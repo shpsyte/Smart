@@ -1,0 +1,19 @@
+﻿@model Smart.Models.Production.StockReportsModel
+@{ ViewData["Title"] = Localizer["Produtos e Serviços"]; ViewBag.PageClass = "container"; ViewData.AddActivePageApp(ActivePagesApp.StockReports);}
+@{ bool hasrecord = Model.Product == null ? false : Model.Product.Count() > 0 ? true : false; }
+<div class="row">
+    <div class="col-4">
+        <p class="text-info h3">@Localizer["Listagem de Itens Valorizado"]</p>
+    </div>
+    <div class="col-2 ml-auto text-right">
+        <a class="btn btn-outline-secondary filter" data-toggle="collapse" href="#filter" role="button"
+           aria-expanded="false">@Localizer["Filtros"]</a>
+    </div>
+</div>
+
+<div class="collapse multi-collapse collapse @( !hasrecord ? "show" : "" )" id="filter">
+    <form method="post" asp-action="Product" asp-controller="StockStats">
+        @{ await Html.RenderPartialAsync("_Filter", Model); }
+    </form>
+</div>
+<hr />

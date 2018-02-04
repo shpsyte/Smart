@@ -17,6 +17,7 @@ namespace Smart.Views
         public static string BankTrans => "BankTrans";
         public static string CashFlow => "CashFlow";
         public static string FinanceReports => "FinanceReports";
+        public static string StockReports => "StockReports";
         public static string Product => "Product";
         public static string IndexPersonNavClass(ViewContext viewContext) => PageNavClassApp(viewContext, Person);
         public static string RevenueNavClass(ViewContext viewContext) => PageNavClassApp(viewContext, Revenue);
@@ -25,7 +26,9 @@ namespace Smart.Views
         public static string BankTransNavClass(ViewContext viewContext) => PageNavClassApp(viewContext, BankTrans);
         public static string CashFlowNavClass(ViewContext viewContext) => PageNavClassApp(viewContext, CashFlow);
         public static string ProductNavClass(ViewContext viewContext) => PageNavClassApp(viewContext, Product);
-
+        public static string StockReportsNavClass(ViewContext viewContext) => PageNavClassApp(viewContext, StockReports);
+        public static string FinanceReportsNavClass(ViewContext viewContext) => PageNavClassApp(viewContext, FinanceReports);
+        
         public static string FinanceNavClass(ViewContext viewContext)
         {
             return string.Concat(
@@ -37,14 +40,17 @@ namespace Smart.Views
 
                 );
         }
-        public static string FinanceReportsNavClass(ViewContext viewContext)
+
+        public static string ReportsNavClass(ViewContext viewContext)
         {
             return string.Concat(
-                PageNavClassApp(viewContext, FinanceReports) 
-
+                PageNavClassApp(viewContext, FinanceReports),
+                PageNavClassApp(viewContext, StockReports)
 
                 );
         }
+
+        
 
         public static string RegNavClass(ViewContext viewContext)
         {

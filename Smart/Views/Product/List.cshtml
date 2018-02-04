@@ -3,6 +3,15 @@
 @{ ViewData.AddActivePageApp(ActivePagesApp.Product); }
 
 
+@if (ViewData["ErrorMessage"] != null)
+{
+    var statusMessageClass = ViewData["ErrorMessage"].ToString().StartsWith("Erro") ? "danger" : "success";
+<div class="alert alert-@statusMessageClass alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    @ViewData["ErrorMessage"]
+</div>
+}
+
 <h4> @ViewData["Title"] <small class="text-danger"> @Model.Count() </small></h4>
 <hr class="myb-4" />
 <div class="row">
@@ -57,6 +66,7 @@
                             <th width="30"> @Localizer["ID"]</th>
                             <th width="80"> @Localizer["Código"]</th>
                             <th> @Localizer["Nome"]</th>
+                            <th width="120"> @Localizer["Saldo"]</th>
                             <th width="120"> @Localizer["Preço"]</th>
                             <th class="no-order" width="40px"> @SharedLocalizer["Ação"]</th>
                         </tr>
@@ -64,25 +74,31 @@
                     <tbody>
                         @foreach (var item in Model)
                         {
-                            <tr class="table-row-body">
-                                <td class="table-item-body">
-                                    @Html.DisplayFor(modelItem => item.ProductId)
-                                </td>
-                                <td class="table-item-body">
-                                    @Html.DisplayFor(modelItem => item.ProductNumber)
-                                </td>
-                                <td class="table-item-body">
-                                    @Html.DisplayFor(modelItem => item.Name)
-                                </td>
+                        <tr class="table-row-body">
+                            <td class="table-item-body">
+                                @Html.DisplayFor(modelItem => item.ProductId)
+                            </td>
+                            <td class="table-item-body">
+                                <a asp-action="Edit" asp-route-id="@item.ProductId" class="btn btn-link btn-sm"> @item.ProductNumber</a>
+                            </td>
+                            <td class="table-item-body">
+                                <a asp-action="Edit" asp-route-id="@item.ProductId" class="btn btn-link btn-sm"> @item.Name</a>
+                            </td>
 
-                                <td class="table-item-body">
-                                    @( item.ListPrice.HasValue ? item.ListPrice.Value.ToString("c") : "0" )
-                                </td>
+                            <td class="table-item-body">
+                                @( item.VProduct.Stock.HasValue ? item.VProduct.Stock.Value.ToString("0") : "0" )
+                            </td>
 
-                                <td class="table-item-body">
-                                    <a asp-action="Edit" asp-route-id="@item.ProductId" class="btn btn-light btn-bdr btn-sm"> @SharedLocalizer["Editar"] </a>
-                                </td>
-                            </tr>
+                            <td class="table-item-body">
+                                @( item.ListPrice.HasValue ? item.ListPrice.Value.ToString("c") : "0" )
+                            </td>
+
+                            <td class="table-item-body">
+                                <button type="button" class="btn btn-sm btn-info btn-bdr pay" data-id="@item.ProductId">
+                                    @Localizer["Movimentar"]
+                                </button>
+                            </td>
+                        </tr>
                         }
                     </tbody>
                 </table>
@@ -90,6 +106,81 @@
         </div>
     </div>
 </div>
+<!-- Modal -->
+<div class="modal fade bd-example-modal-lg" id="stockmov" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">@Localizer["Movimentar Estoque"] <span id="Name"></span> </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form asp-action="Inventory" role="form" onsubmit="return productJS.ConfirmaForm();" method="post" asp-antiforgery="true" class="form-horizontal">
+                <div class="modal-body padding-top-15">
+                    <input name="ProductId" id="ProductId" type="hidden" />
+                    <div class="controls">
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label>@Localizer["Local"]</label>
+                                <select name="LocationId" id="LocationId" asp-items="ViewBag.LocationId" class="form-control"></select>
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <label>@Localizer["Tipo de Lançamento"]</label>
+                                <select name="Signal" id="Signal" asp-items="Html.GetEnumSelectList<Core.Fake.SellInOrSellOut>()" class="form-control"></select>
+                            </div>
+
+
+
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group col-md-4">
+                                <label>@Localizer["Estante"]</label>
+                                <input id="Shelf" name="Shelf" placeholder="@Localizer["Estante"]" class="form-control" />
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label>@Localizer["Box"]</label>
+                                <input id="Bin" name="Bin" placeholder="@Localizer["Box"]" class="form-control" />
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label>@Localizer["Documento"]</label>
+                                <input id="NumberDoc" name="NumberDoc" placeholder="@Localizer["Documento"]"
+                                       class="form-control" />
+                            </div>
+                        </div>
+
+
+
+                        <div class="form-row">
+                            <div class="form-group col-md-8">
+                                <label>@Localizer["Descrição"]</label>
+                                <input id="Description" name="Description"
+                                       placeholder="@Localizer["Descrição"]" class="form-control" />
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label>@Localizer["Quantidade"]</label>
+                                <input id="Quantity" required name="Quantity" placeholder="@Localizer["Qtde"]" class="form-control" data-thousands="." data-decimal="," />
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">@Localizer["Cancelar"]</button>
+                    <button type="submit" class="btn btn-primary">@Localizer["Movimentar"]</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
 @section Scripts {
     <script>setupTable.tableInit("resultTable", 50);</script>
+    <script src="~/js/views/product-createorupdate.min.js"></script>
+    <script>productJS.InitList();</script>
+
 }

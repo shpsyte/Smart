@@ -14,6 +14,7 @@ namespace Core.Domain.Production
         {
             InvoiceDetail = new HashSet<InvoiceDetail>();
             ProductImage = new HashSet<ProductImage>();
+            ProductInventory = new HashSet<ProductInventory>();
             this.FinishedGoodsFlag = true;
             this.SellStartDate = System.DateTime.Now.Date;
             this.CreateDate = System.DateTime.Now.Date;
@@ -79,9 +80,11 @@ namespace Core.Domain.Production
 
 
         public CategoryProduct Category { get; set; }
+        public VProduct VProduct { get; set; }
         public ClassProduct Class { get; set; }
         public TaxGroup TaxGroup { get; set; }
         public ICollection<InvoiceDetail> InvoiceDetail { get; set; }
         public ICollection<ProductImage> ProductImage { get; set; }
+        public ICollection<ProductInventory> ProductInventory { get; set; }
     }
 }

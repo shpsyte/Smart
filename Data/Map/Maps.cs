@@ -114,7 +114,7 @@ namespace Data.Map
                       .WithMany(p => p.RevenueTrans)
                       .HasForeignKey(d => d.RevenueId);
 
-               
+
 
                 entity.Property(e => e.CreateDate)
                     .HasColumnType("datetime")
@@ -178,7 +178,7 @@ namespace Data.Map
                             .HasMaxLength(80)
                             .IsUnicode(false);
 
-               
+
             }
         }
 
@@ -219,7 +219,7 @@ namespace Data.Map
             }
         }
 
-         
+
 
         public class RevenueMap : IMapConfiguration<Revenue>
         {
@@ -269,7 +269,7 @@ namespace Data.Map
 
 
 
-       
+
 
 
 
@@ -287,7 +287,7 @@ namespace Data.Map
         }
 
 
-        
+
         public void Map(EntityTypeBuilder<Address> entity)
         {
             entity.HasKey(e => e.AddressId);
@@ -307,7 +307,7 @@ namespace Data.Map
                         .IsUnicode(false);
             entity.Property(e => e.Number).HasColumnType("char(20)");
             entity.Property(e => e.PostalCode)
-                        
+
                         .HasMaxLength(50)
                         .IsUnicode(false);
             entity.Property(e => e.SpatialLocation)
@@ -328,7 +328,7 @@ namespace Data.Map
 
 
             entity.Property(e => e.StreetAddress)
-                       
+
                         .HasMaxLength(150)
                         .IsUnicode(false);
             entity.Property(e => e.StreetAddressLine2)
@@ -393,7 +393,7 @@ namespace Data.Map
                 .IsRequired()
                 .HasMaxLength(120)
                 .IsUnicode(false);
-           
+
         }
     }
     public class CategoryFinancialMap : IMapConfiguration<CategoryFinancial>
@@ -410,7 +410,7 @@ namespace Data.Map
                 .IsUnicode(false);
             entity.Property(e => e.Type)
                 .IsRequired();
-            
+
         }
     }
     public class CategoryPersonMap : IMapConfiguration<CategoryPerson>
@@ -432,7 +432,7 @@ namespace Data.Map
                 .IsRequired()
                 .HasMaxLength(80)
                 .IsUnicode(false);
-            
+
         }
     }
     public class CityMap : IMapConfiguration<City>
@@ -442,11 +442,11 @@ namespace Data.Map
             entity.ToTable("City", "Person");
             entity.HasIndex(e => e.Name)
                 .HasName("IX_City");
-         
+
             entity.Property(e => e.MiddleName)
                 .HasMaxLength(50)
                 .IsUnicode(false);
-           
+
             entity.Property(e => e.Name)
                 .IsRequired()
                 .HasMaxLength(150)
@@ -473,7 +473,7 @@ namespace Data.Map
                 .IsRequired()
                 .HasMaxLength(120)
                 .IsUnicode(false);
-            
+
         }
     }
     public class ConditionMap : IMapConfiguration<Condition>
@@ -484,13 +484,13 @@ namespace Data.Map
             entity.ToTable("Condition", "Sales");
             entity.Property(e => e.Active).HasDefaultValueSql("((1))");
             entity.Property(e => e.BusinessEntityId).HasColumnName("BusinessEntityID");
-            
+
             entity.Property(e => e.Name)
                 .IsRequired()
                 .HasMaxLength(50)
                 .IsUnicode(false);
             entity.Property(e => e.Tax).HasColumnType("numeric(5, 2)");
-            
+
         }
     }
     public class CostCenterMap : IMapConfiguration<CostCenter>
@@ -500,12 +500,12 @@ namespace Data.Map
             entity.ToTable("CostCenter", "Financial");
             entity.Property(e => e.Active).HasDefaultValueSql("((1))");
             entity.Property(e => e.BusinessEntityId).HasColumnName("BusinessEntityID");
-           
+
             entity.Property(e => e.Name)
                 .IsRequired()
                 .HasMaxLength(80)
                 .IsUnicode(false);
-            
+
         }
     }
     public class CountryMap : IMapConfiguration<Country>
@@ -516,11 +516,11 @@ namespace Data.Map
             entity.HasIndex(e => new { e.MiddleName, e.Name })
                 .HasName("IX_CountryRegion");
             entity.Property(e => e.CountryRegionCode).HasColumnType("char(6)");
-           
+
             entity.Property(e => e.MiddleName)
                 .HasMaxLength(30)
                 .IsUnicode(false);
-           
+
             entity.Property(e => e.Name)
                 .IsRequired()
                 .HasMaxLength(80)
@@ -573,7 +573,7 @@ namespace Data.Map
                 .HasMaxLength(80)
                 .IsUnicode(false);
             entity.Property(e => e.Total).HasColumnType("numeric(12, 4)");
-            
+
             entity.HasOne(d => d.CategoryFinancial)
                 .WithMany(p => p.Expense)
                 .HasForeignKey(d => d.CategoryId)
@@ -614,7 +614,7 @@ namespace Data.Map
                 .HasDefaultValueSql("((0))");
             entity.Property(e => e.StateTaxes)
                 .HasColumnType("numeric(5, 2)");
-            
+
         }
     }
     public class ImageMap : IMapConfiguration<Image>
@@ -632,7 +632,7 @@ namespace Data.Map
             entity.Property(e => e.ModifiedDate)
                 .HasColumnType("datetime")
                 .HasDefaultValueSql("(getdate())");
-            
+
         }
     }
     public class InvoiceMap : IMapConfiguration<Invoice>
@@ -694,7 +694,7 @@ namespace Data.Map
                 .WithMany(p => p.InvoiceBillToAddress)
                 .HasForeignKey(d => d.BillToAddressId)
                 .HasConstraintName("FK_Order_Address");
-            
+
             entity.HasOne(d => d.Carrier)
                 .WithMany(p => p.InvoiceCarrier)
                 .HasForeignKey(d => d.CarrierId)
@@ -739,7 +739,7 @@ namespace Data.Map
             entity.Property(e => e.UnitPriceDiscount)
                 .HasColumnType("numeric(6, 3)")
                 .HasDefaultValueSql("((0.0))");
-            
+
             entity.HasOne(d => d.Invoice)
                 .WithMany(p => p.InvoiceDetail)
                 .HasForeignKey(d => d.InvoiceId)
@@ -773,7 +773,7 @@ namespace Data.Map
                 .HasColumnType("datetime")
                 .HasDefaultValueSql("(getdate())");
             entity.Property(e => e.Email).IsUnicode(false);
-            entity.Property(e => e.Phone).HasColumnType("varchar(50)").IsUnicode(false); 
+            entity.Property(e => e.Phone).HasColumnType("varchar(50)").IsUnicode(false);
             entity.Property(e => e.FirstName)
                 .IsRequired()
                 .HasMaxLength(120)
@@ -794,7 +794,7 @@ namespace Data.Map
                 .IsUnicode(false);
             entity.Property(e => e.Type)
                 .HasDefaultValueSql("((1))");
-            
+
             entity.HasOne(d => d.Category)
                 .WithMany(p => p.Person)
                 .HasForeignKey(d => d.CategoryId)
@@ -811,7 +811,7 @@ namespace Data.Map
                 .HasForeignKey(d => d.AddressId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_PersonAddress_Address");
-            
+
             entity.HasOne(d => d.Person)
                 .WithMany(p => p.PersonAddress)
                 .HasForeignKey(d => d.PersonId)
@@ -836,7 +836,7 @@ namespace Data.Map
                 .HasForeignKey(d => d.PersonId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_PersonEmail_Person");
-            
+
         }
     }
     public class PersonPhoneMap : IMapConfiguration<PersonPhone>
@@ -856,7 +856,7 @@ namespace Data.Map
                 .HasForeignKey(d => d.PhoneId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_PersonPhone_Phone");
-            
+
         }
     }
     public class PhoneMap : IMapConfiguration<Phone>
@@ -875,9 +875,71 @@ namespace Data.Map
                 .IsRequired()
                 .HasColumnType("char(2)")
                 .HasDefaultValueSql("('CN')");
-            
+
         }
     }
+
+    public class VProductMap : IMapConfiguration<VProduct>
+    {
+        public void Map(EntityTypeBuilder<VProduct> entity)
+        {
+            entity.ToTable("VProduct", "Production");
+            entity.HasKey(e => new { e.ProductId });
+            entity.HasOne(d => d.Product)
+                 .WithOne(p => p.VProduct)
+                 .HasForeignKey<VProduct>(b => b.ProductId);
+
+        }
+    }
+
+
+    public class ProductInventoryMap : IMapConfiguration<ProductInventory>
+    {
+        public void Map(EntityTypeBuilder<ProductInventory> entity)
+        {
+            entity.ToTable("ProductInventory", "Production");
+            entity.HasKey(e => e.Id);
+
+            entity.Property(e => e.CreateDate)
+                .HasColumnType("date")
+                .HasDefaultValueSql("(getdate())");
+
+            entity.Property(e => e.Description)
+                .HasColumnType("varchar(150)")
+                .HasMaxLength(150)
+                .IsUnicode(false);
+
+            entity.Property(e => e.NumberDoc)
+             .HasColumnType("varchar(150)")
+             .HasMaxLength(150)
+             .IsUnicode(false);
+
+            entity.Property(e => e.Shelf)
+         .HasColumnType("varchar(50)")
+         .HasMaxLength(50)
+         .IsUnicode(false);
+
+            entity.Property(e => e.Quantity)
+                .HasColumnType("numeric(12, 4)")
+                .HasDefaultValueSql("((0))");
+
+            entity.HasOne(d => d.Location)
+                .WithMany(p => p.ProductInventory)
+                .HasForeignKey(d => d.LocationId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_ProductInventory_Location");
+
+            entity.HasOne(d => d.Product)
+                .WithMany(p => p.ProductInventory)
+                .HasForeignKey(d => d.ProductId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_ProductInventory_Product");
+
+        }
+    }
+
+
+
     public class ProductMap : IMapConfiguration<Product>
     {
         public void Map(EntityTypeBuilder<Product> entity)
@@ -944,7 +1006,7 @@ namespace Data.Map
             entity.Property(e => e.Weight).HasColumnType("numeric(12, 4)");
             entity.Property(e => e.WeightTotal).HasColumnType("numeric(12, 4)");
             entity.Property(e => e.Width).HasColumnType("numeric(10, 3)");
-            
+
             entity.HasOne(d => d.Category)
                 .WithMany(p => p.Product)
                 .HasForeignKey(d => d.CategoryId)
@@ -980,7 +1042,7 @@ namespace Data.Map
                 .HasForeignKey(d => d.ProductId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_ProductImage_Product");
-            
+
         }
     }
 
@@ -991,9 +1053,9 @@ namespace Data.Map
             entity.ToTable("StateProvince", "Person");
             entity.HasIndex(e => new { e.Name, e.StateProvinceCode })
                 .HasName("IX_StateProvince");
-            
+
             entity.Property(e => e.IsOnlyStateProvinceFlag).HasDefaultValueSql("((1))");
-            
+
             entity.Property(e => e.Name)
                 .IsRequired()
                 .HasMaxLength(80)
@@ -1020,7 +1082,7 @@ namespace Data.Map
                 .IsRequired()
                 .HasColumnType("char(2)")
                 .HasDefaultValueSql("('SL')");
-            
+
         }
     }
     public class TaxGroupMap : IMapConfiguration<TaxGroup>
@@ -1028,13 +1090,13 @@ namespace Data.Map
         public void Map(EntityTypeBuilder<TaxGroup> entity)
         {
             entity.ToTable("TaxGroup", "Accounting");
-            
+
             entity.Property(e => e.BusinessEntityId).HasColumnName("BusinessEntityID");
             entity.Property(e => e.Name)
                 .IsRequired()
                 .HasMaxLength(120)
                 .IsUnicode(false);
-            
+
         }
     }
     public class TaxOperationMap : IMapConfiguration<TaxOperation>
@@ -1052,7 +1114,7 @@ namespace Data.Map
                 .HasMaxLength(80)
                 .IsUnicode(false);
             entity.Property(e => e.StockTrigger).HasDefaultValueSql("((1))");
-            
+
         }
     }
     public class Warehousemap : IMapConfiguration<Location>
@@ -1064,7 +1126,7 @@ namespace Data.Map
             entity.HasIndex(e => e.Name)
                 .HasName("IX_Warehouse");
             entity.Property(e => e.BusinessEntityId).HasColumnName("BusinessEntityID");
-          
+
             entity.Property(e => e.Name)
                 .HasMaxLength(50)
                 .IsUnicode(false);
@@ -1080,7 +1142,7 @@ namespace Data.Map
 
             entity.Property(e => e.BusinessEntityId).HasColumnName("BusinessEntityID");
 
-            
+
         }
     }
 }

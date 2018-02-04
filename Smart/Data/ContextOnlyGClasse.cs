@@ -36,9 +36,13 @@ namespace Smart.Data
         {
             base.OnModelCreating(modelBuilder);
 
+            modelBuilder.Entity<ProductInventory>(entity =>
+            {
+                entity.ToTable("ProductInventory", "Production");
+                entity.HasKey(e => e.Id);
 
 
-
+            });
 
             modelBuilder.Entity<RevenueTrans>(entity =>
             {

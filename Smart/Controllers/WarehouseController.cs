@@ -52,7 +52,7 @@ namespace Smart.Controllers
         // POST: Warehouse/Add
         [HttpPost, ValidateAntiForgeryToken]
         [Route("warehouse-management/warehouse-add")]
-        public async Task<IActionResult> Add([Bind("WarehouseId,Name,BusinessEntityId")] Location warehouse, bool continueAdd)
+        public async Task<IActionResult> Add([Bind("WarehouseId,Name,BusinessEntityId,DefaultLocation")] Location warehouse, bool continueAdd)
         {
             if (ModelState.IsValid)
             {
@@ -79,7 +79,7 @@ namespace Smart.Controllers
         // POST: Warehouse/Edit/5
         [HttpPost, ValidateAntiForgeryToken]
         [Route("warehouse-management/warehouse-edit/{id?}")]
-        public async Task<IActionResult> Edit(int id, [Bind("WarehouseId,Name,BusinessEntityId")] Location warehouse, bool continueAdd)
+        public async Task<IActionResult> Edit(int id, [Bind("WarehouseId,Name,BusinessEntityId,DefaultLocation")] Location warehouse, bool continueAdd)
         {
             if (id != warehouse.WarehouseId)
             {

@@ -64,34 +64,35 @@
 
                     </li>
 
-                    <li class="nav-item dropdown @ActivePagesApp.FinanceReportsNavClass(ViewContext)">
+                    <li class="nav-item dropdown @ActivePagesApp.ReportsNavClass(ViewContext)">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Relatórios
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                             <li> <a class="dropdown-item  @ActivePagesApp.FinanceReportsNavClass(ViewContext)" asp-action="Reports" asp-controller="FinancialStats">Financeiro</a> </li>
+                            <li> <a class="dropdown-item  @ActivePagesApp.StockReportsNavClass(ViewContext)" asp-action="Reports" asp-controller="StockStats">Estoque</a> </li>
                             @*<li>
-                                    <a class="dropdown-item dropdown-toggle" href="#">Financeiro</a>
-                                    <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" href="#">Submenu action</a></li>
-                                        <li><a class="dropdown-item" href="#">Another submenu action</a></li>
+            <a class="dropdown-item dropdown-toggle" href="#">Financeiro</a>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">Submenu action</a></li>
+                <li><a class="dropdown-item" href="#">Another submenu action</a></li>
 
-                                        <li>
-                                            <a class="dropdown-item dropdown-toggle" href="#">Subsubmenu</a>
-                                            <ul class="dropdown-menu">
-                                                <li><a class="dropdown-item" href="#">Subsubmenu action aa</a></li>
-                                                <li><a class="dropdown-item" href="#">Another subsubmenu action</a></li>
-                                            </ul>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item dropdown-toggle" href="#">Second subsubmenu</a>
-                                            <ul class="dropdown-menu">
-                                                <li><a class="dropdown-item" href="#">Subsubmenu action bb</a></li>
-                                                <li><a class="dropdown-item" href="#">Another subsubmenu action</a></li>
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                </li>*@
+                <li>
+                    <a class="dropdown-item dropdown-toggle" href="#">Subsubmenu</a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">Subsubmenu action aa</a></li>
+                        <li><a class="dropdown-item" href="#">Another subsubmenu action</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a class="dropdown-item dropdown-toggle" href="#">Second subsubmenu</a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">Subsubmenu action bb</a></li>
+                        <li><a class="dropdown-item" href="#">Another subsubmenu action</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </li>*@
                         </ul>
 
                     </li>

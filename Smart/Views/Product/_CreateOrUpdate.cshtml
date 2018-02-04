@@ -75,30 +75,6 @@
     </div>
 
 
-
-    <div class="form-row">
-        <div class="form-group col-md-3">
-            <label asp-for="Location">@Localizer["Localização Estoque"]</label>
-            <input asp-for="Location" placeholder="@Localizer["Localização Estoque"]" class="form-control" />
-            <span asp-validation-for="Location" class="text-danger"></span>
-        </div>
-        <div class="form-group col-md-3">
-            <label asp-for="SafetyStockLevel">@Localizer["Estoque Mínimo"]</label>
-            <input asp-for="SafetyStockLevel" placeholder="@Localizer["Estoque Mínimo"]" class="form-control" data-thousands="." data-decimal="," />
-            <span asp-validation-for="SafetyStockLevel" class="text-danger"></span>
-        </div>
-        <div class="form-group col-md-3">
-            <label asp-for="MaximumStocklevel">@Localizer["Estoque Máximo"]</label>
-            <input asp-for="MaximumStocklevel" placeholder="@Localizer["Estoque Máximo"]" class="form-control" data-thousands="." data-decimal="," />
-            <span asp-validation-for="MaximumStocklevel" class="text-danger"></span>
-        </div>
-        <div class="form-group col-md-3">
-            <label asp-for="ReorderPoint">@Localizer["Ponto de Compra"]</label>
-            <input asp-for="ReorderPoint" placeholder="@Localizer["Ponto de Compra"]" class="form-control" data-thousands="." data-decimal="," />
-            <span asp-validation-for="ReorderPoint" class="text-danger"></span>
-        </div>
-    </div>
-
     <div class="form-row">
         <div class="form-group col-md-3">
             <label asp-for="StandardCost">@Localizer["Valor do Custo"]</label>
@@ -110,7 +86,18 @@
             <input asp-for="ListPrice" placeholder="@Localizer["Valor de Venda"]" class="form-control" data-thousands="." data-decimal="," />
             <span asp-validation-for="ListPrice" class="text-danger"></span>
         </div>
+        @if (!isEdit)
+        {
+            <div class="form-group col-md-3">
+                <label>@Localizer["Saldo Inicial"]</label>
+                <input name="InitialStock" id="InitialStock" placeholder="@Localizer["Saldo Inicial"]" class="form-control" data-thousands="." data-decimal="," />
+
+            </div>
+        }
     </div>
+
+
+
 
     <div class="form-row">
         <div class="form-group col-12">
@@ -125,6 +112,29 @@
            aria-expanded="false" aria-controls="stock">@Localizer["Características"]</a>
     </p>
     <div class="collapse multi-collapse collapse" id="caracter">
+        <div class="form-row">
+            <div class="form-group col-md-3">
+                <label asp-for="Location">@Localizer["Localização Estoque"]</label>
+                <input asp-for="Location" placeholder="@Localizer["Localização Estoque"]" class="form-control" />
+                <span asp-validation-for="Location" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-3">
+                <label asp-for="SafetyStockLevel">@Localizer["Estoque Mínimo"]</label>
+                <input asp-for="SafetyStockLevel" placeholder="@Localizer["Estoque Mínimo"]" class="form-control" data-thousands="." data-decimal="," />
+                <span asp-validation-for="SafetyStockLevel" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-3">
+                <label asp-for="MaximumStocklevel">@Localizer["Estoque Máximo"]</label>
+                <input asp-for="MaximumStocklevel" placeholder="@Localizer["Estoque Máximo"]" class="form-control" data-thousands="." data-decimal="," />
+                <span asp-validation-for="MaximumStocklevel" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-3">
+                <label asp-for="ReorderPoint">@Localizer["Ponto de Compra"]</label>
+                <input asp-for="ReorderPoint" placeholder="@Localizer["Ponto de Compra"]" class="form-control" data-thousands="." data-decimal="," />
+                <span asp-validation-for="ReorderPoint" class="text-danger"></span>
+            </div>
+        </div>
+
         <div class="form-row">
             <div class="form-group col-md-3">
                 <label asp-for="Manufacturer">@Localizer["Fabricante"]</label>
@@ -171,7 +181,7 @@
                 <div class="checkbox">
                     <label>
                         <input asp-for="MakeFlag" type="checkbox" class="checkbox style-0" />
-                        <span><label asp-for="MakeFlag">@Localizer["Produto é Frabicado"]</label></span>
+                        <span><label asp-for="MakeFlag">@Localizer["Produto é Fabricado"]</label></span>
                     </label>
                 </div>
             </div>

@@ -1,0 +1,63 @@
+﻿@model Smart.Models.Production.StockReportsModel
+@{ ViewData["Title"] = Localizer["Produtos e Serviços"]; ViewBag.PageClass = "container"; ViewData.AddActivePageApp(ActivePagesApp.StockReports);}
+@{ bool hasrecord = Model.Product == null ? false : Model.Product.Count() > 0 ? true : false; }
+<div class="row">
+    <div class="col-4">
+        <p class="text-info h3">@Localizer["Listagem de Itens"]</p>
+    </div>
+    <div class="col-2 ml-auto text-right">
+        <a class="btn btn-outline-secondary filter" data-toggle="collapse" href="#filter" role="button"
+           aria-expanded="false">@Localizer["Filtros"]</a>
+    </div>
+</div>
+
+<div class="collapse multi-collapse collapse @( !hasrecord ? "show" : "" )" id="filter">
+    <form method="post" asp-action="Product" asp-controller="StockStats">
+        @{ await Html.RenderPartialAsync("_Filter", Model); }
+    </form>
+</div>
+<hr />
+
+<div class="collapse multi-collapse show" id="tablerows">
+
+    <div class="row padding-top-15">
+        <div class="col-12">
+            <div class="table-responsive">
+                @if (!hasrecord)
+                {
+                    <div class="no-registry-content">
+                        <div class="text-center">
+                            <div style="font-size:3em; color:darkseagreen">
+                                <i class="fas fa-exclamation-circle"></i>
+                            </div>
+                        </div>
+                        <div class="fade-item">
+                            <h2 class="no-registry-title">
+                                @SharedLocalizer["Nenhum registro de"]  <span class="text-info">@ViewData["Title"]</span> @SharedLocalizer["encontrado"].
+                            </h2>
+                            <a class="btn btn-outline-secondary filter" data-toggle="collapse" href="#filter" role="button">@Localizer["Clique aqui para ver os Filtros"]</a>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    await Html.RenderPartialAsync(Model.TypeView, Model.Product);
+                    <div class="text-center">
+                        <a class="btn btn-outline-secondary filter" data-toggle="collapse" href="#filter" role="button">@Localizer["Clique aqui para ver os Filtros"]</a>
+
+                    </div>
+                }
+                <br />
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script>setupTable.tableInitExport("resultTable", 50, 1, 1, 'desc', 3);</script>
+
+    <script src="~/js/views/product-reports.min.js"></script>
+
+}

@@ -74,5 +74,11 @@
     "inputFiles": [
       "wwwroot/js/views/product-createorupdate.js"
     ]
+  },
+  {
+    "outputFileName": "wwwroot/js/views/product-reports.min.js",
+    "inputFiles": [
+      "wwwroot/js/views/product-reports.js"
+    ]
   }
 ]

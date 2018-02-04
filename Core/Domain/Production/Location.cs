@@ -12,14 +12,18 @@ namespace Core.Domain.Production
         {
             Invoice = new HashSet<Invoice>();
             InvoiceDetail = new HashSet<InvoiceDetail>();
+            ProductInventory = new HashSet<ProductInventory>();
+            this.DefaultLocation = false;
         }
 
         public int WarehouseId { get; set; }
         [Required]
         public string Name { get; set; }
-     
+            public bool DefaultLocation { get; set; }
+
 
         public ICollection<Invoice> Invoice { get; set; }
         public ICollection<InvoiceDetail> InvoiceDetail { get; set; }
+        public ICollection<ProductInventory> ProductInventory { get; set; }
     }
 }

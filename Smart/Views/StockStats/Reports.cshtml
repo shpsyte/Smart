@@ -1,0 +1,94 @@
+﻿@{ DateTime today = new DateTime(System.DateTime.Now.Year, System.DateTime.Now.Month, System.DateTime.Now.Day);
+    today = today.AddDays(-1);
+}
+@{ ViewData["Title"] = Localizer["Relatórios de Estoque"]; ViewBag.PageClass = "container"; ViewData.AddActivePageApp(ActivePagesApp.StockReports);}
+
+<h2 class="text-muted">@Localizer["Relatórios de Estoque"]</h2>
+<hr />
+<div class="row padding-top-15">
+    <div class="col-2 text-center">
+        <i class="fas fa-shopping-basket text-info fa-3x "></i>
+    </div>
+    <div class="col">
+        <p class="text-info h4 font-weight-light">
+            <a asp-action="Product" asp-controller="StockStats" class="text-info">
+                @Localizer["Listagem de Itens"]
+            </a>
+        </p>
+        <p class="card-text text-muted">@Localizer["Listagem de Produtos e Serviços com filtro por Nome, Fabricante, Categorias, etc"]</p>
+    </div>
+</div>
+<hr />
+
+<div class="row padding-top-15">
+    <div class="col-2 text-center">
+        <i class="fas fa-eye text-dark fa-3x "></i>
+    </div>
+    <div class="col">
+        <p class="h4 font-weight-light">
+            <a asp-action="ProductWithutSaldo" asp-controller="StockStats" class="text-dark">
+                @Localizer["Saldo de Itens"]
+            </a>
+        </p>
+        <p class="card-text text-muted">@Localizer["Listagem de Produtos sem saldo com filtro por Nome, Fabricante, Categorias, etc"]</p>
+    </div>
+</div>
+
+
+
+<hr />
+
+<div class="row padding-top-15">
+    <div class="col-2 text-center">
+        <i class="fas fa-cart-arrow-down text-warning fa-3x "></i>
+    </div>
+    <div class="col">
+        <p class="text-warning h4 font-weight-light">
+            <a asp-action="ProductMinimumStocklevel" asp-controller="StockStats" class="text-warning">
+                @Localizer["Saldo Mínimo"]
+            </a>
+        </p>
+        <p class="card-text text-muted">@Localizer["Listagem de Produtos com saldo Mínimo atingido (ou com 20% ) com filtro por Nome, Fabricante, Categorias, etc"]</p>
+    </div>
+</div>
+<hr />
+
+
+<div class="row padding-top-15">
+    <div class="col-2 text-center">
+        <i class="fas fa-money-bill-alt text-success fa-3x "></i>
+    </div>
+    <div class="col">
+        <p class="text-warning h4 font-weight-light">
+            <a asp-action="ValueStockLocation" asp-controller="StockStats" class="text-success">
+                @Localizer["Valorização de Estoque"]
+            </a>
+        </p>
+        <p class="card-text text-muted">@Localizer["Mostra o valor do seu estoque em reais com filtro por Nome, Fabricante, Categorias, etc"]</p>
+    </div>
+</div>
+<hr />
+
+
+
+<br>
+
+<h2 class="text-muted">@Localizer["Templates Prontos"]</h2>
+<hr class="mr-4" />
+<div class="row padding-top-15">
+    <div class="col-2 text-center">
+        <i class="fas fa-eye fa-3x text-danger"></i>
+    </div>
+    <div class="col">
+        <form id="form1" method="post" asp-action="Product" asp-controller="StockStats" asp-route-TypeView="_ProductWithutSaldo">
+            <p class="text-danger h4 font-weight-light">
+                <a class="text-danger" href="#" onclick="form1.submit();">
+                    @Localizer["Itens sem Saldo"]
+                </a>
+            </p>
+
+        </form>
+        <p class="card-text text-muted">@Localizer["Listagem de Contas a Pagar com filtro por fornecedor, data de vencimento, status"]</p>
+    </div>
+</div>
+<hr /> 

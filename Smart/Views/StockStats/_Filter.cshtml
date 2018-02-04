@@ -1,0 +1,134 @@
+﻿@model Smart.Models.Production.StockReportsModel
+
+<div class="controls">
+    <input type="hidden" asp-for="TypeView" />
+    
+    <div class="form-row">
+        <div class="form-group col-md-3">
+            <label asp-for="ProductNumber">@Localizer["Código"]</label>
+            <input asp-for="ProductNumber" placeholder="@Localizer["Código"]" class="form-control" />
+        </div>
+        <div class="form-group col-md-6">
+            <label asp-for="Name">@Localizer["Descrição"]</label>
+            <input asp-for="Name" placeholder="@Localizer["Descrição"]" class="form-control" />
+        </div>
+
+        <div class="form-group col-md-3">
+            <label asp-for=" Manufacturer">@Localizer["Fabricante"]</label>
+            <input asp-for="Manufacturer" placeholder="@Localizer["Fabricante"]" class="form-control" />
+        </div>
+    </div>
+
+
+    <div class="form-row">
+        <div class="form-group col-md-3">
+            <label asp-for="Ean">@Localizer["Ean"]</label>
+            <input asp-for="Ean" placeholder="@Localizer["Ean"]" class="form-control" />
+        </div>
+        <div class="form-group col-md-3">
+            <label asp-for="HsCode">@Localizer["NCM"]</label>
+            <input asp-for="HsCode" placeholder="@Localizer["NCM"]" class="form-control" />
+        </div>
+
+        <div class="form-group col-md-6">
+            <label asp-for=" Location">@Localizer["Localização"]</label>
+            <input asp-for="Location" placeholder="@Localizer["Localização"]" class="form-control" />
+        </div>
+    </div>
+
+
+
+
+    <div class="form-row">
+        <div class="form-group col-md-4">
+            <label asp-for="SizeUnitMeasureCode">@Localizer["Tamanho/Medida"]</label>
+            <input asp-for="SizeUnitMeasureCode" placeholder="@Localizer["Tamanho/Medida"]" class="form-control" />
+        </div>
+        <div class="form-group col-md-8">
+            <label asp-for="ProductAttribute">@Localizer["Obs"]</label>
+            <input asp-for="ProductAttribute" placeholder="@Localizer["Obs"]" class="form-control" />
+        </div>
+
+    </div>
+
+
+    <div class="form-row">
+        <div class="form-group col-md-3">
+            <div class="checkbox">
+                <label>
+                    <input asp-for="MakeFlag" type="checkbox" class="checkbox style-0" />
+                    <span><label asp-for="MakeFlag">@Localizer["Produto é Fabricado"]</label></span>
+                </label>
+            </div>
+        </div>
+
+        <div class="form-group col-md-3">
+            <div class="checkbox">
+                <label>
+                    <input asp-for="FinishedGoodsFlag" type="checkbox" class="checkbox style-0" />
+                    <span><label asp-for="FinishedGoodsFlag">@Localizer["Dísponivel a Venda"]</label></span>
+                </label>
+            </div>
+        </div>
+
+        @*<div class="form-group col-md-2">
+            <div class="checkbox">
+                <label>
+                    <input asp-for="VariableFlag" type="checkbox" class="checkbox style-0" />
+                    <span><label asp-for="VariableFlag">@Localizer["Com Variação"]</label></span>
+                </label>
+            </div>
+        </div>*@
+
+
+        <div class="form-group col-md-3">
+            <div class="checkbox">
+                <label>
+                    <input asp-for="Active" type="checkbox" class="checkbox style-0" />
+                    <span><label asp-for="Active">@Localizer["Ativos"]</label></span>
+                </label>
+            </div>
+        </div>
+
+        <div class="form-group col-md-3">
+            <div class="checkbox">
+                <label>
+                    <input asp-for="WithStock" type="checkbox" class="checkbox style-0" />
+                    <span><label asp-for="WithStock">@Localizer["Com Saldo"]</label></span>
+                </label>
+            </div>
+        </div>
+
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-3">
+            <label asp-for="ProductSourceId">@Localizer["Origem do Produto"]</label>
+            <select asp-for="ProductSourceId" asp-items="Html.GetEnumSelectList<Core.Fake.ProductSource>()" class="form-control"><option></option></select>
+            <span asp-validation-for="ProductSourceId" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-3">
+            <label asp-for="ClassId">@Localizer["Classificação"]</label>
+            <select asp-for="ClassId" class="form-control" asp-items="ViewBag.ClassId"><option></option> </select>
+            <span asp-validation-for="ClassId" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-3">
+            <label asp-for="CategoryId">@Localizer["Categoria"]</label>
+            <select asp-for="CategoryId" class="form-control" asp-items="ViewBag.CategoryId"><option></option></select>
+            <span asp-validation-for="CategoryId" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-3">
+            <label asp-for="LocationId">@Localizer["Local"]</label>
+            <select asp-for="LocationId" class="form-control" asp-items="ViewBag.LocationId"><option></option></select>
+            <span asp-validation-for="LocationId" class="text-danger"></span>
+        </div>
+    </div>
+
+
+
+
+    <div class="form-row">
+        <div class="col-4">
+            <button type="submit" class="btn btn-success btn-bdr btn-block">@Localizer["Pesquisar"]</button>
+        </div>
+    </div>
+</div>

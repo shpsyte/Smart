@@ -24,7 +24,7 @@ C:\Program Files\dotnet\sdk\NuGetFallbackFolder\microsoft.visualstudio.web.codeg
 C:\Users\José Luiz\.nuget\packages\microsoft.visualstudio.web.codegenerators.mvc
 
 --Gerar Classe
-dotnet ef dbcontext scaffold "Data Source=IDELLSERVER\\eXPRESS,1433;Database=Smart;User=sa;Password=Jymkatana_6985;MultipleActiveResultSets=true" Microsoft.EntityFrameworkCore.SqlServer -c ContextOnlyGClasse -o DataExemple -f 
+dotnet ef dbcontext scaffold "Data Source=IDELLSERVER\\eXPRESS,1433;Database=Smart;User=sa;Password=Jymkatana_6985;MultipleActiveResultSets=true" Microsoft.EntityFrameworkCore.SqlServer -c ContextOnlyGClasse -o DataExemple -f -t ProductInventory -t Location -t Product
 
 
 @section topright{

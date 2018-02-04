@@ -1,4 +1,36 @@
-﻿document.querySelector('#Image').addEventListener("change", previewImages, false);
+﻿class ProductJS {
+    
+
+    InitList() {
+        var original;
+        var hasPayDate;
+        $(document).on("click", ".pay", function () {
+            $(".modal-body #ProductId").val($(this).data('id'));
+            $('#stockmov').modal('show')
+        });
+    }
+
+    ConfirmaForm() {
+        var x = confirm("Você deseja movimentar o produto ?");
+        if (x)
+            return true;
+        else
+            return false;
+    }
+
+}
+var productJS = new ProductJS();
+
+
+
+
+
+
+
+
+
+
+document.querySelector('#Image').addEventListener("change", previewImages, false);
 $(document).ready(function () {
 
 
@@ -44,7 +76,6 @@ function removeimg(e) {
 }
 
 
-
 function GetNextCodProduct() {
     var botao = document.getElementById('getCodproduct');
     var url = botao.getAttribute('data-url');
@@ -73,4 +104,7 @@ function GetNextCodProduct() {
     }
 
 }
+
+
+
 

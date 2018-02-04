@@ -1,0 +1,47 @@
+﻿@model IEnumerable<Core.Domain.Production.Product>
+<table id="resultTable" class="table table-hover table-sm" cellspacing="0" cellpadding="0">
+    <thead>
+        <tr>
+            <th width="120"> @Localizer["Código"]</th>
+            <th> @Localizer["Nome"]</th>
+            <th width="120"> @Localizer["NCM"]</th>
+            <th width="90"> @Localizer["Saldo"]</th>
+            <th width="90"> @Localizer["Mínimo"]</th>
+            <th width="90"> @Localizer["Máximo"]</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null)
+        {
+            foreach (var item in Model)
+            {
+                string suplier = item.Name.Truncate(60, true);
+                decimal listprice = item.ListPrice.HasValue ? item.ListPrice.Value : 0;
+                decimal stock = item.VProduct.Stock.HasValue ? item.VProduct.Stock.Value : 0;
+
+        <tr class="table-row-body">
+            <td class="table-item-body">
+                @Html.DisplayFor(modelItem => item.ProductNumber)
+            </td>
+            <td class="table-item-body" data-toggle="tooltip" data-placement="top" title="@Html.DisplayFor(modelItem => item.Name)">
+                @suplier
+            </td>
+            <td class="table-item-body">
+                @Html.DisplayFor(modelItem => item.HsCode)
+            </td>
+            <td class="table-item-body">
+                @stock.ToString("0")
+            </td>
+            <td class="table-item-body">
+                @Html.DisplayFor(modelItem => item.SafetyStockLevel)
+            </td>
+            <td class="table-item-body">
+                @Html.DisplayFor(modelItem => item.MaximumStocklevel)
+            </td>
+        </tr>
+            }
+        }
+    </tbody>
+</table>
+

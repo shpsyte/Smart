@@ -44,7 +44,7 @@ namespace Smart.Controllers
             return View();
         }
 
-
+        [Route("financial-reports/stats-management")]
         public IActionResult Reports() => View();
 
 

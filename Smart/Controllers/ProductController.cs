@@ -28,7 +28,9 @@ namespace Smart.Controllers
         private readonly IServices<CategoryProduct> _categoryProductServices;
         private readonly IServices<ClassProduct> _classProductServices;
         private readonly IServices<TaxGroup> _taxGroupServices;
-       
+        private readonly IServices<ProductInventory> _productInventoryServices;
+        private readonly IServices<Location> _locationServices;
+
         #endregion
         #region ctor
         public ProductController(
@@ -38,6 +40,8 @@ namespace Smart.Controllers
                                 IServices<ClassProduct> classProductServices,
                                 IServices<TaxGroup> taxGroupServices,
                                 IServices<Product> productServices,
+                                IServices<ProductInventory> productInventoryServices,
+                                IServices<Location> locationServices,
                                 IUser currentUser,
                                 IEmailSender emailSender,
                                 IHttpContextAccessor accessor,
@@ -51,15 +55,19 @@ namespace Smart.Controllers
             this._productServices = productServices;
             this._imageServices = imageServices;
             this._productImageServices = productImageServices;
+            this._productInventoryServices = productInventoryServices;
+            this._locationServices = locationServices;
         }
         #endregion
         #region privates
-
+          [TempData]
+        public string ErrorMessage { get; set; }
         private void LoadViewData()
         {
             ViewData["CategoryId"] = new SelectList(_categoryProductServices.GetAll(), "CategoryId", "Name");
             ViewData["ClassId"] = new SelectList(_classProductServices.GetAll(), "ClassId", "Name");
             ViewData["TaxGroupId"] = new SelectList(_taxGroupServices.GetAll(), "TaxGroupId", "Name");
+            ViewData["LocationId"] = new SelectList(_locationServices.GetAll(), "WarehouseId", "Name");
         }
         #endregion
         #region methods
@@ -90,7 +98,7 @@ namespace Smart.Controllers
             try
             {
                 await _context.SaveChangesAsync();
-                return Json(new {ok="ok"});
+                return Json(new { ok = "ok" });
             }
             catch (System.Exception)
             {
@@ -99,11 +107,39 @@ namespace Smart.Controllers
 
         }
 
+        [HttpPost, ValidateAntiForgeryToken]
+        [Route("product-management/product-inventory")]
+        public async Task<IActionResult> Inventory([Bind("Id,BusinessEntityID,LocationId,ProductId,VarId,Shelf,Bin,CreateDate,Description,NumberDoc,Quantity,Signal")] ProductInventory data)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                await _productInventoryServices.AddAsync(data);
+                ErrorMessage = $"Movimentação efetuada com sucesso";
+
+                }
+                catch (System.Exception e)
+                {
+                    ErrorMessage = $"Erro na Movimentação {(string.IsNullOrEmpty(e.Message) ? "" : e.Message)}";
+
+                }
+            }else
+            {
+                ErrorMessage = $"Erro na movimentação";
+            }
+             
+            return RedirectToAction(nameof(List));
+        }
+
+
         // GET: Product
         [Route("product-management/product-list")]
         public async Task<IActionResult> List(string search)
         {
+            LoadViewData();
             ViewData["search"] = search;
+            ViewData["ErrorMessage"] = ErrorMessage;
             var data = await _productServices.QueryAsync();
             data = data.Where(a => a.Deleted == false);
             if (!string.IsNullOrEmpty(search))
@@ -120,14 +156,16 @@ namespace Smart.Controllers
                     || p.ProductAttribute.Contains(search)
                  );
             }
-            return View(data);
+
+
+            return View(data.Include(a => a.VProduct));
         }
 
         // GET: Product/Add
         [Route("product-management/product-add")]
         public IActionResult Add()
         {
-            
+
             LoadViewData();
             var data = new Product();
             return View(data);
@@ -137,7 +175,7 @@ namespace Smart.Controllers
         // POST: Product/Add
         [HttpPost, ValidateAntiForgeryToken]
         [Route("product-management/product-add")]
-        public async Task<IActionResult> Add([Bind("ProductId,Name,ProductNumber,Manufacturer,Ean,HsCode,HsCodeTax,Location,MakeFlag,VariableFlag,FinishedGoodsFlag,SafetyStockLevel,MaximumStocklevel,ReorderPoint,StandardCost,ListPrice,SizeUnitMeasureCode,Weight,WeightTotal,Height,Width,Length,DaysToManufacture,ProductAttribute,ProductSourceId,ClassId,CategoryId,TaxGroupId,TaxIva,TaxImport,TaxProduction,TaxSale,SellStartDate,SellEndDate,ModifiedDate,CreateDate,Active,BusinessEntityId,Deleted,Image,Product")] Product product, List<IFormFile> Image, bool continueAdd)
+        public async Task<IActionResult> Add([Bind("ProductId,Name,ProductNumber,Manufacturer,Ean,HsCode,HsCodeTax,Location,MakeFlag,VariableFlag,FinishedGoodsFlag,SafetyStockLevel,MaximumStocklevel,ReorderPoint,StandardCost,ListPrice,SizeUnitMeasureCode,Weight,WeightTotal,Height,Width,Length,DaysToManufacture,ProductAttribute,ProductSourceId,ClassId,CategoryId,TaxGroupId,TaxIva,TaxImport,TaxProduction,TaxSale,SellStartDate,SellEndDate,ModifiedDate,CreateDate,Active,BusinessEntityId,Deleted,Image,Product,InitialStock")] Product product, List<IFormFile> Image, decimal? InitialStock, bool continueAdd)
         {
             if (ModelState.IsValid)
             {
@@ -182,7 +220,27 @@ namespace Smart.Controllers
                     await _productServices.AddAsync(product);
                 }
 
+                if (InitialStock.HasValue && InitialStock.Value > 0)
+                {
+                    var location = _locationServices.SingleOrDefaultAsync(a => a.DefaultLocation == true).Result;
+                    if (location != null)
+                    {
+                        var stockInicial = new ProductInventory()
+                        {
+                            Bin = 0,
+                            BusinessEntityId = _BusinessId,
+                            Description = "Inicial",
+                            LocationId = location.WarehouseId,
+                            ProductId = product.ProductId,
+                            NumberDoc = product.ProductId.ToString(),
+                            Quantity = InitialStock.Value,
+                            Signal = 1
+                        };
+                       await _productInventoryServices.AddAsync(stockInicial);
 
+                    }
+                }
+                ErrorMessage = $"Cadastro efetuado com sucesso";
                 return continueAdd ? RedirectToAction(nameof(Add)) : RedirectToAction(nameof(List));
             }
             LoadViewData();
@@ -199,15 +257,15 @@ namespace Smart.Controllers
             }
 
             var product = await _productServices.SingleOrDefaultAsync(m => m.ProductId == id);
-            
+
             if (product == null)
             {
                 return RedirectToAction("AccessDenied", "Account");
             }
             LoadViewData();
 
-            ViewData["Images"] =  _productImageServices.Query(a => a.ProductId == id).Select(a => a.Image).ToList();
-            
+            ViewData["Images"] = _productImageServices.Query(a => a.ProductId == id).Select(a => a.Image).ToList();
+
 
 
             return View(product);
@@ -261,12 +319,12 @@ namespace Smart.Controllers
                             }
                         }
                     }
-                  
+
                 }
                 else
                 {
-                        await _productServices.UpdateAsyncNoSave(product);
-                    
+                    await _productServices.UpdateAsyncNoSave(product);
+
                 }
 
 

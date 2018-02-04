@@ -82,6 +82,16 @@ namespace Core.Fake
     }
 
 
+    public enum SellInOrSellOut
+    {
+        [Display(Name = "Entrada")]
+        Entrada = 1,
+        [Display(Name = "Saída")]
+        Saida = 2
+
+    }
+
+
     public enum ProductSource
     {
         [Display(Name = "Nacional")]
