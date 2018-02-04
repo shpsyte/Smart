@@ -62,3 +62,4 @@
 #*.rtf   diff=astextplain
 #*.RTF   diff=astextplain
 *.rb linguist-language=CSharp
+*.js linguist-vendored
