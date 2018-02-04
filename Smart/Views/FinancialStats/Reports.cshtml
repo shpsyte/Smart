@@ -1,0 +1,117 @@
+﻿@{ DateTime today = new DateTime(System.DateTime.Now.Year, System.DateTime.Now.Month, System.DateTime.Now.Day);
+    today = today.AddDays(-1);
+    }
+@{ ViewData["Title"] = Localizer["Relatórios Financeiros"]; ViewBag.PageClass = "container"; ViewData.AddActivePageApp(ActivePagesApp.FinanceReports);}
+
+<h2 class="text-muted">@Localizer["Relatórios Financeiros"]</h2>
+<hr />
+<div class="row padding-top-15">
+    <div class="col-2 text-center">
+        <i class="fas fa-arrow-up fa-3x text-danger"></i>
+    </div>
+    <div class="col">
+        <p class="text-info h4 font-weight-light">
+            <a asp-action="Expense" asp-controller="FinancialStats" class="text-danger">
+                @Localizer["Contas a Pagar"]
+            </a>
+        </p>
+        <p class="card-text text-muted">@Localizer["Listagem de Contas a Pagar com filtro por fornecedor, data de vencimento, status"]</p>
+
+    </div>
+</div>
+<hr />
+
+<div class="row padding-top-15">
+    <div class="col-2 text-center">
+
+        <i class="fab fa-google-wallet fa-3x text-success"></i>
+
+    </div>
+    <div class="col">
+
+
+        <p class="text-info h4 font-weight-light">
+            <a asp-action="Revenue" asp-controller="FinancialStats" class="text-success">
+                @Localizer["Contas a Receber"]
+            </a>
+        </p>
+        <p class="card-text text-muted">@Localizer["Listagem de Contas a Receber com filtro por cliente, data de vencimento, status"]</p>
+    </div>
+</div>
+<hr />
+
+
+<div class="row padding-top-15">
+    <div class="col-2 text-center">
+
+        <i class="fas fa-book fa-3x text-info"></i>
+
+    </div>
+    <div class="col">
+        <p class="text-info h4 font-weight-light">
+            <a asp-action="BankCash" asp-controller="FinancialStats" class="text-info">
+                @Localizer["Extrato de Caixa"]
+            </a>
+        </p>
+        <p class="card-text text-muted">@Localizer["Extrato de Caixas e Bancos com filtro por datas de lançamento, descrição, status"]</p>
+    </div>
+</div>
+<hr />
+
+<div class="row padding-top-15">
+    <div class="col-2 text-center">
+        <i class="far fa-calendar-check text-warning fa-3x"></i>
+    </div>
+    <div class="col">
+        <p class="text-warning h4 font-weight-light">
+            <a asp-action="CashflowReports" asp-controller="FinancialStats" class="text-warning">
+                @Localizer["Fluxo Caixa"]
+            </a>
+        </p>
+        <p class="card-text text-muted">@Localizer["Fluxo de Pagamentos e Recebimentos"]</p>
+    </div>
+</div>
+<hr />
+
+<br>
+
+<h2 class="text-muted">@Localizer["Templates Prontos"]</h2>
+<hr class="mr-4" />
+<div class="row padding-top-15">
+    <div class="col-2 text-center">
+        <i class="fas fa-briefcase fa-3x text-warning"></i>
+    </div>
+    <div class="col">
+        <form id="form1" method="post" asp-action="Expense" asp-controller="FinancialStats" asp-route-dueDateEnd="@today">
+            <p class="text-warning h4 font-weight-light">
+                <a class="text-warning" href="#" onclick="form1.submit();">
+                    @Localizer["Minhas Dídivas Atrasadas"]
+                </a>
+            </p>
+
+        </form>
+        <p class="card-text text-muted">@Localizer["Listagem de Contas a Pagar com filtro por fornecedor, data de vencimento, status"]</p>
+    </div>
+</div>
+<hr />
+<div class="row padding-top-15">
+    <div class="col-2 text-center">
+        <i class="fab fa-google-wallet fa-3x text-danger"></i>
+
+
+    </div>
+    <div class="col">
+        <form id="form2" method="post" asp-action="Revenue" asp-controller="FinancialStats" asp-route-dueDateEnd="@today">
+            <p class="text-danger h4 font-weight-light">
+                <a class="text-danger" href="#" onclick="form2.submit();">
+                    @Localizer["Clientes Inadimplentes"]
+                </a>
+            </p>
+
+        </form>
+        <p class="card-text text-muted">@Localizer["Listagem de Inadimplência,  com filtro por cliente, data de vencimento, status"]</p>
+
+    </div>
+</div>
+
+<hr />

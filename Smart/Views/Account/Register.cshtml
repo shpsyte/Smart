@@ -1,0 +1,41 @@
+﻿@model RegisterViewModel
+@{
+    ViewData["Title"] = "Register";
+}
+<style>
+    .form-signin input[type="password"] {
+        margin-bottom: -1px;
+        border-radius: 0;
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+    }
+    .form-signin .confirm {
+        margin-bottom: 10px !important;
+        border-top-left-radius: 0;
+        border-bottom-right-radius: 0.3rem !important;
+        border-bottom-left-radius: 0.3rem !important;
+    }
+</style>
+<h2 class="form-signin-heading text-center">@LoginLocalizer["Registro de novo usuário"]</h2>
+<hr class="my-4">
+<div class="container">
+    <div class="row" style="padding:15px">
+        <div class="col-md-6">
+            <form asp-route-returnUrl="@ViewData["ReturnUrl"]" method="post" class="form-signin">
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <h2 class="form-signin-heading">@LoginLocalizer["Novo usuário"]</h2>
+                <label asp-for="Email" class="sr-only">Email</label>
+                <input asp-for="Email" class="form-control" placeholder="Email address" required autofocus />
+                <label asp-for="Email" class="sr-only">@LoginLocalizer["Senha"]</label>
+                <input asp-for="Password" class="form-control password" placeholder="@LoginLocalizer["Senha"]" />
+                <label asp-for="ConfirmPassword" class="sr-only"> @LoginLocalizer["Senha"]</label>
+                <input asp-for="ConfirmPassword" class="form-control confirm" placeholder="@LoginLocalizer["Confirmar"]" />
+                <button type="submit" class="btn btn-info btn-block">@LoginLocalizer["Registrar"]</button>
+                <a asp-action="Login">@LoginLocalizer["Já possui conta?"]</a>
+            </form>
+        </div>
+        <div class="col-md-6" style=" padding: 15px;">
+            @{ await Html.RenderPartialAsync("_SiginAnotherServices"); }
+        </div>
+    </div>
+</div> <!-- /container -->

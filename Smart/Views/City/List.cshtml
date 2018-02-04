@@ -1,0 +1,93 @@
+@model IEnumerable<Core.Domain.Region.City>
+@{ ViewData["Title"] = ViewsLocalizer["Cidades"]; ViewBag.PageClass = "container"; }
+@section topright{
+    @{ Html.RenderPartialIf("_HeaderConfiguracoes", SignInManager.IsSignedIn(User)); }
+}
+<h4> @ViewData["Title"] <small class="text-danger"> @Model.Count() </small></h4>
+<hr class="myb-4" />
+<div class="row">
+    <div class="col-md-12">
+        <form class="form-horizontal" method="get">
+            <div class="row">
+                <div class="col">
+                    <a asp-action="Add" class="btn btn-success btn-bdr">@SharedLocalizer["Adicionar Novo"]</a>
+                </div>
+                <div class="col">
+                    <div class="input-group mb-3">
+                        <input id="search" name="search" value="@ViewData["search"]" type="text" class="form-control" placeholder="@SharedLocalizer["Pesquisar..."]" aria-label="@SharedLocalizer["Pesquisar..."]" aria-describedby="basic-addon2">
+                        <div class="input-group-append">
+                            <button class="btn btn-info btn-secondary" type="submit"> <i class="fas fa-search"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="row padding-top-15">
+    <div class="col-12">
+        <div class="table-responsive">
+            @if (Model.Count() == 0)
+            {
+                <div class="no-registry-content">
+                    <div class="text-center">
+                        <div style="font-size:3em; color:darkseagreen">
+                            <i class="fas fa-exclamation-circle"></i>
+                        </div>
+                    </div>
+                    <div class="fade-item">
+                        <h2 class="no-registry-title">
+                            @SharedLocalizer["Nenhum registro de"]  <span class="text-info">@ViewData["Title"]</span> @SharedLocalizer["encontrado"].
+                        </h2>
+                        <div class="lead">
+                            @SharedLocalizer["Crie"] @ViewData["Title"] @SharedLocalizer["clicando no botão adicionar"].
+                        </div>
+                        <hr />
+                        <div class="no-registry-button-wrapper">
+                            <a asp-action="Add" class="btn btn-success btn-bdr">@SharedLocalizer["Adicionar Novo"]</a>
+                        </div>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <table id="resultTable" class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th> @SharedLocalizer["Nome"]</th>
+                            <th width="50px"> @SharedLocalizer["Apelido"]</th>
+                            <th width="60px"> @SharedLocalizer["IBGE"]</th>
+                            <th width="40px"> @SharedLocalizer["Estado"] </th>
+                            <th class="no-order" width="40px"> @SharedLocalizer["Action"]</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Name)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.MiddleName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.SpecialCodeRegion)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.StateProvince.StateProvinceCode)
+                                </td>
+                                <td>
+                                    <a asp-action="Edit" asp-route-id="@item.CityId" class="btn btn-light btn-bdr"> @SharedLocalizer["Editar"] </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <script>setupTable.tableInit("resultTable", 50);</script>
+}

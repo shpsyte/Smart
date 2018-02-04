@@ -1,0 +1,15 @@
+@model Core.Domain.PersonAndData.CategoryPerson
+   @{ Layout = null; }
+    @Html.HiddenFor(a => a.CategoryId)
+    @Html.HiddenFor(a => a.CreateDate)
+    @Html.HiddenFor(a => a.ModifiedDate)
+    @Html.HiddenFor(a => a.BusinessEntityId)
+<div class="controls">
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label asp-for="Name"></label>
+                <input asp-for="Name" placeholder="@Localizer["Name"]" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+        </div>
+</div>

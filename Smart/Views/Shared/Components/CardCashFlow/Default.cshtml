@@ -1,0 +1,121 @@
+﻿@model Smart.Models.Components.CardFinancialModel
+
+
+@{
+    decimal value = Model.Amount ?? decimal.Zero;
+    string GetValue()
+    { 
+            return value.ToString("c");
+       
+
+    }
+}
+
+@if (Model.HtmlModel.Equals(ModelCards.SimpleNumber))
+{@GetValue();
+}
+
+
+@if (Model.HtmlModel.Equals(ModelCards.SimpleCard))
+{
+    <div class="card">
+        <div class="card-body @Model.cssCard" style="padding: 0rem!important; padding-top: 1rem!important">
+            <div class="text-center">
+                <small class="card-title text-secondary ">
+                    @Localizer[Model.title]
+                </small>
+            </div>
+            <p class="text-center">
+
+                <b> @GetValue()</b>
+            </p>
+        </div>
+    </div>
+}
+
+
+@if (Model.HtmlModel.Equals(ModelCards.SimpleCardTitle))
+{
+    <div class="card @Model.cssCard">
+        <div class="card-header">
+            @Localizer[Model.title]
+        </div>
+        <div class="card-body">
+            <p class="text-center">
+                <b> @GetValue()</b>
+            </p>
+        </div>
+    </div>
+}
+
+
+
+@if (Model.HtmlModel.Equals(ModelCards.SimpleTableRow))
+{
+     
+        decimal saldo = Model.initial.HasValue ? Model.initial.Value : 0;
+        if (Model.HtmlModel.Equals(ModelCards.SimpleTableRow))
+        {
+            <table id="resultTableCashFlow" class="table table-hover table-sm">
+                <tr class="table-row-body">
+                    <td class="table-item-body text-right">
+                        <b>@Localizer["Saldo inicial"]:</b>  @saldo.ToString("c")
+                    </td>
+                </tr>
+            </table>
+            <table id="resultTableCashFlow" class="table table-hover table-sm ">
+                <thead>
+                    <tr>
+                        <th class="" width="80"> @Localizer["TIPO"]</th>
+                        <th class="" width="80"> @Localizer["Número"]</th>
+                        <th width="80"> @Localizer["Vencimento"]</th>
+                        <th> @Localizer["Lançamento"]</th>
+                        <th width="120"> @Localizer["Valor"]</th>
+                        <th width="120"> @Localizer["Saldo"]</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.CashFlows.OrderBy(a => a.DueDate.Value.Date))
+                    {
+                        if (item.Tp == "D")
+                        {
+                            saldo -= item.Saldo;
+                        }
+                        else
+                        {
+                            saldo += item.Saldo;
+                        }
+                        <tr class="table-row-body">
+                            <td class="table-item-body">
+                                @Html.DisplayFor(modelItem => item.Tp)
+                            </td>
+                            <td class="table-item-body">
+                                @Html.DisplayFor(modelItem => item.CashFlowNumber)/@Html.DisplayFor(modelItem => item.CashFlowSeq)
+                            </td>
+                            <td class="table-item-body">
+                                @Html.DisplayFor(modelItem => item.DueDate)
+                            </td>
+                            <td class="table-item-body" data-toggle="tooltip" data-placement="top" title="@item.Name : @item.Comment">
+                                @item.Name.Truncate(30, true)
+                            </td>
+                            <td class="table-item-body text-@( item.Tp.ToString() == "D" ? "danger" : "success" )">
+                                @item.Saldo.ToString("c")
+                            </td>
+                            <td class="table-item-body">
+                                @saldo.ToString("c")
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <table id="resultTableCashFlow" class="table table-hover table-sm ">
+                <tr class="table-row-body">
+                    <td class="table-item-body text-right">
+                        <b>@Localizer["Saldo Final"]:</b>:  @saldo.ToString("c")
+                    </td>
+                </tr>
+            </table>
+        }
+    
+}
+

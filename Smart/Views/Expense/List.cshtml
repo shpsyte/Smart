@@ -1,0 +1,185 @@
+@model IEnumerable<Core.Domain.Finance.Views.VExpense>
+@{ ViewData["Title"] = ViewsLocalizer["Contas a Pagar"]; ViewBag.PageClass = "container"; }
+@{ ViewData.AddActivePageApp(ActivePagesApp.Expense); }
+<h4> @ViewData["Title"] <small class="text-danger"> @Model.Count() </small></h4>
+<hr class="myb-4" />
+<div class="row">
+    <div class="col-12" style="padding-bottom:20px">
+        <p>
+            <a class="btn btn-outline-link" data-toggle="collapse" href="#multiCollapseDetails" role="button"
+               aria-expanded="false" aria-controls="multiCollapseExample1">@Localizer["Resumo"]&nbsp;<i class="fas fa-sort-down"></i></a>
+        </p>
+        <div class="collapse multi-collapse collapse @( Model.Count() > 0 ? "show" : "")" id="multiCollapseDetails">
+            @{ await Html.RenderPartialAsync("_ExpenseStats"); }
+        </div>
+    </div>
+</div>
+<hr class="myb-4" />
+<div class="row">
+    <div class="col-12">
+        <form class="form-horizontal" method="get">
+            <div class="row">
+                <div class="col">
+                    <a asp-action="Add" class="btn btn-success btn-bdr">@SharedLocalizer["Adicionar Novo"]</a>
+                </div>
+                <div class="col">
+                    <div class="input-group mb-3">
+                        <input id="search" name="search" value="@ViewData["search"]" type="text" class="form-control" placeholder="@SharedLocalizer["Pesquisar..."]" aria-label="@SharedLocalizer["Pesquisar..."]" aria-describedby="basic-addon2">
+                        <div class="input-group-append">
+                            <button class="btn btn-info btn-secondary" type="submit"> <i class="fas fa-search"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="row padding-top-15">
+    <div class="col-12">
+        <div class="table-responsive">
+            @if (Model.Count() == 0)
+            {
+                <div class="no-registry-content">
+                    <div class="text-center">
+                        <div style="font-size:3em; color:darkseagreen">
+                            <i class="fas fa-exclamation-circle"></i>
+                        </div>
+                    </div>
+                    <div class="fade-item">
+                        <h2 class="no-registry-title">
+                            @SharedLocalizer["Nenhum registro de"]  <span class="text-info">@ViewData["Title"]</span> @SharedLocalizer["encontrado"].
+                        </h2>
+                        <div class="lead">
+                            @SharedLocalizer["Crie"] @ViewData["Title"] @SharedLocalizer["clicando no botão adicionar"].
+                        </div>
+                        <hr />
+                        <div class="no-registry-button-wrapper">
+                            <a asp-action="Add" class="btn btn-success btn-bdr">@SharedLocalizer["Adicionar Novo"]</a>
+                        </div>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <table id="resultTable" class="table table-hover table-sm" cellspacing="0" cellpadding="0">
+                    <thead>
+                        <tr>
+                            <th width="80"> @Localizer["Número"]</th>
+                            <th width="80"> @Localizer["Vencimento"]</th>
+                            <th> @Localizer["Lançamento"]</th>
+                            <th width="180"> @Localizer["Valor"]</th>
+                            <th class="no-sort" width="20px"> @SharedLocalizer["Ação"]</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr class="table-row-body text-@( item.DueDate < System.DateTime.Now ? "danger" : "" )">
+                                <td class="table-item-body">
+                                    @Html.DisplayFor(modelItem => item.ExpenseNumber)/@Html.DisplayFor(modelItem => item.ExpenseSeq)
+                                </td>
+                                <td class="table-item-body">
+                                    @Html.DisplayFor(modelItem => item.DueDate)
+                                </td>
+                                <td class="table-item-body" data-toggle="tooltip" data-placement="top" title="@item.Name : @item.Comment">
+                                    <a asp-action="Edit" asp-route-id="@item.ExpenseId" class=" "> @item.Name.Truncate(30, true) </a>
+                                    @if (item.ExpenseTotalSeq > 1)
+                                    {
+                                        <span class="badge badge-success">
+                                            @Html.DisplayFor(modelItem => item.ExpenseSeq)
+                                            /@Html.DisplayFor(modelItem => item.ExpenseTotalSeq)
+                                        </span>
+                                    }
+                                </td>
+                                <td class="table-item-body">
+                                    @item.AmountFinal.ToString("c")
+                                </td>
+                                <td class="table-item-body">
+                                    <a href="#payexpense" data-payday="@item.DueDate" data-id="@item.ExpenseId" data-value="@item.AmountFinal" data-name="@item.Name" data-conta="@item.ExpenseNumber/@item.ExpenseSeq" class="pay">
+                                        <i class="fas fa-certificate" style="color:@( item.DueDate < System.DateTime.Now ? "tomato" : "#d1d1d1" ) "></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<!-- Modal -->
+<div class="modal fade bd-example-modal-lg" id="payexpense" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">@Localizer["Liquidar Conta"] <span id="Name"></span> </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form asp-action="PayAccount" enctype="multipart/form-data" role="form" onsubmit="return expenseJS.Confirma();" method="post" asp-antiforgery="true" class="form-horizontal">
+                <div class="modal-body padding-top-15">
+                    <input name="ExpenseId" id="ExpenseId" type="hidden" />
+                    <div class="controls">
+                        <div class="form-row">
+                            <div class="form-group col-md-4">
+                                <label>@Localizer["Data da Liquidação"]</label>
+                                <input id="DueDate" name="DueDate" placeholder="@Localizer["Data Pagamento"]" class="form-control datepicker"
+                                       data-val="true" data-val-required="Required." value="@System.DateTime.Now.ToShortDateString()" />
+                                <span class="text-danger field-validation-valid" data-valmsg-for="DueDate" data-valmsg-replace="true"></span>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label>@Localizer["Caixa"]</label>
+                                <select id="BankId" name="BankId" required asp-items="ViewBag.BankId" class="form-control"></select>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label>@Localizer["Forma de Pagamento"]</label>
+                                <select id="PaymentConditionId" name="PaymentConditionId" asp-items="ViewBag.PaymentConditionId" class="form-control"></select>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-4">
+                                <label>@Localizer["Valor Pago"]</label>
+                                <input id="Payment" name="Payment"
+                                       placeholder="@Localizer["Valor Pago"]" class="payv form-control" data-thousands="." data-decimal="," />
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label>@Localizer["Juros/Acréscimo"]</label>
+                                <input id="Tax" name="Tax" placeholder="@Localizer["Juros/Acréscimo"]"
+                                       class="payv form-control" data-thousands="." data-decimal="," />
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label>@Localizer["Desconto"]</label>
+                                <input id="Discont" name="Discont" placeholder="@Localizer["Valor Desconto"]"
+                                       class="payv form-control" data-thousands="." data-decimal="," />
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label>@Localizer["Obs"]</label>
+                                <input id="Comment" name="Comment" placeholder="@Localizer["Obs"]" class="form-control" />
+                            </div>
+                            <div class="form-group col-md-6">
+                                <br />
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" checked="checked" class="custom-control-input" id="Active" name="Active" value="true">
+                                    <label class="custom-control-label" for="Active">@Localizer["Pagamento Total"]</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">@Localizer["Cancelar"]</button>
+                    <button type="submit" class="btn btn-primary">@Localizer["Pagar Conta"]</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <script>setupTable.tableInit("resultTable", 50, 1, 1, 'desc', 3);</script>
+    <script src="~/js/views/expense.min.js"></script>
+    <script>    expenseJS.InitList();</script>
+}

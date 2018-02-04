@@ -1,0 +1,55 @@
+Instalar dependencias do Identoty Core 
+
+Install-Package Microsoft.AspNetCore.Identity.EntityFrameworkCore –Version 2.0.1
+Install-Package Microsoft.AspNetCore.Identity -Version 2.0.1
+Install-Package Microsoft.AspNetCore.OWIN -Version 2.0.1
+
+
+
+Create By : José luiz
+Date: 23/06/2017
+About: ERP & CRM Software Application
+
+--no-build
+--exemplo
+dotnet ef dbcontext scaffold "Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=SmartAdmin;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False;" Microsoft.EntityFrameworkCore.SqlServer -c ContextOnlyGClasse -o Data -t Teste
+
+
+-- templates em
+2.0
+C:\Program Files\dotnet\sdk\NuGetFallbackFolder\microsoft.visualstudio.web.codegenerators.mvc\2.0.0\Templates
+
+
+<= 1.1
+C:\Users\José Luiz\.nuget\packages\microsoft.visualstudio.web.codegenerators.mvc
+
+--Gerar Classe
+dotnet ef dbcontext scaffold "Data Source=IDELLSERVER\\eXPRESS,1433;Database=Smart;User=sa;Password=Jymkatana_6985;MultipleActiveResultSets=true" Microsoft.EntityFrameworkCore.SqlServer -c ContextOnlyGClasse -o DataExemple -f 
+
+
+@section topright{
+    @{ Html.RenderPartialIf("_HeaderConfiguracoes", SignInManager.IsSignedIn(User)); }
+}
+
+--Gerar Controller Sem View
+dotnet aspnet-codegenerator --project . --no-build controller --force --controllerName ProductController --model Core.Domain.Production.Product --dataContext ContextOnlyGClasse --relativeFolderPath Controllers --noViews
+
+
+--Gerar View List
+dotnet.exe aspnet-codegenerator --project . --no-build view List List --force --model Core.Domain.Production.Product --dataContext ContextOnlyGClasse --relativeFolderPath Views\Product --useDefaultLayout
+
+--Gerar View Edit
+dotnet.exe aspnet-codegenerator --project . --no-build view Edit Create --force --model Core.Domain.Production.Product --dataContext ContextOnlyGClasse --relativeFolderPath Views\Product --useDefaultLayout
+
+--Gerar View Add
+dotnet.exe aspnet-codegenerator --project . --no-build view Add Create --force --model Core.Domain.Production.Product --dataContext ContextOnlyGClasse --relativeFolderPath Views\Product --useDefaultLayout
+
+--Gerar View _CreateOrUpdate
+dotnet.exe aspnet-codegenerator --project . --no-build view _CreateOrUpdate Details --force --model Core.Domain.Production.Product --dataContext ContextOnlyGClasse --relativeFolderPath Views\Product --useDefaultLayout
+
+
+
+Via RazorPage, mas noa vou usar
+--Gerar View _CreateOrUpdate
+dotnet.exe aspnet-codegenerator --project . --no-build razorpage _CreateOrUpdate _CreateOrUpdate --force --model Core.Domain.PersonAndData.CategoryPerson --dataContext ContextOnlyGClasse -outDir Views\CategoryPerson --useDefaultLayout
+

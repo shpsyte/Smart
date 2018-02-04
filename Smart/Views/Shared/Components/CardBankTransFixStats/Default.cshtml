@@ -1,0 +1,49 @@
+﻿@model Smart.Models.Components.CardFinancialModel
+@{
+    decimal value = Model.Amount ?? decimal.Zero;
+    string GetValue()
+    {
+            return value.ToString("c");
+
+    }
+}
+<input type="hidden" id="valueidbankfix" value="@GetValue()" />
+
+@if (Model.HtmlModel.Equals(ModelCards.SimpleNumber))
+{@GetValue();
+}
+
+
+@if (Model.HtmlModel.Equals(ModelCards.SimpleCard))
+{
+    <div class="card">
+        <div class="card-body @Model.cssCard" style="padding: 0rem!important; padding-top: 1rem!important">
+            <div class="text-center">
+                <small class="card-title text-secondary ">
+                    @Localizer[Model.title]
+                </small>
+            </div>
+            <p class="text-center">
+
+                <b> @GetValue()</b>
+            </p>
+        </div>
+    </div>
+}
+
+
+@if (Model.HtmlModel.Equals(ModelCards.SimpleCardTitle))
+{
+    <div class="card @Model.cssCard">
+        <div class="card-header">
+            @Localizer[Model.title]
+        </div>
+        <div class="card-body">
+            <p class="text-center">
+                <b> @GetValue()</b>
+            </p>
+        </div>
+    </div>
+}
+
+

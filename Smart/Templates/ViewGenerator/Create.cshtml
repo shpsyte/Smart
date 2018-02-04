@@ -1,0 +1,28 @@
+﻿@inherits Microsoft.VisualStudio.Web.CodeGeneration.Templating.RazorTemplateBase
+@using Microsoft.VisualStudio.Web.CodeGeneration.EntityFrameworkCore
+@@model @Model.ViewDataTypeName
+@@{ ViewData["Title"] = ViewsLocalizer["@Model.ModelMetadata.EntitySetName"]; ViewBag.PageClass = "container"; }
+@@{ ViewData.AddActivePageApp(ActivePagesApp.@Model.ModelMetadata.EntitySetName); }
+
+
+@{
+@:<h4>@@SharedLocalizer["Dados da"] @@ViewData["Title"]</h4>
+@:<hr class="myb-4" />
+@:<div class="row">
+    @:<div class="col-12">
+        @:<form asp-action="@Model.ViewName" method="post" asp-antiforgery="true" class="form-horizontal">
+            @:@@{ await Html.RenderPartialAsync("_CreateOrUpdate"); }
+            @:<div class="form-actions text-align-left">
+                @:<div class="row">
+                    @:<div class="col-12">
+                        @:<button asp-route-continueAdd="false" type="submit" class="btn btn-success btn-bdr">
+                            @:<span class="btn-label"></span>@@SharedLocalizer["Salvar"]
+                        @:</button>
+                        @:<a asp-action="List" asp-controller="@Model.ModelMetadata.EntitySetName" class="btn btn-light btn-bdr"> <span class="btn-label"><i class="glyphicon glyphicon-chevron-left"></i></span>@@SharedLocalizer["Voltar"] </a>
+                    @:</div>
+                @:</div>
+            @:</div>
+        @:</form>
+    @:</div>
+@:</div>
+}

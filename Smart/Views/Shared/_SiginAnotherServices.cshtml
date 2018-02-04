@@ -1,0 +1,39 @@
+﻿<h2 class="form-signin-heading" style="padding-top: 10px">@LoginLocalizer["Use outros serviços para login"].</h2>
+<div class="form-group">
+    <p class="lead">
+        @LoginLocalizer["Não tem conta ainda?"]
+        <a asp-action="Register" asp-route-returnurl="@ViewData["ReturnUrl"]">@LoginLocalizer["Novo Registro"].</a>
+</p>
+    <hr />
+    <p class="lead">
+        @LoginLocalizer["Ou use estes serviços para criar novo usuário"]
+    </p>
+    @{
+        var loginProviders = (await SignInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+        if (loginProviders.Count == 0)
+        {
+            <div>
+                <p>
+                    @LoginLocalizer["Não existem serviços externos configurados para criar novos logins"].
+                </p>
+            </div>
+        }
+        else
+        {
+            <form asp-action="ExternalLogin" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="form-horizontal">
+                <div>
+                    <p>
+                        @foreach (var provider in loginProviders)
+                        {
+                        <button type="submit" class="btn btn-success"
+                                name="provider" value="@provider.Name" title="@LoginLocalizer["Entre usadno sua conta "] @provider.DisplayName">
+                            @provider.Name
+                            <i class="fab fa-@provider.Name.ToLower()"></i>
+                        </button>
+                        }
+                    </p>
+                </div>
+            </form>
+        }
+    }
+</div>

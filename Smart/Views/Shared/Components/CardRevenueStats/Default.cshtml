@@ -1,0 +1,89 @@
+﻿@model Smart.Models.Components.CardFinancialModel
+
+@{ decimal value = Model.Amount ?? decimal.Zero;}
+
+@{ string GetValue() => value.ToString("c"); }
+
+
+
+@if (Model.HtmlModel.Equals(ModelCards.SimpleNumber))
+{
+    @GetValue()
+
+}
+
+
+@if (Model.HtmlModel.Equals(ModelCards.SimpleCard))
+{
+    <div class="card">
+        <div class="card-body @Model.cssCard" style="padding: 0rem!important; padding-top: 1rem!important">
+            <div class="text-center">
+                <small class="card-title text-secondary ">
+                    @Localizer[Model.title]
+                </small>
+            </div>
+            <p class="text-center">
+
+                <b> @GetValue()</b>
+            </p>
+        </div>
+    </div>
+}
+
+
+@if (Model.HtmlModel.Equals(ModelCards.SimpleCardTitle))
+{
+    <div class="card @Model.cssCard">
+        <div class="card-header">
+            @Localizer[Model.title]
+        </div>
+        <div class="card-body">
+            <p class="text-center">
+                <b> @GetValue()</b>
+            </p>
+        </div>
+    </div>
+
+}
+@if (Model.HtmlModel.Equals(ModelCards.SimpleTableRow))
+{
+    <input type="hidden" id="valueidRevenue" value="@GetValue()" />
+    <table id="resultTableRevenue" class="table table-hover table-sm text-left" cellspacing="0" cellpadding="0">
+        <thead>
+            <tr>
+                <th class="" width="80"> @Localizer["Número"]</th>
+                <th width="80"> @Localizer["Vencimento"]</th>
+                <th> @Localizer["Lançamento"]</th>
+                <th width="120"> @Localizer["Valor"]</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Revenues.OrderBy(a => a.DueDate.Value.Date))
+            {
+                <tr class="table-row-body text-@( item.DueDate < System.DateTime.Now ? "danger" : "" )">
+                    <td class="table-item-body">
+                        @Html.DisplayFor(modelItem => item.RevenueNumber)/@Html.DisplayFor(modelItem => item.RevenueSeq)
+                    </td>
+                    <td class="table-item-body">
+                        @Html.DisplayFor(modelItem => item.DueDate)
+                    </td>
+                    <td class="table-item-body" data-toggle="tooltip" data-placement="top" title="@item.Name : @item.Comment">
+                        @item.Name.Truncate(30, true)
+                        @if (item.RevenueTotalSeq > 1)
+                        {
+                            <span class="badge badge-success">
+                                @Html.DisplayFor(modelItem => item.RevenueSeq)
+                                /@Html.DisplayFor(modelItem => item.RevenueTotalSeq)
+                            </span>
+                        }
+                    </td>
+                    <td class="table-item-body">
+                        @( Model.payed ? item.Credit.ToString("c")  : item.AmountFinal.ToString("c") )
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+}

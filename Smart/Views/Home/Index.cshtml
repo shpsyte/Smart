@@ -1,0 +1,15 @@
+﻿@{ ViewData["Title"] = Localizer["Dashboard"]; ViewBag.PageClass = "container"; }
+
+@{ ViewData.AddActivePageApp(ActivePagesApp.Dashboard); }
+
+<h1>C. Pagar</h1>
+
+@{ await Html.RenderPartialAsync("_ExpenseStats"); }
+
+<h1>C. Receber</h1>
+@{ await Html.RenderPartialAsync("_RevenueStats"); }
+
+
+<h1>Bancos/Caixas</h1>
+@{ await Html.RenderPartialAsync("_BankTransStats"); }
+

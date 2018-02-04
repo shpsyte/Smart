@@ -1,0 +1,103 @@
+﻿@model Smart.Models.Components.CardFinancialModel
+@{
+    decimal value = Model.Amount ?? decimal.Zero;
+    string GetValue()
+    {
+
+        return value.ToString("c");
+
+
+    }
+}
+
+@if (Model.HtmlModel.Equals(ModelCards.SimpleNumber))
+{@GetValue();
+}
+
+
+@if (Model.HtmlModel.Equals(ModelCards.SimpleCard))
+{
+    <div class="card">
+        <div class="card-body @Model.cssCard" style="padding: 0rem!important; padding-top: 1rem!important">
+            <div class="text-center">
+                <small class="card-title text-secondary ">
+                    @Localizer[Model.title]
+                </small>
+            </div>
+            <p class="text-center">
+
+                <b> @GetValue()</b>
+            </p>
+        </div>
+    </div>
+}
+
+
+@if (Model.HtmlModel.Equals(ModelCards.SimpleCardTitle))
+{
+    <div class="card @Model.cssCard">
+        <div class="card-header">
+            @Localizer[Model.title]
+        </div>
+        <div class="card-body">
+            <p class="text-center">
+                <b> @GetValue()</b>
+            </p>
+        </div>
+    </div>
+}
+
+
+
+@if (Model.HtmlModel.Equals(ModelCards.SimpleTableRow))
+{
+    <input type="hidden" id="valueidbank" value="@GetValue()" />
+
+     
+        <input type="hidden" id="valueidbank" value="@GetValue()" />
+        <table id="resultTableBankTrans" class="table table-hover table-sm ">
+            <thead>
+                <tr>
+                    <th width="80"> @Localizer["Id"]</th>
+                    <th width="80"> @Localizer["Conpensação"]</th>
+                    <th> @Localizer["Lançamento"]</th>
+                    <th width="170"> @Localizer["Categoria"]</th>
+                    <th width="140"> @Localizer["Valor"]</th>
+                    <th width="20">Tipo</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.BankTrans)
+                {
+                    <tr class="table-row-body ">
+                        <td class="table-item-body">
+                            @Html.DisplayFor(modelItem => item.Id)
+                        </td>
+                        <td class="table-item-body">
+                            @Html.DisplayFor(modelItem => item.DueDate)
+                        </td>
+                        <td class="table-item-body" data-toggle="tooltip" data-placement="top" title="@item.Description">
+                            @{ string desc = item.Description;}
+                            @desc.Truncate(30, true)
+
+
+                            <small class="text-info">@Html.DisplayFor(modelItem => item.MidleDesc)</small>
+                        </td>
+                        <td class="table-item-body">
+                            @Html.DisplayFor(modelItem => item.CategoryFinancial.Name)
+                        </td>
+                        <td class="table-item-body text-@(item.Signal == 1 ? "success" : "danger")">
+                            @{ string saldo = item.Total.ToString("c"); }
+                            @saldo
+                        </td>
+                        <td class="table-item-body">
+                            @Enum.GetName(typeof(Core.Fake.DebitAndCredit), item.Signal)
+                        </td>
+
+                    </tr>
+                }
+            </tbody>
+        </table>
+     
+}
+

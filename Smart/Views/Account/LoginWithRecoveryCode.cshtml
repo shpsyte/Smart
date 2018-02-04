@@ -1,0 +1,28 @@
+﻿@model LoginWithRecoveryCodeViewModel
+@{
+    ViewData["Title"] = "Recovery code verification";
+}
+<p class="lead text-center">@LoginLocalizer["Seu login esta configurado para usar autenticação dupla. Entre com o código da autenticação abaixo"]</p>
+<hr class="my-4">
+<div class="container">
+    <div class="row" style="padding:15px">
+        <div class="col-md-6">
+            <form class="form-signin" method="post">
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <label asp-for="RecoveryCode"></label>
+                <input asp-for="RecoveryCode" class="form-control" autocomplete="off" />
+                <span asp-validation-for="RecoveryCode" class="text-danger"></span>
+                <div class="checkbox">
+                </div>
+                <button class="btn btn-lg btn-info btn-block" type="submit">@LoginLocalizer["Entrar"]</button>
+                <a asp-action="LoginWith2fa">@LoginLocalizer["Entrar com meu token"]</a>
+            </form>
+        </div>
+        <div class="col-md-6" style=" padding: 15px;">
+            <h2 class="form-signin-heading">@LoginLocalizer["Importante"].</h2>
+            <p>
+                @LoginLocalizer["Você solicitou o login com um código de recuperação. Este login não será lembrado até você fornecer um código de aplicativo de autenticação no login ou desative o 2FA e faça o login novamente"]
+            </p>
+        </div>
+    </div>
+</div>

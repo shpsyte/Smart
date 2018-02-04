@@ -1,0 +1,17 @@
+﻿@{
+    ViewData["Title"] = LoginLocalizer["Conta suspensa"];
+}
+<style>
+    .jumhead {
+        border-top-left-radius: 0 !important;
+        border-top-right-radius: 0 !important;
+    }
+</style>
+<h2 class="text-center text-danger" >@LoginLocalizer["Conta Suspensa"]</h2>
+<hr class="my-4">
+<div class="container">
+    <p class="lead">
+        @LoginLocalizer["Esta conta está bloqueada, por favor tente mais tarde"].
+    </p>
+    <a asp-action="Login" asp-controller="Account" class="btn btn-info">@LoginLocalizer["Volta ao Login"]</a>
+</div>

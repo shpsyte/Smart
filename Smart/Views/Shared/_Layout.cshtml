@@ -1,0 +1,53 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="Content-Type" content="text/html"; charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" charset="UTF-8">
+    <meta name="description" content="Smart, Software Gestão Empresarial">
+    <meta name="author" content="Isco Sisetemas">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>@ViewData["Title"] - Smart</title>
+    <!-- Basic Styles -->
+    @{ await Html.RenderPartialAsync("_StylesheetsPartial"); }
+    <link rel="shortcut icon" href="~/images/favicon/favicon.png" type="image/x-icon">
+    <link rel="icon" href="~/images/favicon/favicon.png" type="image/x-icon">
+</head>
+<body>
+    <header style="background-color: #17a2b8;">
+        @{ await Html.RenderPartialAsync("_HeaderWarning"); }
+        @{ Html.RenderPartialIf("_HeaderMenu", SignInManager.IsSignedIn(User)); }
+    </header>
+    @(IsSectionDefined("topright") ? RenderSection("topright", false) : null)
+    <div class="@(ViewBag.PageClass == null ? "container-fluid" : ViewBag.PageClass)">
+        <main role="main" class="">
+            @{ Html.RenderPartialIf("_Ribbon", SignInManager.IsSignedIn(User)); }
+            <div class="jumhead">
+                @RenderBody()
+            </div>
+        </main>
+    </div>
+    @{ Html.RenderPartialIf("_Footer", SignInManager.IsSignedIn(User)); }
+    @{ await Html.RenderPartialAsync("_Scripts"); }
+    <!-- DO NOT REMOVE : GLOBAL FUNCTIONS! -->
+    <script>
+        $(document).ready(function () {
+            drawBreadCrumb();
+            pageSetUp();
+        });
+        $.validator.methods.range = function (value, element, param) {
+            var globalizedValue = value.replace(",", ".");
+            return this.optional(element) || (globalizedValue >= param[0] && globalizedValue <= param[1]);
+        }
+        $.validator.methods.number = function (value, element) {
+            return this.optional(element) || /-?(?:\d+|\d{1,3}(?:[\s\.,]\d{3})+)(?:[\.,]\d+)?$/.test(value);
+        }
+        //Date dd/MM/yyyy
+        $.validator.methods.date = function (value, element) {
+            var date = value.split("/");
+            return this.optional(element) || !/Invalid|NaN/.test(new Date(date[2], date[1], date[0]).toString());
+        }
+    </script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

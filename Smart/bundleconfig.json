@@ -1,0 +1,78 @@
+[
+  {
+    "outputFileName": "wwwroot/css/site.min.css",
+    "inputFiles": [
+      "wwwroot/css/site.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/js/site.min.js",
+    "inputFiles": [
+      "wwwroot/js/site.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    }
+  },
+  {
+    "outputFileName": "wwwroot/lib/bootstrap/dist/js/bootstrap.min.js",
+    "inputFiles": [
+      "wwwroot/lib/bootstrap/dist/js/bootstrap.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/js/initTables.min.js",
+    "inputFiles": [
+      "wwwroot/js/initTables.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/js/smart.min.js",
+    "inputFiles": [
+      "wwwroot/js/smart.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/css/smart.min.css",
+    "inputFiles": [
+      "wwwroot/css/smart.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/js/views/revenue.min.js",
+    "inputFiles": [
+      "wwwroot/js/views/revenue.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/js/views/expense.min.js",
+    "inputFiles": [
+      "wwwroot/js/views/expense.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/js/views/cashflow.min.js",
+    "inputFiles": [
+      "wwwroot/js/views/cashflow.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/js/views/expense-reports.min.js",
+    "inputFiles": [
+      "wwwroot/js/views/expense-reports.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/js/views/revenue-reports.min.js",
+    "inputFiles": [
+      "wwwroot/js/views/revenue-reports.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/js/views/product-createorupdate.min.js",
+    "inputFiles": [
+      "wwwroot/js/views/product-createorupdate.js"
+    ]
+  }
+]

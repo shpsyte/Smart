@@ -1,0 +1,26 @@
+﻿@model Core.Domain.Finance.Expense
+@{ ViewData["Title"] = ViewsLocalizer["Contas a Pagar"]; ViewBag.PageClass = "container"; }
+@{ ViewData.AddActivePageApp(ActivePagesApp.Expense); }
+<h4>@SharedLocalizer["Dados da"] @ViewData["Title"]</h4>
+<hr class="myb-4" />
+<div class="row">
+    <div class="col-12">
+        <form asp-action="Add" method="post" asp-antiforgery="true" class="form-horizontal">
+            @{ await Html.RenderPartialAsync("_CreateOrUpdate"); }
+            <div class="form-actions text-align-left">
+                <div class="row">
+                    <div class="col-12">
+                        <button asp-route-continueAdd="false" type="submit" class="btn btn-success btn-bdr">
+                            <span class="btn-label"></span>@SharedLocalizer["Salvar"]
+                        </button>
+                        <a asp-action="List" asp-controller="Expense" class="btn btn-light btn-bdr"> <span class="btn-label"><i class="glyphicon glyphicon-chevron-left"></i></span>@SharedLocalizer["Voltar"] </a>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+@section Scripts {
+    <script src="~/js/views/expense.min.js"></script>
+    <script>    expenseJS.InitAdd();</script>
+}

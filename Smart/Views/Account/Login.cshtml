@@ -1,0 +1,31 @@
+﻿@using System.Linq
+@using Core.Domain.Identity
+@{ ViewData["Title"] = LoginLocalizer["Login"]; }
+@model LoginViewModel
+<h2 class="form-signin-heading text-center">@LoginLocalizer["Login"]</h2>
+<hr class="my-4">
+<div class="container">
+    <div class="row" style="padding:15px">
+        <div class="col-md-6">
+            <form asp-route-returnurl="@ViewData["ReturnUrl"]" class="form-signin">
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <h2 class="form-signin-heading">@LoginLocalizer["Entrar com"]</h2>
+                <label asp-for="Email" class="sr-only">@LoginLocalizer["Email"]</label>
+                <input asp-for="Email" class="form-control" placeholder="Email" required autofocus />
+                <label asp-for="Password" class="sr-only">@LoginLocalizer["Senha"]</label>
+                <input asp-for="Password" class="form-control" placeholder="Password" required />
+                <div class="checkbox">
+                    <label asp-for="RememberMe">
+                        <input asp-for="RememberMe" />
+                        @LoginLocalizer["Lembrar-me"]
+                    </label>
+                </div>
+                <button class="btn btn-lg btn-info btn-block" type="submit">@LoginLocalizer["Entrar"]</button>
+                <a asp-action="ForgotPassword">@LoginLocalizer["Esqueçeu sua senha?"]</a>
+            </form>
+        </div>
+        <div class="col-md-6" style=" padding: 15px;">
+            @{ await Html.RenderPartialAsync("_SiginAnotherServices"); }
+        </div>
+    </div>
+</div> <!-- /container -->

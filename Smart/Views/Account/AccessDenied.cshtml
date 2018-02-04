@@ -1,0 +1,20 @@
+﻿@{ ViewData["Title"] = LoginLocalizer["Acesso Negado"]; ViewBag.PageClass = "container"; }
+<h2 class="text-center text-danger">@LoginLocalizer["Acesso Negado"]</h2>
+<p class="text-danger text-center">@LoginLocalizer["Você não tem acesso a este recurso"]</p>
+<hr class="my-4">
+<div class="container">
+    <p class="lead">
+        @LoginLocalizer["O Recurso que você está procurando, não existe ou você não tem permissão para acessá-lo, tente novamente ou contate o administrador da sua empresa."]
+    </p>
+    <p>
+        <b>...@LoginLocalizer["Ou utilize a opção de pesquisa"]</b>
+    </p>
+    <div class="error-search well well-lg padding-10">
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <a asp-controller="Home" asp-action="Index" class="btn btn-outline-secondary"><i class="fa fa-fw fa-lg fa-search"></i></a>
+            </div>
+            <input type="text" class="form-control" placeholder="" aria-label="" aria-describedby="basic-addon1">
+        </div>
+    </div>
+</div>

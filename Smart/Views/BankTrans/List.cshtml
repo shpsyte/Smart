@@ -1,0 +1,208 @@
+@model Smart.Models.Financial.BankTransModel
+@{ ViewData["Title"] = ViewsLocalizer["Bancos/Caixas"]; ViewBag.PageClass = "container"; }
+@{ ViewData.AddActivePageApp(ActivePagesApp.BankTrans); }
+<h4> @ViewData["Title"] <small class="text-danger"> @Model.bankTrans.Count() </small></h4>
+<hr class="myb-4" />
+<div class="row">
+    <div class="col-12" style="padding-bottom:20px">
+        <p>
+            <a class="btn btn-outline-link" data-toggle="collapse" href="#multiCollapseDetails" role="button"
+               aria-expanded="false" aria-controls="multiCollapseExample1">@Localizer["Resumo"]&nbsp;<i class="fas fa-sort-down"></i></a>
+        </p>
+        <div class="collapse multi-collapse collapse @( Model.bankTrans.Count() > 0 ? "show" : "")" id="multiCollapseDetails">
+            <div class="row">
+                <div class="col-2">
+                    <div class="card">
+                        <div class="card-body" style="padding: 0rem!important; padding-top: 1rem!important">
+                            <div class="text-center">
+                                <small class="card-title text-secondary ">
+                                    @Localizer["Saldo Anterior"]
+                                </small>
+                            </div>
+                            <p class="text-center text-@(Model.AmountBefore.Value < 0 ? "danger" : "success")">
+                                <b> @Model.AmountBefore.Value.ToString("c") </b>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-2">
+                    <div class="card">
+                        <div class="card-body" style="padding: 0rem!important; padding-top: 1rem!important">
+                            <div class="text-center">
+                                <small class="card-title text-secondary ">
+                                    @Localizer["Entradas Período"]
+                                </small>
+                            </div>
+                            <p class="text-center text-success">
+                                <b> @Model.Revenue.Value.ToString("c") </b>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-2">
+                    <div class="card">
+                        <div class="card-body" style="padding: 0rem!important; padding-top: 1rem!important">
+                            <div class="text-center">
+                                <small class="card-title text-secondary ">
+                                    @Localizer["Saidas Período"]
+                                </small>
+                            </div>
+                            <p class="text-center text-danger">
+                                <b> @Model.Expense.Value.ToString("c") </b>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="card">
+                        <div class="card-body" style="padding: 0rem!important; padding-top: 1rem!important">
+                            <div class="text-center">
+                                <small class="card-title text-secondary ">
+                                    @Localizer["Saldo Período"]
+                                </small>
+                            </div>
+                            <p class="text-center text-@(Model.AmountData.Value < 0 ? "danger" : "success")">
+                                <b> @Model.AmountData.Value.ToString("c") </b>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="card">
+                        <div class="card-body" style="padding: 0rem!important; padding-top: 1rem!important">
+                            <div class="text-center">
+                                <small class="card-title text-secondary ">
+                                    @Localizer["Saldo Atual"]
+                                </small>
+                            </div>
+                            <p class="text-center text-@(Model.AmountTotal.Value < 0 ? "danger" : "success")">
+                                <b> @Model.AmountTotal.Value.ToString("c") </b>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<hr class="myb-4" />
+<div class="row">
+    <div class="col-md-12">
+        <form class="form-horizontal" method="get">
+            <div class="row">
+                <div class="col-sm-4">
+                    <a asp-action="Add" class="btn btn-success btn-bdr">@SharedLocalizer["Adicionar Novo"]</a>
+                </div>
+                <div class="col">
+                    <input type="text" class="form-control datepicker" id="start" name="start" value="@Model.start.Value.Date.ToShortDateString()" />
+                </div>
+                <div class="col">
+                    <input type="text" class="form-control datepicker" id="end" name="end" value="@Model.end.Value.Date.ToShortDateString()" />
+                </div>
+                <div class="col">
+                    <button class="btn btn-info btn-secondary" type="submit"> <i class="fas fa-search"></i></button>
+                </div>
+                <div class="col">
+                    <a class="btn btn-outline-link" data-toggle="collapse" href="#advanceSearch" role="button"
+                       aria-expanded="false" aria-controls="multiCollapseExample1">@Localizer["Buscas Avançada"]&nbsp;<i class="fas fa-sort-down"></i></a>
+                </div>
+            </div>
+            <div class="collapse multi-collapse collapse" id="advanceSearch">
+                <hr />
+                <div class="row bg-light" style="padding:30px">
+                    <div class="col">
+                        <label>@Localizer["Descrição/Nome"]</label>
+                        <input id="search" name="search" value="@ViewData["search"]" type="text" class="form-control" placeholder="@SharedLocalizer["Pesquisar..."]" aria-label="@SharedLocalizer["Pesquisar..."]" aria-describedby="basic-addon2">
+                    </div>
+                    <div class="col-3">
+                        <label>@Localizer["Caixa/Banco"]</label>
+                        <select id="BankId" name="BankId" class="form-control" asp-items="ViewBag.BankId">
+                            <option></option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="row padding-top-15">
+    <div class="col-12">
+        <div class="table-responsive">
+            @if (Model.bankTrans.Count() == 0)
+            {
+                <div class="no-registry-content">
+                    <div class="text-center">
+                        <div style="font-size:3em; color:darkseagreen">
+                            <i class="fas fa-exclamation-circle"></i>
+                        </div>
+                    </div>
+                    <div class="fade-item">
+                        <h2 class="no-registry-title">
+                            @SharedLocalizer["Nenhum registro de"]  <span class="text-info">@ViewData["Title"]</span> @SharedLocalizer["encontrado"].
+                        </h2>
+                        <div class="lead">
+                            @SharedLocalizer["Crie"] @ViewData["Title"] @SharedLocalizer["clicando no botão adicionar"].
+                        </div>
+                        <hr />
+                        <div class="no-registry-button-wrapper">
+                            <a asp-action="Add" class="btn btn-success btn-bdr">@SharedLocalizer["Adicionar Novo"]</a>
+                        </div>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <table id="resultTable" class="table table-hover table-sm ">
+                    <thead>
+                        <tr>
+                            <th width="80"> @Localizer["Id"]</th>
+                            <th width="80"> @Localizer["Conpensação"]</th>
+                            <th> @Localizer["Lançamento"]</th>
+                            <th width="170"> @Localizer["Categoria"]</th>
+                            <th width="80"> @Localizer["Valor"]</th>
+                            <th width="20">Tipo</th>
+                            <th class="no-sort" width="20px"> @SharedLocalizer["Ação"]</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.bankTrans)
+                        {
+                            <tr class="table-row-body ">
+                                <td class="table-item-body">
+                                    @Html.DisplayFor(modelItem => item.Id)
+                                </td>
+                                <td class="table-item-body">
+                                    @Html.DisplayFor(modelItem => item.DueDate)
+                                </td>
+                                <td class="table-item-body" data-toggle="tooltip" data-placement="top" title="@item.Description">
+                                    @{ string desc = item.Description;}
+                                    @desc.Truncate(30, true)
+
+
+                                    <small class="text-info">@Html.DisplayFor(modelItem => item.MidleDesc)</small>
+                                </td>
+                                <td class="table-item-body">
+                                    @Html.DisplayFor(modelItem => item.CategoryFinancial.Name)
+                                </td>
+                                <td class="table-item-body text-@(item.Signal == 1 ? "success" : "danger")">
+                                    @{ string saldo = item.Total.ToString("c"); }
+                                    @saldo
+                                </td>
+                                <td class="table-item-body">
+                                    @Enum.GetName(typeof(Core.Fake.DebitAndCredit), item.Signal)
+                                </td>
+                                <td class="table-item-body">
+                                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-light btn-bdr btn-sm"> @SharedLocalizer["Editar"] </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <script>setupTable.tableInit("resultTable", 50, 1, 1, 'asc',3);</script>
+
+}

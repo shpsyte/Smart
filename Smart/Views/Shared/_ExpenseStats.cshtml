@@ -1,0 +1,44 @@
+﻿<div class="row">
+    <div class="col-2">
+        <vc:card-expense-fix-stats time="@ModelCards.OnlyQtdy"
+                                   title="Total"
+                                   css-card="text-info"
+                                   model="@ModelCards.SimpleCard">
+        </vc:card-expense-fix-stats>
+    </div>
+    <div class="col-2">
+        <vc:card-expense-fix-stats time="@ModelCards.ToLate"
+                                   title="Atrasados"
+                                   css-card="text-warning"
+                                   model="@ModelCards.SimpleCard">
+        </vc:card-expense-fix-stats>
+    </div>
+    <div class="col-2">
+        <vc:card-expense-fix-stats time="@ModelCards.ToDay"
+                                   title="Para Hoje"
+                                   css-card="text-success"
+                                   model="@ModelCards.SimpleCard">
+        </vc:card-expense-fix-stats>
+    </div>
+    <div class="col-2">
+        <vc:card-expense-fix-stats time="@ModelCards.ToAfter"
+                                   title="Recebimento Futuro"
+                                   css-card="text-success"
+                                   model="@ModelCards.SimpleCard">
+        </vc:card-expense-fix-stats>
+    </div>
+    <div class="col-2">
+        <vc:card-expense-fix-stats time="@ModelCards.All"
+                                   title="Total a Receber"
+                                   css-card="text-success"
+                                   model="@ModelCards.SimpleCard">
+        </vc:card-expense-fix-stats>
+    </div>
+    <div class="col-2">
+        <vc:card-expense-fix-stats time="@ModelCards.Prevision"
+                                   title="Provisionado"
+                                   css-card="text-success"
+                                   model="@ModelCards.SimpleCard">
+        </vc:card-expense-fix-stats>
+    </div>
+</div>

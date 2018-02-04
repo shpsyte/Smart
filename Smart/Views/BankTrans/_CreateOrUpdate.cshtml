@@ -1,0 +1,53 @@
+﻿@model Core.Domain.Finance.BankTrans
+@{ Layout = null; }
+@Html.HiddenFor(a => a.Id)
+@Html.HiddenFor(a => a.CreateDate)
+@Html.HiddenFor(a => a.BusinessEntityId)
+@Html.HiddenFor(a => a.ExpenseTransId)
+@Html.HiddenFor(a => a.RevenueTransId)
+@Html.HiddenFor(a => a.MidleDesc)
+@Html.HiddenFor(a => a.ExcludeId)
+@Html.HiddenFor(a => a.Deleted)
+@{ bool isedit = Model.Id > 0; }
+@if (isedit)
+{
+    <input type="hidden" asp-for="Total" />
+}
+<div class="controls">
+    <div class="form-row">
+        <div class="form-group col-md-3">
+            <label asp-for="Signal">@Localizer["Tipo de Lançamento"]</label>
+            <select asp-for="Signal" asp-items="Html.GetEnumSelectList<Core.Fake.DebitAndCredit>()" class="form-control"></select>
+            <span asp-validation-for="Signal" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-3">
+            <label asp-for="Total">@Localizer["Total"]</label>
+            <input asp-for="Total" placeholder="@Localizer["Total"]" class="form-control" disabled="@isedit" data-thousands="." data-decimal="," />
+            <span asp-validation-for="Total" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-3">
+            <label asp-for="CategoryId">@Localizer["Categoria"]</label>
+            <select asp-for="CategoryId" asp-items="ViewBag.CategoryId" class="form-control">
+                <option></option>
+            </select>
+            <span asp-validation-for="CategoryId" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label asp-for="Description">@Localizer["Nome da Receita/Despesa"]</label>
+            <input asp-for="Description" placeholder="@Localizer["Receita/Despesa"]" class="form-control" />
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-3">
+            <label asp-for="BankId">@Localizer["Caixa/Banco"]</label>
+            <select asp-for="BankId" class="form-control" asp-items="ViewBag.BankId"></select>
+            <span asp-validation-for="BankId" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-3">
+            <label asp-for="DueDate">@Localizer["Data de Compensação"]</label>
+            <input asp-for="DueDate" placeholder="@Localizer["Data de Compensação"]" class="form-control datepicker" />
+            <span asp-validation-for="DueDate" class="text-danger"></span>
+        </div>
+    </div>
+</div>

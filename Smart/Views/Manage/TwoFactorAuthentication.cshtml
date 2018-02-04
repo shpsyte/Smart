@@ -1,0 +1,45 @@
+@model TwoFactorAuthenticationViewModel
+@{
+    ViewData["Title"] = "Two-factor authentication";
+    ViewData.AddActivePage(ManageNavPages.TwoFactorAuthentication);
+}
+<h4>@ViewData["Title"]</h4>
+@if (Model.Is2faEnabled)
+{
+    if (Model.RecoveryCodesLeft == 0)
+    {
+        <div class="alert alert-danger">
+            <strong>@LoginLocalizer["Você não possui nenhum código de recuperação ativo"].</strong>
+            <p>@LoginLocalizer["Você deve "] <a asp-action="GenerateRecoveryCodes">@LoginLocalizer["Gerar novo códigos de recuperação"] </a> @LoginLocalizer[" antes de entrar com códigos de recuperação"].</p>
+</div>
+    }
+    else if (Model.RecoveryCodesLeft == 1)
+    {
+        <div class="alert alert-danger">
+            <strong>@LoginLocalizer["Você tem 1 código de recuperação"].</strong>
+            <p>@LoginLocalizer["Gere "] <a asp-action="GenerateRecoveryCodes">@LoginLocalizer["novo códigos para recuperação"]</a>.</p>
+        </div>
+    }
+    else if (Model.RecoveryCodesLeft <= 3)
+    {
+        <div class="alert alert-warning">
+            <strong>@LoginLocalizer["Você tem "]@Model.RecoveryCodesLeft @LoginLocalizer["códigos para recuperação"].</strong>
+            <p>@LoginLocalizer["Você Deve "] <a asp-action="GenerateRecoveryCodes">@LoginLocalizer["novo códigos para recuperação"]</a>.</p>
+        </div>
+    }
+    <a asp-action="Disable2faWarning" class="btn btn-default">@LoginLocalizer["Desabilitar 2FA"]</a>
+    <a asp-action="GenerateRecoveryCodes" class="btn btn-default">@LoginLocalizer["Resetar/Gerar Códigos de Recuperação"]</a>
+}
+<h5>@LoginLocalizer["Aplicativo Autenticador"] </h5>
+@if (!Model.HasAuthenticator)
+{
+    <a asp-action="EnableAuthenticator" class="btn btn-info">@LoginLocalizer["Adicionar App"]</a>
+}
+else
+{
+    <a asp-action="EnableAuthenticator" class="btn btn-success">@LoginLocalizer["Configurar App"]</a>
+    <a asp-action="ResetAuthenticatorWarning" class="btn btn-success">@LoginLocalizer["Resetar chave"]</a>
+}
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

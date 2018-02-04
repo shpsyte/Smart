@@ -1,0 +1,13 @@
+﻿@if (ViewData["msg"] != null && SignInManager.IsSignedIn(User))
+{
+    <div style="background-color: #ffe8a0">
+        <div class="container">
+            <nav class="navbar  navbar-inverse" style=" background-color: #ffe8a0">
+                <span class="navbar-text mr-auto">
+                    @ViewData["msg"]
+                    <a class="btn btn-sm btn-success">Warning</a>
+                </span>
+            </nav>
+        </div>
+    </div>
+}

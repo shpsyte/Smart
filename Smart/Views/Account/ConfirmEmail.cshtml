@@ -1,0 +1,17 @@
+﻿@{ ViewData["Title"] = "Confirm email"; }
+<style>
+    .jumhead {
+        border-top-left-radius: 0 !important;
+        border-top-right-radius: 0 !important;
+    }
+</style>
+<h2 class="text-center">@LoginLocalizer["E-mail confirmado!"]</h2>
+<hr class="my-4">
+<div class="container">
+    <p class="lead">
+        @LoginLocalizer["Obrigado por confirmar seu email"]
+    </p>
+    <p>
+        <a asp-controller="Home" asp-action="Index" class="btn btn-success">@LoginLocalizer["Home"]</a>
+    </p>
+</div>

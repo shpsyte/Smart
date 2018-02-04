@@ -1,0 +1,2438 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+    <META http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>SmartAdmin Database Schema</title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <style type="text/css">
+
+        body {
+            background-color: #fff;
+            color: #000;
+            font-family: Consolas, monospace
+        }
+
+        a:link {
+            color: #03d;
+        }
+
+        a:visited {
+            color: #039;
+        }
+
+        a:hover {
+            color: #09f;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+            table caption {
+                color: #666;
+                text-align: right;
+                font-size: 65%;
+                margin-bottom: .5ex;
+            }
+
+            table td, table th {
+                border: solid 1px #666;
+                border-collapse: collapse;
+                padding: .3ex .5ex;
+                vertical-align: top;
+            }
+
+            table tbody tr:hover {
+                background-color: #ffc;
+            }
+
+            table thead th {
+                text-align: left;
+                background-color: #ccc;
+            }
+
+            table tbody th {
+                text-align: left;
+                white-space: nowrap;
+            }
+
+        .table {
+            page-break-inside: avoid;
+        }
+
+        .pk {
+            float: right;
+            cursor: arrow;
+            color: #999;
+        }
+
+        .type {
+            white-space: nowrap;
+        }
+
+        .null {
+            text-align: center;
+        }
+
+        .flag {
+            white-space: nowrap;
+            font-size: 70%;
+            display: inline-block;
+            border: solid 1px #ccc;
+            padding: .25ex .5ex;
+            background-color: #ddd;
+            margin-right: 1ex;
+        }
+
+        .tocref {
+            float: right;
+            text-decoration: none;
+            font-weight: normal;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 1em;
+            font-size: 80%;
+        }
+
+        li.view:before {
+            content: "VIEW";
+            font-size: 70%;
+            display: inline-block;
+            border: solid 1px #ccc;
+            padding: .25ex .5ex;
+            background-color: #ddd;
+            margin-right: 1ex;
+        }
+
+        @media print {
+            body {
+                font-size: .8em;
+            }
+
+            #toc, .tocref {
+                display: none;
+            }
+
+            a:link, a:visited {
+                color: #000;
+                text-decoration: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>SmartAdmin Database Schema</h1>
+    <div id="toc">
+        <ul>
+            <li class="table"><a href="#548913027">dbo.A_TemplateTable</a></li>
+            <li class="table"><a href="#1733633269">dbo.Address</a></li>
+            <li class="table"><a href="#1043534801">dbo.BusinessEntity</a></li>
+            <li class="table"><a href="#322152243">dbo.ChartAccount</a></li>
+            <li class="table"><a href="#1475536340">dbo.City</a></li>
+            <li class="table"><a href="#498152870">dbo.CostCenter</a></li>
+            <li class="table"><a href="#1155535200">dbo.Country</a></li>
+            <li class="table"><a href="#1152059190">dbo.Email</a></li>
+            <li class="table"><a href="#1758681363">dbo.Expense</a></li>
+            <li class="table"><a href="#1676585061">dbo.HsCode</a></li>
+            <li class="table"><a href="#1548584605">dbo.Image</a></li>
+            <li class="table"><a href="#126675549">dbo.Invoice</a></li>
+            <li class="table"><a href="#981630590">dbo.InvoiceDetail</a></li>
+            <li class="table"><a href="#1362155948">dbo.PaymentCondition</a></li>
+            <li class="table"><a href="#608057252">dbo.Person</a></li>
+            <li class="table"><a href="#1772585403">dbo.PersonAddress</a></li>
+            <li class="table"><a href="#1971538107">dbo.PersonCategory</a></li>
+            <li class="table"><a href="#1200059361">dbo.PersonEmail</a></li>
+            <li class="table"><a href="#1868585745">dbo.PersonPhone</a></li>
+            <li class="table"><a href="#1504060444">dbo.Phone</a></li>
+            <li class="table"><a href="#731201705">dbo.Product</a></li>
+            <li class="table"><a href="#124579532">dbo.ProductCategory</a></li>
+            <li class="table"><a href="#60579304">dbo.ProductClass</a></li>
+            <li class="table"><a href="#508580900">dbo.ProductImage</a></li>
+            <li class="table"><a href="#1902681876">dbo.Revenue</a></li>
+            <li class="table"><a href="#1363535941">dbo.StateProvince</a></li>
+            <li class="table"><a href="#210099789">dbo.sysdiagrams</a></li>
+            <li class="table"><a href="#1321107797">dbo.Tax</a></li>
+            <li class="table"><a href="#409104548">dbo.TaxGroup</a></li>
+            <li class="table"><a href="#313104206">dbo.TaxOperation</a></li>
+            <li class="table"><a href="#661629450">dbo.Warehouse</a></li>
+            <li class="view"><a href="#309576141">dbo.GetNewID</a></li>
+        </ul>
+    </div>
+    <div class="table">
+        <h2 id="548913027"><a href="#toc" class="tocref">⇧</a>Table dbo.A_TemplateTable</h2>
+        <table>
+            <caption>Table ID: 548913027; Created: November 22, 2017, 14:48:48; Modified: November 27, 2017, 12:16:56</caption>
+            <thead>
+                <tr>
+                    <th style="width:30ex">Name</th>
+                    <th style="width:20ex">Type</th>
+                    <th style="width:4ex">NULL</th>
+                    <th>Comment</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th><span class="pk" title="PRIMARY KEY PK_TemplateTable_1">◆</span>TemplateID</th>
+                    <td class="type">int</td>
+                    <td class="null">☐</td>
+                    <td>Primary key. Unique identifier of this record.</td>
+                </tr>
+                <tr>
+                    <th>BusinessEntityID</th>
+                    <td class="type">int</td>
+                    <td class="null">☐</td>
+                    <td>Foreign key to BusinessEntity.BusinessEntityID, Used for Application Filter.</td>
+                </tr>
+                <tr>
+                    <th>ForeignKey</th>
+                    <td class="type">int</td>
+                    <td class="null">☒</td>
+                    <td>Foreign key to Person.BusinessEntityID</td>
+                </tr>
+                <tr>
+                    <th>StoreID</th>
+                    <td class="type">int</td>
+                    <td class="null">☒</td>
+                    <td>Foreign key to Store.BusinessEntityID</td>
+                </tr>
+                <tr>
+                    <th>SalesQuota</th>
+                    <td class="type">money (19, 4)</td>
+                    <td class="null">☒</td>
+                    <td>Projected yearly sales.</td>
+                </tr>
+                <tr>
+                    <th>SpecialOfferID</th>
+                    <td class="type">int</td>
+                    <td class="null">☐</td>
+                    <td>Promotional code. Foreign key to SpecialOffer.SpecialOfferID.</td>
+                </tr>
+                <tr>
+                    <th>Name</th>
+                    <td class="type">varchar (40)</td>
+                    <td class="null">☐</td>
+                    <td>Name of the Template </td>
+                </tr>
+                <tr>
+                    <th>ExternalCode</th>
+                    <td class="type">varchar (40)</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag">DEFAULT ((0))</span>External Code. Used for support between application integration.</td>
+                </tr>
+                <tr>
+                    <th>DueDate</th>
+                    <td class="type">datetime</td>
+                    <td class="null">☐</td>
+                    <td>Date the order is due to the customer.</td>
+                </tr>
+                <tr>
+                    <th>AccountNumber</th>
+                    <td class="type">nvarchar (15)</td>
+                    <td class="null">☐</td>
+                    <td>Vendor account (identification) number.</td>
+                </tr>
+                <tr>
+                    <th>Comment</th>
+                    <td class="type">nvarchar (128)</td>
+                    <td class="null">☒</td>
+                    <td>Sales representative comments.</td>
+                </tr>
+                <tr>
+                    <th>SubTotal</th>
+                    <td class="type">money (19, 4)</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag">DEFAULT ((0.00))</span>Sales subtotal. Computed as SUM(SalesOrderDetail.LineTotal)for the appropriate SalesOrderID.</td>
+                </tr>
+                <tr>
+                    <th>Status</th>
+                    <td class="type">tinyint</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag">DEFAULT ((1))</span>Order current status. 1 = In process; 2 = Approved; 3 = Backordered; 4 = Rejected; 5 = Shipped; 6 = Cancelled</td>
+                </tr>
+                <tr>
+                    <th>Title</th>
+                    <td class="type">nvarchar (8)</td>
+                    <td class="null">☒</td>
+                    <td>A courtesy title. For example, Mr. or Ms.</td>
+                </tr>
+                <tr>
+                    <th>FirstName</th>
+                    <td class="type">nvarchar (50)</td>
+                    <td class="null">☐</td>
+                    <td>First name of the person.</td>
+                </tr>
+                <tr>
+                    <th>LastName</th>
+                    <td class="type">nvarchar (50)</td>
+                    <td class="null">☐</td>
+                    <td>Last name of the person.</td>
+                </tr>
+                <tr>
+                    <th>Suffix</th>
+                    <td class="type">nvarchar (10)</td>
+                    <td class="null">☒</td>
+                    <td>Surname suffix. For example, Sr. or Jr.</td>
+                </tr>
+                <tr>
+                    <th>OrderDate</th>
+                    <td class="type">datetime</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag">DEFAULT (getdate())</span>Dates the sales order was created.</td>
+                </tr>
+                <tr>
+                    <th>CreateDate</th>
+                    <td class="type">datetime</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag">DEFAULT (getdate())</span>Date and time the record was create. </td>
+                </tr>
+                <tr>
+                    <th>ModifiedDate</th>
+                    <td class="type">datetime</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag">DEFAULT (getdate())</span>Date and time the record was last updated.</td>
+                </tr>
+                <tr>
+                    <th>Rowguid</th>
+                    <td class="type">uniqueidentifier</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag">DEFAULT (newid())</span>ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.</td>
+                </tr>
+                <tr>
+                    <th>Active</th>
+                    <td class="type">bit</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag">DEFAULT ((1))</span>0 = This Record no longer used. 1 = This Record is actively used.</td>
+                </tr>
+                <tr>
+                    <th>Deleted</th>
+                    <td class="type">bit</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag">DEFAULT ((0))</span>0 = This record was not marked as deleted. 1 = This record was marked to deleted.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="table">
+        <h2 id="1733633269"><a href="#toc" class="tocref">⇧</a>Table dbo.Address</h2>
+        <p>Contains all address used in system. Link to many tables</p>
+        <table>
+            <caption>Table ID: 1733633269; Created: December 22, 2017, 08:48:41; Modified: December 22, 2017, 15:33:18</caption>
+            <thead>
+                <tr>
+                    <th style="width:30ex">Name</th>
+                    <th style="width:20ex">Type</th>
+                    <th style="width:4ex">NULL</th>
+                    <th>Comment</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th><span class="pk" title="PRIMARY KEY PK_Address">◆</span>AddressId</th>
+                    <td class="type">int</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag">IDENTITY</span>Primary key for Address records.</td>
+                </tr>
+                <tr>
+                    <th>BusinessEntityID</th>
+                    <td class="type">int</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag" title="FK_Address_BusinessEntity">⇨ <a href="#1043534801">dbo.BusinessEntity</a>.BusinessEntityID</span>Foreign key to BusinessEntity.BusinessEntityID, Used for Application Filter.</td>
+                </tr>
+                <tr>
+                    <th>PostalCode</th>
+                    <td class="type">varchar (50)</td>
+                    <td class="null">☐</td>
+                    <td>Postal code for the street address.</td>
+                </tr>
+                <tr>
+                    <th>StreetAddress</th>
+                    <td class="type">varchar (150)</td>
+                    <td class="null">☐</td>
+                    <td>First street address line.</td>
+                </tr>
+                <tr>
+                    <th>Number</th>
+                    <td class="type">char (20)</td>
+                    <td class="null">☒</td>
+                    <td>Number of Street Address</td>
+                </tr>
+                <tr>
+                    <th>StreetAddressLine2</th>
+                    <td class="type">varchar (150)</td>
+                    <td class="null">☒</td>
+                    <td>Second street address line.</td>
+                </tr>
+                <tr>
+                    <th>StreetAddressLine3</th>
+                    <td class="type">varchar (150)</td>
+                    <td class="null">☒</td>
+                    <td>Thirt street address line.</td>
+                </tr>
+                <tr>
+                    <th>District</th>
+                    <td class="type">varchar (50)</td>
+                    <td class="null">☒</td>
+                    <td>District, Neighborhood, Zone, </td>
+                </tr>
+                <tr>
+                    <th>CityId</th>
+                    <td class="type">int</td>
+                    <td class="null">☒</td>
+                    <td>Name of the city.</td>
+                </tr>
+                <tr>
+                    <th>SpatialLocation</th>
+                    <td class="type">varchar (150)</td>
+                    <td class="null">☒</td>
+                    <td>Latitude and longitude of this address.</td>
+                </tr>
+                <tr>
+                    <th>deleted</th>
+                    <td class="type">bit</td>
+                    <td class="null">☒</td>
+                    <td><span class="flag">DEFAULT ((0))</span>0 = This record was not marked as deleted. 1 = This record was marked to deleted.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="table">
+        <h2 id="1043534801"><a href="#toc" class="tocref">⇧</a>Table dbo.BusinessEntity</h2>
+        <p>Table use for filter user in Application, on new registration will be create a new Business Entity, All tables are relationship in this table by column BusinessEntityId</p>
+        <table>
+            <caption>Table ID: 1043534801; Created: December 21, 2017, 11:50:09; Modified: December 22, 2017, 17:26:05</caption>
+            <thead>
+                <tr>
+                    <th style="width:30ex">Name</th>
+                    <th style="width:20ex">Type</th>
+                    <th style="width:4ex">NULL</th>
+                    <th>Comment</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th><span class="pk" title="PRIMARY KEY PK_BusinessEntity">◆</span>BusinessEntityID</th>
+                    <td class="type">int</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag">IDENTITY</span>Primary key. Unique identifier of this record. Used to support a Application Filter by User</td>
+                </tr>
+                <tr>
+                    <th>Name</th>
+                    <td class="type">varchar (50)</td>
+                    <td class="null">☐</td>
+                    <td>Name of the Business Entity</td>
+                </tr>
+                <tr>
+                    <th>EmailCreate</th>
+                    <td class="type">varchar (255)</td>
+                    <td class="null">☐</td>
+                    <td>Email of the user who created this Entity Business </td>
+                </tr>
+                <tr>
+                    <th>ExternalCode</th>
+                    <td class="type">varchar (40)</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag">DEFAULT ((0))</span>External Code. Used for support between application integration.</td>
+                </tr>
+                <tr>
+                    <th>CreateDate</th>
+                    <td class="type">datetime</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag">DEFAULT (getdate())</span>Date and time the record was create. </td>
+                </tr>
+                <tr>
+                    <th>Validate</th>
+                    <td class="type">datetime</td>
+                    <td class="null">☒</td>
+                    <td><span class="flag">DEFAULT (getdate())</span>Date for Validade Email Create on this Entity</td>
+                </tr>
+                <tr>
+                    <th>Active</th>
+                    <td class="type">bit</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag">DEFAULT ((1))</span>0 = This Record no longer used. 1 = This Record is actively used.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="table">
+        <h2 id="322152243"><a href="#toc" class="tocref">⇧</a>Table dbo.ChartAccount</h2>
+        <p>Contains chart account using in Finantial Categories</p>
+        <table>
+            <caption>Table ID: 322152243; Created: December 22, 2017, 09:10:55; Modified: December 22, 2017, 15:43:04</caption>
+            <thead>
+                <tr>
+                    <th style="width:30ex">Name</th>
+                    <th style="width:20ex">Type</th>
+                    <th style="width:4ex">NULL</th>
+                    <th>Comment</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th><span class="pk" title="PRIMARY KEY PK_FinancialCategory">◆</span>ChartAccountId</th>
+                    <td class="type">int</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag">IDENTITY</span>Primary key this record.</td>
+                </tr>
+                <tr>
+                    <th>BusinessEntityID</th>
+                    <td class="type">int</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag" title="FK_FinancialCategory_BusinessEntity">⇨ <a href="#1043534801">dbo.BusinessEntity</a>.BusinessEntityID</span>Foreign key to BusinessEntity.BusinessEntityID, Used for Application Filter.</td>
+                </tr>
+                <tr>
+                    <th>Name</th>
+                    <td class="type">varchar (80)</td>
+                    <td class="null">☐</td>
+                    <td>Name of this Category Financial</td>
+                </tr>
+                <tr>
+                    <th>Type</th>
+                    <td class="type">char (1)</td>
+                    <td class="null">☐</td>
+                    <td>Type of Category, P = Payable , R = Receivable </td>
+                </tr>
+                <tr>
+                    <th>CreateDate</th>
+                    <td class="type">datetime</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag">DEFAULT (getdate())</span>Date and time the record was create. </td>
+                </tr>
+                <tr>
+                    <th>ModifiedDate</th>
+                    <td class="type">datetime</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag">DEFAULT (getdate())</span>Date and time the record was last updated.</td>
+                </tr>
+                <tr>
+                    <th>Active</th>
+                    <td class="type">bit</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag">DEFAULT ((1))</span>0 = This Record no longer used. 1 = This Record is actively used.</td>
+                </tr>
+                <tr>
+                    <th>Deleted</th>
+                    <td class="type">bit</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag">DEFAULT ((0))</span>0 = This record was not marked as deleted. 1 = This record was marked to deleted.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="table">
+        <h2 id="1475536340"><a href="#toc" class="tocref">⇧</a>Table dbo.City</h2>
+        <p>Contains Citys </p>
+        <table>
+            <caption>Table ID: 1475536340; Created: December 21, 2017, 12:04:40; Modified: December 22, 2017, 15:45:50</caption>
+            <thead>
+                <tr>
+                    <th style="width:30ex">Name</th>
+                    <th style="width:20ex">Type</th>
+                    <th style="width:4ex">NULL</th>
+                    <th>Comment</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th><span class="pk" title="PRIMARY KEY PK_City">◆</span>CityId</th>
+                    <td class="type">int</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag">IDENTITY</span>Primary key. Unique identifier of this record.</td>
+                </tr>
+                <tr>
+                    <th>Name</th>
+                    <td class="type">varchar (150)</td>
+                    <td class="null">☐</td>
+                    <td>Name of City</td>
+                </tr>
+                <tr>
+                    <th>MiddleName</th>
+                    <td class="type">varchar (50)</td>
+                    <td class="null">☒</td>
+                    <td>Midle name of City</td>
+                </tr>
+                <tr>
+                    <th>SpecialCodeRegion</th>
+                    <td class="type">varchar (80)</td>
+                    <td class="null">☒</td>
+                    <td>Special Code using in Governament</td>
+                </tr>
+                <tr>
+                    <th>StateProvinceId</th>
+                    <td class="type">int</td>
+                    <td class="null">☒</td>
+                    <td><span class="flag" title="FK_City_StateProvince">⇨ <a href="#1363535941">dbo.StateProvince</a>.StateProvinceId</span>Foreign key to StateProvince.StateProvinceId</td>
+                </tr>
+                <tr>
+                    <th>CreateDate</th>
+                    <td class="type">datetime</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag">DEFAULT (getdate())</span>Date and time the record was create. </td>
+                </tr>
+                <tr>
+                    <th>ModifiedDate</th>
+                    <td class="type">datetime</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag">DEFAULT (getdate())</span>Date and time the record was last updated.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="table">
+        <h2 id="498152870"><a href="#toc" class="tocref">⇧</a>Table dbo.CostCenter</h2>
+        <p>Contains Center of Cost using in Financial Type</p>
+        <table>
+            <caption>Table ID: 498152870; Created: December 22, 2017, 09:13:19; Modified: December 22, 2017, 15:49:56</caption>
+            <thead>
+                <tr>
+                    <th style="width:30ex">Name</th>
+                    <th style="width:20ex">Type</th>
+                    <th style="width:4ex">NULL</th>
+                    <th>Comment</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th><span class="pk" title="PRIMARY KEY PK_FinancialCenter">◆</span>CostCenterId</th>
+                    <td class="type">int</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag">IDENTITY</span>Primary Key, ID for CosCenter , Unique Identifier</td>
+                </tr>
+                <tr>
+                    <th>BusinessEntityID</th>
+                    <td class="type">int</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag" title="FK_CostCenter_BusinessEntity">⇨ <a href="#1043534801">dbo.BusinessEntity</a>.BusinessEntityID</span>Foreign key to BusinessEntity.BusinessEntityID, Used for Application Filter.</td>
+                </tr>
+                <tr>
+                    <th>Name</th>
+                    <td class="type">varchar (80)</td>
+                    <td class="null">☐</td>
+                    <td>Name of Center Of Cost Financtial</td>
+                </tr>
+                <tr>
+                    <th>CreateDate</th>
+                    <td class="type">datetime</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag">DEFAULT (getdate())</span>Date and time the record was create. </td>
+                </tr>
+                <tr>
+                    <th>ModifiedDate</th>
+                    <td class="type">datetime</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag">DEFAULT (getdate())</span>Date and time the record was last updated.</td>
+                </tr>
+                <tr>
+                    <th>Active</th>
+                    <td class="type">bit</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag">DEFAULT ((1))</span>0 = This Record no longer used. 1 = This Record is actively used.</td>
+                </tr>
+                <tr>
+                    <th>Deleted</th>
+                    <td class="type">bit</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag">DEFAULT ((0))</span>0 = This record was not marked as deleted. 1 = This record was marked to deleted.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="table">
+        <h2 id="1155535200"><a href="#toc" class="tocref">⇧</a>Table dbo.Country</h2>
+        <p>Contains Countries</p>
+        <table>
+            <caption>Table ID: 1155535200; Created: December 21, 2017, 11:57:19; Modified: December 22, 2017, 15:51:55</caption>
+            <thead>
+                <tr>
+                    <th style="width:30ex">Name</th>
+                    <th style="width:20ex">Type</th>
+                    <th style="width:4ex">NULL</th>
+                    <th>Comment</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th><span class="pk" title="PRIMARY KEY PK_Territory">◆</span>CountryId</th>
+                    <td class="type">int</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag">IDENTITY</span>Primary key for SalesTerritory records.</td>
+                </tr>
+                <tr>
+                    <th>Name</th>
+                    <td class="type">varchar (80)</td>
+                    <td class="null">☐</td>
+                    <td>Sales territory description</td>
+                </tr>
+                <tr>
+                    <th>MiddleName</th>
+                    <td class="type">varchar (30)</td>
+                    <td class="null">☒</td>
+                    <td>Midle name of Terretory</td>
+                </tr>
+                <tr>
+                    <th>CountryRegionCode</th>
+                    <td class="type">char (6)</td>
+                    <td class="null">☒</td>
+                    <td>ISO standard country or region code. Foreign key to CountryRegion.CountryRegionCode. </td>
+                </tr>
+                <tr>
+                    <th>SpecialCodeRegion</th>
+                    <td class="type">char (10)</td>
+                    <td class="null">☒</td>
+                    <td>Special Code Country using any </td>
+                </tr>
+                <tr>
+                    <th>CreateDate</th>
+                    <td class="type">datetime</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag">DEFAULT (getdate())</span>Date and time the record was create. </td>
+                </tr>
+                <tr>
+                    <th>ModifiedDate</th>
+                    <td class="type">datetime</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag">DEFAULT (getdate())</span>Date and time the record was last updated.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="table">
+        <h2 id="1152059190"><a href="#toc" class="tocref">⇧</a>Table dbo.Email</h2>
+        <p>Contains All Email using </p>
+        <table>
+            <caption>Table ID: 1152059190; Created: December 21, 2017, 15:30:01; Modified: December 22, 2017, 16:12:19</caption>
+            <thead>
+                <tr>
+                    <th style="width:30ex">Name</th>
+                    <th style="width:20ex">Type</th>
+                    <th style="width:4ex">NULL</th>
+                    <th>Comment</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th><span class="pk" title="PRIMARY KEY PK_Email">◆</span>EmailID</th>
+                    <td class="type">int</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag">IDENTITY</span>Primary key for Address records.</td>
+                </tr>
+                <tr>
+                    <th>BusinessEntityID</th>
+                    <td class="type">int</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag" title="FK_Email_BusinessEntity">⇨ <a href="#1043534801">dbo.BusinessEntity</a>.BusinessEntityID</span>Foreign key to BusinessEntity.BusinessEntityID, Used for Application Filter.</td>
+                </tr>
+                <tr>
+                    <th>Email</th>
+                    <td class="type">varchar (250)</td>
+                    <td class="null">☐</td>
+                    <td>Address email</td>
+                </tr>
+                <tr>
+                    <th>Type</th>
+                    <td class="type">char (2)</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag">DEFAULT ('IN')</span>Primary type OR = Email Order; PR = Email promotional; IN = Info Email; </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="table">
+        <h2 id="1758681363"><a href="#toc" class="tocref">⇧</a>Table dbo.Expense</h2>
+        <p>Contain Account of Payments</p>
+        <table>
+            <caption>Table ID: 1758681363; Created: December 22, 2017, 13:06:59; Modified: December 22, 2017, 16:13:51</caption>
+            <thead>
+                <tr>
+                    <th style="width:30ex">Name</th>
+                    <th style="width:20ex">Type</th>
+                    <th style="width:4ex">NULL</th>
+                    <th>Comment</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th><span class="pk" title="PRIMARY KEY PK_Expense">◆</span>ExpenseId</th>
+                    <td class="type">int</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag">IDENTITY</span>Primary key. Unique identifier of this record.</td>
+                </tr>
+                <tr>
+                    <th>BusinessEntityID</th>
+                    <td class="type">int</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag" title="FK_Expense_BusinessEntity">⇨ <a href="#1043534801">dbo.BusinessEntity</a>.BusinessEntityID</span>Foreign key to BusinessEntity.BusinessEntityID, Used for Application Filter.</td>
+                </tr>
+                <tr>
+                    <th>ExpenseNumber</th>
+                    <td class="type">varchar (30)</td>
+                    <td class="null">☒</td>
+                    <td>Number this account</td>
+                </tr>
+                <tr>
+                    <th>Name</th>
+                    <td class="type">varchar (80)</td>
+                    <td class="null">☐</td>
+                    <td>Name of account </td>
+                </tr>
+                <tr>
+                    <th>PersonId</th>
+                    <td class="type">int</td>
+                    <td class="null">☒</td>
+                    <td><span class="flag" title="FK_Expense_Person">⇨ <a href="#608057252">dbo.Person</a>.PersonId</span>Person related to this account</td>
+                </tr>
+                <tr>
+                    <th>ChartAccountId</th>
+                    <td class="type">int</td>
+                    <td class="null">☒</td>
+                    <td><span class="flag" title="FK_Expense_ChartAccount">⇨ <a href="#322152243">dbo.ChartAccount</a>.ChartAccountId</span>Category for this account. ForenKey to FinancialCategory.Id</td>
+                </tr>
+                <tr>
+                    <th>CostCenterId</th>
+                    <td class="type">int</td>
+                    <td class="null">☒</td>
+                    <td><span class="flag" title="FK_Expense_CostCenter">⇨ <a href="#498152870">dbo.CostCenter</a>.CostCenterId</span>Center Of Cost ForenKey to FinancialCostCenter.FinancialCostCenterId</td>
+                </tr>
+                <tr>
+                    <th>PaymentConditionId</th>
+                    <td class="type">int</td>
+                    <td class="null">☒</td>
+                    <td>Condition Payment ForenKey to PaymentCondition.PaymentConditionId</td>
+                </tr>
+                <tr>
+                    <th>Total</th>
+                    <td class="type">numeric (12, 4)</td>
+                    <td class="null">☒</td>
+                    <td>Total of this Revenue</td>
+                </tr>
+                <tr>
+                    <th>CreateDate</th>
+                    <td class="type">datetime</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag">DEFAULT (getdate())</span>Date and time the record was create. </td>
+                </tr>
+                <tr>
+                    <th>DueDate</th>
+                    <td class="type">date</td>
+                    <td class="null">☒</td>
+                    <td>Date of Due</td>
+                </tr>
+                <tr>
+                    <th>DuePayment</th>
+                    <td class="type">date</td>
+                    <td class="null">☒</td>
+                    <td>Date payment</td>
+                </tr>
+                <tr>
+                    <th>Comment</th>
+                    <td class="type">varchar (250)</td>
+                    <td class="null">☒</td>
+                    <td>Commetns ond this Expense</td>
+                </tr>
+                <tr>
+                    <th>ModifiedDate</th>
+                    <td class="type">datetime</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag">DEFAULT (getdate())</span>Date and time the record was last updated.</td>
+                </tr>
+                <tr>
+                    <th>Deleted</th>
+                    <td class="type">bit</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag">DEFAULT ((0))</span>0 = This record was not marked as deleted. 1 = This record was marked to deleted.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="table">
+        <h2 id="1676585061"><a href="#toc" class="tocref">⇧</a>Table dbo.HsCode</h2>
+        <p>Hs Code (Harmonie System) Like NCM</p>
+        <table>
+            <caption>Table ID: 1676585061; Created: December 21, 2017, 16:25:56; Modified: December 22, 2017, 16:15:53</caption>
+            <thead>
+                <tr>
+                    <th style="width:30ex">Name</th>
+                    <th style="width:20ex">Type</th>
+                    <th style="width:4ex">NULL</th>
+                    <th>Comment</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th><span class="pk" title="PRIMARY KEY PK_Ncm">◆</span>HsCodeId</th>
+                    <td class="type">int</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag">IDENTITY</span>Primary Key of HS Code</td>
+                </tr>
+                <tr>
+                    <th>HsCode</th>
+                    <td class="type">char (20)</td>
+                    <td class="null">☐</td>
+                    <td>HS Code</td>
+                </tr>
+                <tr>
+                    <th>Name</th>
+                    <td class="type">varchar (100)</td>
+                    <td class="null">☐</td>
+                    <td>Name of HS Code</td>
+                </tr>
+                <tr>
+                    <th>NationalFederalTaxes</th>
+                    <td class="type">numeric (5, 2)</td>
+                    <td class="null">☒</td>
+                    <td><span class="flag">DEFAULT ((0))</span>Taxes for National product  - Federal Taxes</td>
+                </tr>
+                <tr>
+                    <th>ImportFederalTaxes</th>
+                    <td class="type">numeric (5, 2)</td>
+                    <td class="null">☒</td>
+                    <td><span class="flag">DEFAULT ((0))</span>Taxes for product Imported - Federal Taxes</td>
+                </tr>
+                <tr>
+                    <th>StateTaxes</th>
+                    <td class="type">numeric (5, 2)</td>
+                    <td class="null">☒</td>
+                    <td><span class="flag">DEFAULT ((0))</span>Taxes for state province</td>
+                </tr>
+                <tr>
+                    <th>CityTaxes</th>
+                    <td class="type">numeric (5, 2)</td>
+                    <td class="null">☒</td>
+                    <td><span class="flag">DEFAULT ((0))</span>Taxes for city</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="table">
+        <h2 id="1548584605"><a href="#toc" class="tocref">⇧</a>Table dbo.Image</h2>
+        <p>Contain All images used in App</p>
+        <table>
+            <caption>Table ID: 1548584605; Created: December 21, 2017, 16:25:34; Modified: December 22, 2017, 16:17:32</caption>
+            <thead>
+                <tr>
+                    <th style="width:30ex">Name</th>
+                    <th style="width:20ex">Type</th>
+                    <th style="width:4ex">NULL</th>
+                    <th>Comment</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th><span class="pk" title="PRIMARY KEY PK_Image">◆</span>ImageId</th>
+                    <td class="type">int</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag">IDENTITY</span>Primary Key of Images, Unique identifier</td>
+                </tr>
+                <tr>
+                    <th>BusinessEntityID</th>
+                    <td class="type">int</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag" title="FK_Image_BusinessEntity">⇨ <a href="#1043534801">dbo.BusinessEntity</a>.BusinessEntityID</span>Foreign key to BusinessEntity.BusinessEntityID, Used for Application Filter.</td>
+                </tr>
+                <tr>
+                    <th>LargeImage</th>
+                    <td class="type">varbinary (max)</td>
+                    <td class="null">☒</td>
+                    <td>Large image of the product.</td>
+                </tr>
+                <tr>
+                    <th>LargeImageFileName</th>
+                    <td class="type">nvarchar (50)</td>
+                    <td class="null">☒</td>
+                    <td>Large image file name.</td>
+                </tr>
+                <tr>
+                    <th>Comments</th>
+                    <td class="type">varchar (max)</td>
+                    <td class="null">☒</td>
+                    <td>Comments/Description  on this Images</td>
+                </tr>
+                <tr>
+                    <th>CreateDate</th>
+                    <td class="type">datetime</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag">DEFAULT (getdate())</span>Date and time the record was create. </td>
+                </tr>
+                <tr>
+                    <th>ModifiedDate</th>
+                    <td class="type">datetime</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag">DEFAULT (getdate())</span>Date and time the record was last updated.</td>
+                </tr>
+                <tr>
+                    <th>Active</th>
+                    <td class="type">bit</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag">DEFAULT ((1))</span>0 = This Record no longer used. 1 = This Record is actively used.</td>
+                </tr>
+                <tr>
+                    <th>Deleted</th>
+                    <td class="type">bit</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag">DEFAULT ((0))</span>0 = This record was not marked as deleted. 1 = This record was marked to deleted.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="table">
+        <h2 id="126675549"><a href="#toc" class="tocref">⇧</a>Table dbo.Invoice</h2>
+        <p>Table used for save all invoice</p>
+        <table>
+            <caption>Table ID: 126675549; Created: December 22, 2017, 10:17:36; Modified: December 22, 2017, 16:22:19</caption>
+            <thead>
+                <tr>
+                    <th style="width:30ex">Name</th>
+                    <th style="width:20ex">Type</th>
+                    <th style="width:4ex">NULL</th>
+                    <th>Comment</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th><span class="pk" title="PRIMARY KEY PK_Order">◆</span>InvoiceId</th>
+                    <td class="type">int</td>
+                    <td class="null">☐</td>
+                    <td>Primary key.</td>
+                </tr>
+                <tr>
+                    <th>BusinessEntityID</th>
+                    <td class="type">int</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag" title="FK_Order_BusinessEntity">⇨ <a href="#1043534801">dbo.BusinessEntity</a>.BusinessEntityID</span>Foreign key to BusinessEntity.BusinessEntityID, Used for Application Filter.</td>
+                </tr>
+                <tr>
+                    <th>TaxOperationId</th>
+                    <td class="type">int</td>
+                    <td class="null">☐</td>
+                    <td>Operation Tax, ForenKey to TaxOperation.TaxOperationID</td>
+                </tr>
+                <tr>
+                    <th>RevisionNumber</th>
+                    <td class="type">tinyint</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag">DEFAULT ((0))</span>Incremental number to track changes to the sales order over time.</td>
+                </tr>
+                <tr>
+                    <th>InvoiceDate</th>
+                    <td class="type">datetime</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag">DEFAULT (getdate())</span>Dates the sales order was created.</td>
+                </tr>
+                <tr>
+                    <th>DueDate</th>
+                    <td class="type">date</td>
+                    <td class="null">☐</td>
+                    <td>Date the order is due to the customer.</td>
+                </tr>
+                <tr>
+                    <th>ShipDate</th>
+                    <td class="type">date</td>
+                    <td class="null">☒</td>
+                    <td>Date the order was shipped to the customer.</td>
+                </tr>
+                <tr>
+                    <th>Status</th>
+                    <td class="type">tinyint</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag">DEFAULT ((1))</span>Order current status. 1 = In process; 2 = Approved; 3 = Backordered; 4 = Rejected; 5 = Shipped; 6 = Cancelled</td>
+                </tr>
+                <tr>
+                    <th>OnlineInvoiceFlag</th>
+                    <td class="type">bit</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag">DEFAULT ((1))</span>0 = Order placed by sales person. 1 = Order placed online by customer.</td>
+                </tr>
+                <tr>
+                    <th>InvoiceNumber</th>
+                    <td class="type">nvarchar (25)</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag">COMPUTED</span>Unique sales order identification number.</td>
+                </tr>
+                <tr>
+                    <th>PurchaseOrderNumber</th>
+                    <td class="type">varchar (50)</td>
+                    <td class="null">☒</td>
+                    <td>Customer purchase order number reference. </td>
+                </tr>
+                <tr>
+                    <th>AccountNumber</th>
+                    <td class="type">varchar (50)</td>
+                    <td class="null">☒</td>
+                    <td>Financial accounting number reference.</td>
+                </tr>
+                <tr>
+                    <th>CustomerID</th>
+                    <td class="type">int</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag" title="FK_Order_Person">⇨ <a href="#608057252">dbo.Person</a>.PersonId</span>Customer identification number. Foreign key to Customer.BusinessEntityID.</td>
+                </tr>
+                <tr>
+                    <th>SalesPersonID</th>
+                    <td class="type">int</td>
+                    <td class="null">☒</td>
+                    <td><span class="flag" title="FK_Order_Person1">⇨ <a href="#608057252">dbo.Person</a>.PersonId</span>Sales person who created the sales order. Foreign key to SalesPerson.BusinessEntityID.</td>
+                </tr>
+                <tr>
+                    <th>CarrierId</th>
+                    <td class="type">int</td>
+                    <td class="null">☒</td>
+                    <td><span class="flag" title="FK_Order_Person2">⇨ <a href="#608057252">dbo.Person</a>.PersonId</span>Code for Carrier</td>
+                </tr>
+                <tr>
+                    <th>WarehouseId</th>
+                    <td class="type">int</td>
+                    <td class="null">☒</td>
+                    <td><span class="flag" title="FK_Order_Warehouse">⇨ <a href="#661629450">dbo.Warehouse</a>.WarehouseId</span>Code for warehouse, where product are stocked</td>
+                </tr>
+                <tr>
+                    <th>BillToAddressID</th>
+                    <td class="type">int</td>
+                    <td class="null">☒</td>
+                    <td><span class="flag" title="FK_Order_Address">⇨ <a href="#1733633269">dbo.Address</a>.AddressId</span>Customer billing address. Foreign key to Address.AddressID.</td>
+                </tr>
+                <tr>
+                    <th>ShipToAddressID</th>
+                    <td class="type">int</td>
+                    <td class="null">☒</td>
+                    <td><span class="flag" title="FK_Order_Address1">⇨ <a href="#1733633269">dbo.Address</a>.AddressId</span>Customer shipping address. Foreign key to Address.AddressID.</td>
+                </tr>
+                <tr>
+                    <th>CarrierTrackingNumber</th>
+                    <td class="type">nvarchar (25)</td>
+                    <td class="null">☒</td>
+                    <td>Shipment tracking number supplied by the shipper.</td>
+                </tr>
+                <tr>
+                    <th>FreightType</th>
+                    <td class="type">int</td>
+                    <td class="null">☒</td>
+                    <td>Type of Freight (1 = CIF, 2 = FOB, 3 = Custom</td>
+                </tr>
+                <tr>
+                    <th>Volumes</th>
+                    <td class="type">int</td>
+                    <td class="null">☒</td>
+                    <td>Volume in this invoice</td>
+                </tr>
+                <tr>
+                    <th>Package</th>
+                    <td class="type">varchar (20)</td>
+                    <td class="null">☒</td>
+                    <td>Qty package using to send this invoice</td>
+                </tr>
+                <tr>
+                    <th>CarrierTruckId</th>
+                    <td class="type">varchar (10)</td>
+                    <td class="null">☒</td>
+                    <td>Id for Truck for send this invoice</td>
+                </tr>
+                <tr>
+                    <th>Weight</th>
+                    <td class="type">numeric (9, 2)</td>
+                    <td class="null">☒</td>
+                    <td>Weight</td>
+                </tr>
+                <tr>
+                    <th>TotalWeight</th>
+                    <td class="type">numeric (9, 2)</td>
+                    <td class="null">☒</td>
+                    <td>Total Weight</td>
+                </tr>
+                <tr>
+                    <th>SubTotal</th>
+                    <td class="type">numeric (12, 4)</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag">DEFAULT ((0.00))</span>Sales subtotal. Computed as SUM(SalesOrderDetail.LineTotal)for the appropriate SalesOrderID.</td>
+                </tr>
+                <tr>
+                    <th>TaxAmt</th>
+                    <td class="type">numeric (12, 4)</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag">DEFAULT ((0.00))</span>Tax amount.</td>
+                </tr>
+                <tr>
+                    <th>Freight</th>
+                    <td class="type">numeric (12, 4)</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag">DEFAULT ((0.00))</span>Shipping cost.</td>
+                </tr>
+                <tr>
+                    <th>TotalDue</th>
+                    <td class="type">numeric (14, 4)</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag">COMPUTED</span>Total due from customer. Computed as Subtotal + TaxAmt + Freight.</td>
+                </tr>
+                <tr>
+                    <th>Comment</th>
+                    <td class="type">varchar (max)</td>
+                    <td class="null">☒</td>
+                    <td>Sales representative comments.</td>
+                </tr>
+                <tr>
+                    <th>ModifiedDate</th>
+                    <td class="type">datetime</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag">DEFAULT (getdate())</span>Date and time the record was last updated.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="table">
+        <h2 id="981630590"><a href="#toc" class="tocref">⇧</a>Table dbo.InvoiceDetail</h2>
+        <p>Contains product for invoice create</p>
+        <table>
+            <caption>Table ID: 981630590; Created: December 22, 2017, 08:05:58; Modified: December 22, 2017, 16:24:24</caption>
+            <thead>
+                <tr>
+                    <th style="width:30ex">Name</th>
+                    <th style="width:20ex">Type</th>
+                    <th style="width:4ex">NULL</th>
+                    <th>Comment</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th><span class="pk" title="PRIMARY KEY PK_OrderDetail">◆</span>InvoiceId</th>
+                    <td class="type">int</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag" title="FK_OrderDetail_Order">⇨ <a href="#126675549">dbo.Invoice</a>.InvoiceId</span>Primary key. Foreign key to SalesOrderHeader.SalesOrderID.</td>
+                </tr>
+                <tr>
+                    <th><span class="pk" title="PRIMARY KEY PK_OrderDetail">◆</span>InvoiceDetailId</th>
+                    <td class="type">int</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag">IDENTITY</span>Primary key. One incremental unique number per product sold.</td>
+                </tr>
+                <tr>
+                    <th>ProductID</th>
+                    <td class="type">int</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag" title="FK_OrderDetail_Product">⇨ <a href="#731201705">dbo.Product</a>.ProductId</span>Product sold to customer. Foreign key to Product.ProductID.</td>
+                </tr>
+                <tr>
+                    <th>BusinessEntityID</th>
+                    <td class="type">int</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag" title="FK_OrderDetail_BusinessEntity">⇨ <a href="#1043534801">dbo.BusinessEntity</a>.BusinessEntityID</span>Foreign key to BusinessEntity.BusinessEntityID, Used for Application Filter.</td>
+                </tr>
+                <tr>
+                    <th>CarrierTrackingNumber</th>
+                    <td class="type">nvarchar (25)</td>
+                    <td class="null">☒</td>
+                    <td>Shipment tracking number supplied by the shipper.</td>
+                </tr>
+                <tr>
+                    <th>WarehouseId</th>
+                    <td class="type">int</td>
+                    <td class="null">☒</td>
+                    <td><span class="flag" title="FK_OrderDetail_Warehouse">⇨ <a href="#661629450">dbo.Warehouse</a>.WarehouseId</span>Warehouse used for calculate stock product</td>
+                </tr>
+                <tr>
+                    <th>OrderQty</th>
+                    <td class="type">numeric (5, 3)</td>
+                    <td class="null">☐</td>
+                    <td>Quantity ordered per product.</td>
+                </tr>
+                <tr>
+                    <th>UnitPrice</th>
+                    <td class="type">numeric (12, 4)</td>
+                    <td class="null">☐</td>
+                    <td>Selling price of a single product.</td>
+                </tr>
+                <tr>
+                    <th>UnitPriceDiscount</th>
+                    <td class="type">numeric (6, 3)</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag">DEFAULT ((0.0))</span>Discount amount.</td>
+                </tr>
+                <tr>
+                    <th>LineTotal</th>
+                    <td class="type">numeric (26, 10)</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag">COMPUTED</span>Per product subtotal. Computed as UnitPrice * (1 - UnitPriceDiscount) * OrderQty.</td>
+                </tr>
+                <tr>
+                    <th>ModifiedDate</th>
+                    <td class="type">datetime</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag">DEFAULT (getdate())</span>Date and time the record was last updated.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="table">
+        <h2 id="1362155948"><a href="#toc" class="tocref">⇧</a>Table dbo.PaymentCondition</h2>
+        <p>Containts all condition for Payment</p>
+        <table>
+            <caption>Table ID: 1362155948; Created: December 22, 2017, 09:30:34; Modified: December 22, 2017, 16:26:44</caption>
+            <thead>
+                <tr>
+                    <th style="width:30ex">Name</th>
+                    <th style="width:20ex">Type</th>
+                    <th style="width:4ex">NULL</th>
+                    <th>Comment</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th><span class="pk" title="PRIMARY KEY PK_Payment">◆</span>PaymentConditionId</th>
+                    <td class="type">int</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag">IDENTITY</span>Primary key. Unique identifier of this record. Payment ID</td>
+                </tr>
+                <tr>
+                    <th>BusinessEntityID</th>
+                    <td class="type">int</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag" title="FK_Payment_BusinessEntity">⇨ <a href="#1043534801">dbo.BusinessEntity</a>.BusinessEntityID</span>Foreign key to BusinessEntity.BusinessEntityID, Used for Application Filter.</td>
+                </tr>
+                <tr>
+                    <th>Name</th>
+                    <td class="type">varchar (50)</td>
+                    <td class="null">☐</td>
+                    <td>Name of payment</td>
+                </tr>
+                <tr>
+                    <th>PaymentQty</th>
+                    <td class="type">int</td>
+                    <td class="null">☒</td>
+                    <td>Qty Payments </td>
+                </tr>
+                <tr>
+                    <th>PaymentDays</th>
+                    <td class="type">int</td>
+                    <td class="null">☒</td>
+                    <td>Interval of Days in payments </td>
+                </tr>
+                <tr>
+                    <th>Tax</th>
+                    <td class="type">numeric (5, 2)</td>
+                    <td class="null">☒</td>
+                    <td>Tax for use this payment</td>
+                </tr>
+                <tr>
+                    <th>PaymentUse</th>
+                    <td class="type">int</td>
+                    <td class="null">☒</td>
+                    <td>Use in: 0 = All; 1 = Sales; 2 = Purchase;</td>
+                </tr>
+                <tr>
+                    <th>CreateDate</th>
+                    <td class="type">datetime</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag">DEFAULT (getdate())</span>Date and time the record was create. </td>
+                </tr>
+                <tr>
+                    <th>ModifiedDate</th>
+                    <td class="type">datetime</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag">DEFAULT (getdate())</span>Date and time the record was last updated.</td>
+                </tr>
+                <tr>
+                    <th>Active</th>
+                    <td class="type">bit</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag">DEFAULT ((1))</span>0 = This Record no longer used. 1 = This Record is actively used.</td>
+                </tr>
+                <tr>
+                    <th>Deleted</th>
+                    <td class="type">bit</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag">DEFAULT ((0))</span>0 = This record was not marked as deleted. 1 = This record was marked to deleted.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="table">
+        <h2 id="608057252"><a href="#toc" class="tocref">⇧</a>Table dbo.Person</h2>
+        <p>Human beings involved with AdventureWorks: employees, customer contacts, and vendor contacts.</p>
+        <table>
+            <caption>Table ID: 608057252; Created: December 21, 2017, 15:18:24; Modified: December 22, 2017, 16:29:28</caption>
+            <thead>
+                <tr>
+                    <th style="width:30ex">Name</th>
+                    <th style="width:20ex">Type</th>
+                    <th style="width:4ex">NULL</th>
+                    <th>Comment</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th><span class="pk" title="PRIMARY KEY PK_Person">◆</span>PersonId</th>
+                    <td class="type">int</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag">IDENTITY</span>Primary key. Unique identifier of this record.</td>
+                </tr>
+                <tr>
+                    <th>BusinessEntityID</th>
+                    <td class="type">int</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag" title="FK_Person_BusinessEntity">⇨ <a href="#1043534801">dbo.BusinessEntity</a>.BusinessEntityID</span>Foreign key to BusinessEntity.BusinessEntityID, Used for Application Filter.</td>
+                </tr>
+                <tr>
+                    <th>FirstName</th>
+                    <td class="type">varchar (120)</td>
+                    <td class="null">☐</td>
+                    <td>First name of the person.</td>
+                </tr>
+                <tr>
+                    <th>LastName</th>
+                    <td class="type">varchar (80)</td>
+                    <td class="null">☒</td>
+                    <td>Last name of the person.</td>
+                </tr>
+                <tr>
+                    <th>RegistrationCode</th>
+                    <td class="type">varchar (150)</td>
+                    <td class="null">☒</td>
+                    <td>Code for registration code country like VATNUMBER or CNPJ</td>
+                </tr>
+                <tr>
+                    <th>RegistrationState</th>
+                    <td class="type">varchar (150)</td>
+                    <td class="null">☒</td>
+                    <td>Code for registration province like IE</td>
+                </tr>
+                <tr>
+                    <th>Type</th>
+                    <td class="type">char (2)</td>
+                    <td class="null">☒</td>
+                    <td><span class="flag">DEFAULT ('CO')</span>Primary type  CO = Company; PE = Person</td>
+                </tr>
+                <tr>
+                    <th>PersonType</th>
+                    <td class="type">char (2)</td>
+                    <td class="null">☒</td>
+                    <td><span class="flag">DEFAULT ('IN')</span>Primary type of person: SC = Store Contact, IN = Individual (retail) customer, SP = Sales person, EM = Employee (non-sales), VC = Vendor contact, GC = General contact, </td>
+                </tr>
+                <tr>
+                    <th>CategoryId</th>
+                    <td class="type">int</td>
+                    <td class="null">☒</td>
+                    <td><span class="flag" title="FK_Person_PersonClass">⇨ <a href="#1971538107">dbo.PersonCategory</a>.PersonCategoryId</span>Category for this Person. ForenKey to PersonCategory</td>
+                </tr>
+                <tr>
+                    <th>Email</th>
+                    <td class="type">varchar (max)</td>
+                    <td class="null">☒</td>
+                    <td>Primary Email</td>
+                </tr>
+                <tr>
+                    <th>Image</th>
+                    <td class="type">varbinary (max)</td>
+                    <td class="null">☒</td>
+                    <td>Image of the person.</td>
+                </tr>
+                <tr>
+                    <th>Comments</th>
+                    <td class="type">varchar (max)</td>
+                    <td class="null">☒</td>
+                    <td>Comments/Description for this person</td>
+                </tr>
+                <tr>
+                    <th>CreateDate</th>
+                    <td class="type">datetime</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag">DEFAULT (getdate())</span>Date and time the record was create. </td>
+                </tr>
+                <tr>
+                    <th>ModifiedDate</th>
+                    <td class="type">datetime</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag">DEFAULT (getdate())</span>Date and time the record was last updated.</td>
+                </tr>
+                <tr>
+                    <th>Active</th>
+                    <td class="type">bit</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag">DEFAULT ((1))</span>0 = This Record no longer used. 1 = This Record is actively used.</td>
+                </tr>
+                <tr>
+                    <th>Deleted</th>
+                    <td class="type">bit</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag">DEFAULT ((0))</span>0 = This record was not marked as deleted. 1 = This record was marked to deleted.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="table">
+        <h2 id="1772585403"><a href="#toc" class="tocref">⇧</a>Table dbo.PersonAddress</h2>
+        <p>Address for Person</p>
+        <table>
+            <caption>Table ID: 1772585403; Created: December 21, 2017, 16:27:04; Modified: December 22, 2017, 16:30:42</caption>
+            <thead>
+                <tr>
+                    <th style="width:30ex">Name</th>
+                    <th style="width:20ex">Type</th>
+                    <th style="width:4ex">NULL</th>
+                    <th>Comment</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th><span class="pk" title="PRIMARY KEY PK_PersonAddress">◆</span>Id</th>
+                    <td class="type">int</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag">IDENTITY</span>Primary key for Address records.</td>
+                </tr>
+                <tr>
+                    <th>AddressId</th>
+                    <td class="type">int</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag" title="FK_PersonAddress_Address">⇨ <a href="#1733633269">dbo.Address</a>.AddressId</span>Foreign key to Adress.AdressID</td>
+                </tr>
+                <tr>
+                    <th>PersonId</th>
+                    <td class="type">int</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag" title="FK_PersonAddress_Person">⇨ <a href="#608057252">dbo.Person</a>.PersonId</span>Foreign key to Company.CompanyID</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="table">
+        <h2 id="1971538107"><a href="#toc" class="tocref">⇧</a>Table dbo.PersonCategory</h2>
+        <p>Contains Category for person</p>
+        <table>
+            <caption>Table ID: 1971538107; Created: December 21, 2017, 14:52:10; Modified: December 22, 2017, 16:32:01</caption>
+            <thead>
+                <tr>
+                    <th style="width:30ex">Name</th>
+                    <th style="width:20ex">Type</th>
+                    <th style="width:4ex">NULL</th>
+                    <th>Comment</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th><span class="pk" title="PRIMARY KEY PK_PersonType">◆</span>PersonCategoryId</th>
+                    <td class="type">int</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag">IDENTITY</span>Primary key. Unique identifier of this record.</td>
+                </tr>
+                <tr>
+                    <th>BusinessEntityID</th>
+                    <td class="type">int</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag" title="FK_PersonType_BusinessEntity">⇨ <a href="#1043534801">dbo.BusinessEntity</a>.BusinessEntityID</span>Foreign key to BusinessEntity.BusinessEntityID, Used for Application Filter.</td>
+                </tr>
+                <tr>
+                    <th>Name</th>
+                    <td class="type">varchar (80)</td>
+                    <td class="null">☐</td>
+                    <td>Name of Type Person</td>
+                </tr>
+                <tr>
+                    <th>CreateDate</th>
+                    <td class="type">datetime</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag">DEFAULT (getdate())</span>Date and time the record was create. </td>
+                </tr>
+                <tr>
+                    <th>ModifiedDate</th>
+                    <td class="type">datetime</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag">DEFAULT (getdate())</span>Date and time the record was last updated.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="table">
+        <h2 id="1200059361"><a href="#toc" class="tocref">⇧</a>Table dbo.PersonEmail</h2>
+        <p>Contais Email for Person</p>
+        <table>
+            <caption>Table ID: 1200059361; Created: December 21, 2017, 15:32:41; Modified: December 22, 2017, 16:33:03</caption>
+            <thead>
+                <tr>
+                    <th style="width:30ex">Name</th>
+                    <th style="width:20ex">Type</th>
+                    <th style="width:4ex">NULL</th>
+                    <th>Comment</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th><span class="pk" title="PRIMARY KEY PK_PersonEmail">◆</span>Id</th>
+                    <td class="type">int</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag">IDENTITY</span>Primary key for Address records.</td>
+                </tr>
+                <tr>
+                    <th>EmailId</th>
+                    <td class="type">int</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag" title="FK_PersonEmail_Email">⇨ <a href="#1152059190">dbo.Email</a>.EmailID</span>Foreign key to Email.EmailID</td>
+                </tr>
+                <tr>
+                    <th>PersonId</th>
+                    <td class="type">int</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag" title="FK_PersonEmail_Person">⇨ <a href="#608057252">dbo.Person</a>.PersonId</span>Foreign key to Company.CompanyID</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="table">
+        <h2 id="1868585745"><a href="#toc" class="tocref">⇧</a>Table dbo.PersonPhone</h2>
+        <p>Contains Phone of people</p>
+        <table>
+            <caption>Table ID: 1868585745; Created: December 21, 2017, 16:28:28; Modified: December 22, 2017, 16:34:37</caption>
+            <thead>
+                <tr>
+                    <th style="width:30ex">Name</th>
+                    <th style="width:20ex">Type</th>
+                    <th style="width:4ex">NULL</th>
+                    <th>Comment</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th><span class="pk" title="PRIMARY KEY PK_PersonPhone">◆</span>Id</th>
+                    <td class="type">int</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag">IDENTITY</span>Primary key for Address records.</td>
+                </tr>
+                <tr>
+                    <th>PhoneId</th>
+                    <td class="type">int</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag" title="FK_PersonPhone_Phone">⇨ <a href="#1504060444">dbo.Phone</a>.PhoneId</span>Foreign key to Phone.PhoneID</td>
+                </tr>
+                <tr>
+                    <th>PersonId</th>
+                    <td class="type">int</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag" title="FK_PersonPhone_Person">⇨ <a href="#608057252">dbo.Person</a>.PersonId</span>Foreign key to Company.CompanyID</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="table">
+        <h2 id="1504060444"><a href="#toc" class="tocref">⇧</a>Table dbo.Phone</h2>
+        <p>Contains All fone using in this system</p>
+        <table>
+            <caption>Table ID: 1504060444; Created: December 21, 2017, 15:35:37; Modified: December 22, 2017, 16:35:35</caption>
+            <thead>
+                <tr>
+                    <th style="width:30ex">Name</th>
+                    <th style="width:20ex">Type</th>
+                    <th style="width:4ex">NULL</th>
+                    <th>Comment</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th><span class="pk" title="PRIMARY KEY PK_Phone">◆</span>PhoneId</th>
+                    <td class="type">int</td>
+                    <td class="null">☐</td>
+                    <td>Primary key for Address records.</td>
+                </tr>
+                <tr>
+                    <th>BusinessEntityID</th>
+                    <td class="type">int</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag" title="FK_Phone_BusinessEntity">⇨ <a href="#1043534801">dbo.BusinessEntity</a>.BusinessEntityID</span>Foreign key to BusinessEntity.BusinessEntityID, Used for Application Filter.</td>
+                </tr>
+                <tr>
+                    <th>Phone</th>
+                    <td class="type">varchar (50)</td>
+                    <td class="null">☐</td>
+                    <td>Address email</td>
+                </tr>
+                <tr>
+                    <th>Type</th>
+                    <td class="type">char (2)</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag">DEFAULT ('CN')</span>Primary type OR = Phone Order; PR = Promotional; IN = Info;  CN = Contact</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="table">
+        <h2 id="731201705"><a href="#toc" class="tocref">⇧</a>Table dbo.Product</h2>
+        <p>Products sold or used in the manfacturing of sold products.</p>
+        <table>
+            <caption>Table ID: 731201705; Created: December 22, 2017, 14:50:57; Modified: December 22, 2017, 16:39:58</caption>
+            <thead>
+                <tr>
+                    <th style="width:30ex">Name</th>
+                    <th style="width:20ex">Type</th>
+                    <th style="width:4ex">NULL</th>
+                    <th>Comment</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th><span class="pk" title="PRIMARY KEY PK_Product">◆</span>ProductId</th>
+                    <td class="type">int</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag">IDENTITY</span>Primary key for Product records.</td>
+                </tr>
+                <tr>
+                    <th>BusinessEntityID</th>
+                    <td class="type">int</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag" title="FK_Product_BusinessEntity">⇨ <a href="#1043534801">dbo.BusinessEntity</a>.BusinessEntityID</span>Foreign key to BusinessEntity.BusinessEntityID, Used for Application Filter.</td>
+                </tr>
+                <tr>
+                    <th>Name</th>
+                    <td class="type">varchar (120)</td>
+                    <td class="null">☐</td>
+                    <td>Name of the product.</td>
+                </tr>
+                <tr>
+                    <th>ProductNumber</th>
+                    <td class="type">varchar (30)</td>
+                    <td class="null">☐</td>
+                    <td>Unique product identification number.</td>
+                </tr>
+                <tr>
+                    <th>Manufacturer</th>
+                    <td class="type">varchar (100)</td>
+                    <td class="null">☒</td>
+                    <td>Manufacture name</td>
+                </tr>
+                <tr>
+                    <th>Ean</th>
+                    <td class="type">varchar (100)</td>
+                    <td class="null">☒</td>
+                    <td>Code for EAN / R CODE</td>
+                </tr>
+                <tr>
+                    <th>HsCode</th>
+                    <td class="type">varchar (30)</td>
+                    <td class="null">☒</td>
+                    <td>HS Code (Harmony System)</td>
+                </tr>
+                <tr>
+                    <th>HsCodeTax</th>
+                    <td class="type">varchar (30)</td>
+                    <td class="null">☒</td>
+                    <td>Tax for HS Code</td>
+                </tr>
+                <tr>
+                    <th>Location</th>
+                    <td class="type">varchar (50)</td>
+                    <td class="null">☒</td>
+                    <td>Location this Product on Stock</td>
+                </tr>
+                <tr>
+                    <th>MakeFlag</th>
+                    <td class="type">bit</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag">DEFAULT ((0))</span>0 = Product is purchased, 1 = Product is manufactured in-house.</td>
+                </tr>
+                <tr>
+                    <th>VariableFlag</th>
+                    <td class="type">bit</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag">DEFAULT ((0))</span>0 = Product is not variable. 1 = Product is variable.</td>
+                </tr>
+                <tr>
+                    <th>FinishedGoodsFlag</th>
+                    <td class="type">bit</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag">DEFAULT ((1))</span>0 = Product is not a salable item. 1 = Product is salable.</td>
+                </tr>
+                <tr>
+                    <th>SafetyStockLevel</th>
+                    <td class="type">numeric (12, 4)</td>
+                    <td class="null">☒</td>
+                    <td>Minimum inventory quantity. </td>
+                </tr>
+                <tr>
+                    <th>MaximumStocklevel</th>
+                    <td class="type">numeric (12, 4)</td>
+                    <td class="null">☒</td>
+                    <td>Maximum  inventory quantity. </td>
+                </tr>
+                <tr>
+                    <th>ReorderPoint</th>
+                    <td class="type">numeric (12, 4)</td>
+                    <td class="null">☒</td>
+                    <td><span class="flag">DEFAULT ((0))</span>Inventory level that triggers a purchase order or work order. </td>
+                </tr>
+                <tr>
+                    <th>StandardCost</th>
+                    <td class="type">numeric (12, 4)</td>
+                    <td class="null">☒</td>
+                    <td><span class="flag">DEFAULT ((0))</span>Standard cost of the product.</td>
+                </tr>
+                <tr>
+                    <th>ListPrice</th>
+                    <td class="type">numeric (12, 4)</td>
+                    <td class="null">☒</td>
+                    <td><span class="flag">DEFAULT ((0))</span>Selling price.</td>
+                </tr>
+                <tr>
+                    <th>SizeUnitMeasureCode</th>
+                    <td class="type">char (3)</td>
+                    <td class="null">☒</td>
+                    <td>Unit of measure for Size column.</td>
+                </tr>
+                <tr>
+                    <th>Weight</th>
+                    <td class="type">numeric (12, 4)</td>
+                    <td class="null">☒</td>
+                    <td>Product weight.</td>
+                </tr>
+                <tr>
+                    <th>WeightTotal</th>
+                    <td class="type">numeric (12, 4)</td>
+                    <td class="null">☒</td>
+                    <td>Total Product weight.</td>
+                </tr>
+                <tr>
+                    <th>Height</th>
+                    <td class="type">numeric (10, 3)</td>
+                    <td class="null">☒</td>
+                    <td>Height</td>
+                </tr>
+                <tr>
+                    <th>Width</th>
+                    <td class="type">numeric (10, 3)</td>
+                    <td class="null">☒</td>
+                    <td>Width</td>
+                </tr>
+                <tr>
+                    <th>Length</th>
+                    <td class="type">numeric (10, 3)</td>
+                    <td class="null">☒</td>
+                    <td>Length</td>
+                </tr>
+                <tr>
+                    <th>DaysToManufacture</th>
+                    <td class="type">int</td>
+                    <td class="null">☒</td>
+                    <td>Number of days required to manufacture the product.</td>
+                </tr>
+                <tr>
+                    <th>ProductAttribute</th>
+                    <td class="type">xml (max)</td>
+                    <td class="null">☒</td>
+                    <td>Attibute for this product</td>
+                </tr>
+                <tr>
+                    <th>ProductSourceID</th>
+                    <td class="type">int</td>
+                    <td class="null">☒</td>
+                    <td>Source for Product , 0 = National,1  = Imported ,2 = Purchase Nat. Bu Imported</td>
+                </tr>
+                <tr>
+                    <th>ProductClassID</th>
+                    <td class="type">int</td>
+                    <td class="null">☒</td>
+                    <td><span class="flag" title="FK_Product_ProductClass">⇨ <a href="#60579304">dbo.ProductClass</a>.ProductClassId</span>Class for Product , ForenKey to ProductClass</td>
+                </tr>
+                <tr>
+                    <th>ProductCategoryID</th>
+                    <td class="type">int</td>
+                    <td class="null">☒</td>
+                    <td><span class="flag" title="FK_Product_ProductCategory">⇨ <a href="#124579532">dbo.ProductCategory</a>.ProductCategoryId</span>Product is a member of this product subcategory. Foreign key to ProductSubCategory.ProductSubCategoryID. </td>
+                </tr>
+                <tr>
+                    <th>TaxGroupId</th>
+                    <td class="type">int</td>
+                    <td class="null">☒</td>
+                    <td><span class="flag" title="FK_Product_ProductTax">⇨ <a href="#409104548">dbo.TaxGroup</a>.TaxGroupId</span>Group Tax for this Product</td>
+                </tr>
+                <tr>
+                    <th>TaxIva</th>
+                    <td class="type">numeric (5, 2)</td>
+                    <td class="null">☒</td>
+                    <td>IVA Tax</td>
+                </tr>
+                <tr>
+                    <th>TaxImport</th>
+                    <td class="type">numeric (5, 2)</td>
+                    <td class="null">☒</td>
+                    <td>Tax Import like II</td>
+                </tr>
+                <tr>
+                    <th>TaxProduction</th>
+                    <td class="type">numeric (5, 2)</td>
+                    <td class="null">☒</td>
+                    <td>Tax for production on this product</td>
+                </tr>
+                <tr>
+                    <th>TaxSale</th>
+                    <td class="type">numeric (5, 2)</td>
+                    <td class="null">☒</td>
+                    <td>Tax for sale this product</td>
+                </tr>
+                <tr>
+                    <th>SellStartDate</th>
+                    <td class="type">datetime</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag">DEFAULT (getdate())</span>Date the product was available for sale.</td>
+                </tr>
+                <tr>
+                    <th>SellEndDate</th>
+                    <td class="type">datetime</td>
+                    <td class="null">☒</td>
+                    <td>Date the product was no longer available for sale.</td>
+                </tr>
+                <tr>
+                    <th>ModifiedDate</th>
+                    <td class="type">datetime</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag">DEFAULT (getdate())</span>Date and time the record was last updated.</td>
+                </tr>
+                <tr>
+                    <th>Active</th>
+                    <td class="type">bit</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag">DEFAULT ((1))</span>0 = Not Active; 1 = Active</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="table">
+        <h2 id="124579532"><a href="#toc" class="tocref">⇧</a>Table dbo.ProductCategory</h2>
+        <p>Category Using in Product</p>
+        <table>
+            <caption>Table ID: 124579532; Created: December 21, 2017, 16:02:48; Modified: December 22, 2017, 16:43:58</caption>
+            <thead>
+                <tr>
+                    <th style="width:30ex">Name</th>
+                    <th style="width:20ex">Type</th>
+                    <th style="width:4ex">NULL</th>
+                    <th>Comment</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th><span class="pk" title="PRIMARY KEY PK_ProductCategory">◆</span>ProductCategoryId</th>
+                    <td class="type">int</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag">IDENTITY</span>Primary key for Product records.</td>
+                </tr>
+                <tr>
+                    <th>BusinessEntityID</th>
+                    <td class="type">int</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag" title="FK_ProductCategory_BusinessEntity">⇨ <a href="#1043534801">dbo.BusinessEntity</a>.BusinessEntityID</span>Foreign key to BusinessEntity.BusinessEntityID, Used for Application Filter.</td>
+                </tr>
+                <tr>
+                    <th>Name</th>
+                    <td class="type">varchar (120)</td>
+                    <td class="null">☐</td>
+                    <td>Name for Category</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="table">
+        <h2 id="60579304"><a href="#toc" class="tocref">⇧</a>Table dbo.ProductClass</h2>
+        <p>Classified using in product</p>
+        <table>
+            <caption>Table ID: 60579304; Created: December 21, 2017, 16:02:16; Modified: December 22, 2017, 16:44:14</caption>
+            <thead>
+                <tr>
+                    <th style="width:30ex">Name</th>
+                    <th style="width:20ex">Type</th>
+                    <th style="width:4ex">NULL</th>
+                    <th>Comment</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th><span class="pk" title="PRIMARY KEY PK_ProductClass">◆</span>ProductClassId</th>
+                    <td class="type">int</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag">IDENTITY</span>Primary key for Product records.</td>
+                </tr>
+                <tr>
+                    <th>BusinessEntityID</th>
+                    <td class="type">int</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag" title="FK_ProductClass_BusinessEntity">⇨ <a href="#1043534801">dbo.BusinessEntity</a>.BusinessEntityID</span>Foreign key to BusinessEntity.BusinessEntityID, Used for Application Filter.</td>
+                </tr>
+                <tr>
+                    <th>Name</th>
+                    <td class="type">varchar (120)</td>
+                    <td class="null">☐</td>
+                    <td>Name for Class Product</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="table">
+        <h2 id="508580900"><a href="#toc" class="tocref">⇧</a>Table dbo.ProductImage</h2>
+        <p>Images for products</p>
+        <table>
+            <caption>Table ID: 508580900; Created: December 21, 2017, 16:05:23; Modified: December 22, 2017, 16:45:00</caption>
+            <thead>
+                <tr>
+                    <th style="width:30ex">Name</th>
+                    <th style="width:20ex">Type</th>
+                    <th style="width:4ex">NULL</th>
+                    <th>Comment</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th><span class="pk" title="PRIMARY KEY PK_ProductImage">◆</span>id</th>
+                    <td class="type">int</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag">IDENTITY</span>Primary key for this recors Images x products.</td>
+                </tr>
+                <tr>
+                    <th>ImageId</th>
+                    <td class="type">int</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag" title="FK_ProductImage_Image">⇨ <a href="#1548584605">dbo.Image</a>.ImageId</span>Product photo identification number. Foreign key to Image.ImageID.</td>
+                </tr>
+                <tr>
+                    <th>ProductId</th>
+                    <td class="type">int</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag" title="FK_ProductImage_Product">⇨ <a href="#731201705">dbo.Product</a>.ProductId</span>Product identification number. Foreign key to Product.ProductID.</td>
+                </tr>
+                <tr>
+                    <th>IsPrimary</th>
+                    <td class="type">bit</td>
+                    <td class="null">☒</td>
+                    <td><span class="flag">DEFAULT ((0))</span>Make is primary image</td>
+                </tr>
+                <tr>
+                    <th>CreateDate</th>
+                    <td class="type">datetime</td>
+                    <td class="null">☒</td>
+                    <td><span class="flag">DEFAULT (getdate())</span>Create Date</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="table">
+        <h2 id="1902681876"><a href="#toc" class="tocref">⇧</a>Table dbo.Revenue</h2>
+        <p>Contains Account for Receivables, Receiables</p>
+        <table>
+            <caption>Table ID: 1902681876; Created: December 22, 2017, 13:07:14; Modified: December 22, 2017, 16:46:34</caption>
+            <thead>
+                <tr>
+                    <th style="width:30ex">Name</th>
+                    <th style="width:20ex">Type</th>
+                    <th style="width:4ex">NULL</th>
+                    <th>Comment</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th><span class="pk" title="PRIMARY KEY PK_Account">◆</span>RevenueId</th>
+                    <td class="type">int</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag">IDENTITY</span>Primary key. Unique identifier of this record.</td>
+                </tr>
+                <tr>
+                    <th>BusinessEntityID</th>
+                    <td class="type">int</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag" title="FK_Revenue_BusinessEntity">⇨ <a href="#1043534801">dbo.BusinessEntity</a>.BusinessEntityID</span>Foreign key to BusinessEntity.BusinessEntityID, Used for Application Filter.</td>
+                </tr>
+                <tr>
+                    <th>RevenueNumber</th>
+                    <td class="type">varchar (30)</td>
+                    <td class="null">☒</td>
+                    <td>Number this account</td>
+                </tr>
+                <tr>
+                    <th>Name</th>
+                    <td class="type">varchar (80)</td>
+                    <td class="null">☐</td>
+                    <td>Name of account </td>
+                </tr>
+                <tr>
+                    <th>PersonId</th>
+                    <td class="type">int</td>
+                    <td class="null">☒</td>
+                    <td><span class="flag" title="FK_Revenue_Person">⇨ <a href="#608057252">dbo.Person</a>.PersonId</span>Person related to this account</td>
+                </tr>
+                <tr>
+                    <th>ChartAccountId</th>
+                    <td class="type">int</td>
+                    <td class="null">☒</td>
+                    <td><span class="flag" title="FK_Revenue_FinancialCategory">⇨ <a href="#322152243">dbo.ChartAccount</a>.ChartAccountId</span>Category for this account. ForenKey to FinancialCategory.Id</td>
+                </tr>
+                <tr>
+                    <th>CostCenterId</th>
+                    <td class="type">int</td>
+                    <td class="null">☒</td>
+                    <td><span class="flag" title="FK_Revenue_FinancialCostCenter">⇨ <a href="#498152870">dbo.CostCenter</a>.CostCenterId</span>Center Of Cost ForenKey to FinancialCostCenter.FinancialCostCenterId</td>
+                </tr>
+                <tr>
+                    <th>PaymentConditionId</th>
+                    <td class="type">int</td>
+                    <td class="null">☒</td>
+                    <td><span class="flag" title="FK_Revenue_PaymentCondition">⇨ <a href="#1362155948">dbo.PaymentCondition</a>.PaymentConditionId</span>Condition Payment ForenKey to PaymentCondition.PaymentConditionId</td>
+                </tr>
+                <tr>
+                    <th>Total</th>
+                    <td class="type">numeric (12, 4)</td>
+                    <td class="null">☒</td>
+                    <td>Total of this Revenue</td>
+                </tr>
+                <tr>
+                    <th>CreateDate</th>
+                    <td class="type">datetime</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag">DEFAULT (getdate())</span>Date and time the record was create. </td>
+                </tr>
+                <tr>
+                    <th>DueDate</th>
+                    <td class="type">date</td>
+                    <td class="null">☒</td>
+                    <td>Date of Due</td>
+                </tr>
+                <tr>
+                    <th>DuePayment</th>
+                    <td class="type">date</td>
+                    <td class="null">☒</td>
+                    <td>Date payment</td>
+                </tr>
+                <tr>
+                    <th>Comment</th>
+                    <td class="type">varchar (250)</td>
+                    <td class="null">☒</td>
+                    <td>Comments/Description for this Revenue</td>
+                </tr>
+                <tr>
+                    <th>ModifiedDate</th>
+                    <td class="type">datetime</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag">DEFAULT (getdate())</span>Date and time the record was last updated.</td>
+                </tr>
+                <tr>
+                    <th>Deleted</th>
+                    <td class="type">bit</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag">DEFAULT ((0))</span>0 = This record was not marked as deleted. 1 = This record was marked to deleted.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="table">
+        <h2 id="1363535941"><a href="#toc" class="tocref">⇧</a>Table dbo.StateProvince</h2>
+        <p>States Provinces</p>
+        <table>
+            <caption>Table ID: 1363535941; Created: December 21, 2017, 12:03:13; Modified: December 22, 2017, 16:48:01</caption>
+            <thead>
+                <tr>
+                    <th style="width:30ex">Name</th>
+                    <th style="width:20ex">Type</th>
+                    <th style="width:4ex">NULL</th>
+                    <th>Comment</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th><span class="pk" title="PRIMARY KEY PK_StateProvince">◆</span>StateProvinceId</th>
+                    <td class="type">int</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag">IDENTITY</span>Primary key for StateProvince records.</td>
+                </tr>
+                <tr>
+                    <th>StateProvinceCode</th>
+                    <td class="type">varchar (50)</td>
+                    <td class="null">☐</td>
+                    <td>ISO standard state or province code.</td>
+                </tr>
+                <tr>
+                    <th>IsOnlyStateProvinceFlag</th>
+                    <td class="type">bit</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag">DEFAULT ((1))</span>0 = StateProvinceCode exists. 1 = StateProvinceCode unavailable, using CountryRegionCode.</td>
+                </tr>
+                <tr>
+                    <th>Name</th>
+                    <td class="type">varchar (80)</td>
+                    <td class="null">☐</td>
+                    <td>State or province description.</td>
+                </tr>
+                <tr>
+                    <th>CountryRegionId</th>
+                    <td class="type">int</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag" title="FK_StateProvince_Territory">⇨ <a href="#1155535200">dbo.Country</a>.CountryId</span>ID of the Country Regon in which the state or province is located. Foreign key to CountryRegion.CountryRegionID.</td>
+                </tr>
+                <tr>
+                    <th>CreateDate</th>
+                    <td class="type">datetime</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag">DEFAULT (getdate())</span>Date and time the record was create. </td>
+                </tr>
+                <tr>
+                    <th>ModifiedDate</th>
+                    <td class="type">datetime</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag">DEFAULT (getdate())</span>Date and time the record was last updated.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="table">
+        <h2 id="210099789"><a href="#toc" class="tocref">⇧</a>Table dbo.sysdiagrams</h2>
+        <table>
+            <caption>Table ID: 210099789; Created: September 10, 2016, 19:11:53</caption>
+            <thead>
+                <tr>
+                    <th style="width:30ex">Name</th>
+                    <th style="width:20ex">Type</th>
+                    <th style="width:4ex">NULL</th>
+                    <th>Comment</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th>name</th>
+                    <td class="type">nvarchar (128)</td>
+                    <td class="null">☐</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th>principal_id</th>
+                    <td class="type">int</td>
+                    <td class="null">☐</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th><span class="pk" title="PRIMARY KEY PK__sysdiagr__C2B05B61F473B963">◆</span>diagram_id</th>
+                    <td class="type">int</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag">IDENTITY</span></td>
+                </tr>
+                <tr>
+                    <th>version</th>
+                    <td class="type">int</td>
+                    <td class="null">☒</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th>definition</th>
+                    <td class="type">varbinary (max)</td>
+                    <td class="null">☒</td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="table">
+        <h2 id="1321107797"><a href="#toc" class="tocref">⇧</a>Table dbo.Tax</h2>
+        <p>Table Save Rules for apply tax in Invoice</p>
+        <table>
+            <caption>Table ID: 1321107797; Created: December 21, 2017, 17:03:11; Modified: December 22, 2017, 17:26:05</caption>
+            <thead>
+                <tr>
+                    <th style="width:30ex">Name</th>
+                    <th style="width:20ex">Type</th>
+                    <th style="width:4ex">NULL</th>
+                    <th>Comment</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th><span class="pk" title="PRIMARY KEY PK_Tax">◆</span>TaxId</th>
+                    <td class="type">int</td>
+                    <td class="null">☐</td>
+                    <td>Primary key of this record </td>
+                </tr>
+                <tr>
+                    <th>BusinessEntityID</th>
+                    <td class="type">int</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag" title="FK_Tax_BusinessEntity">⇨ <a href="#1043534801">dbo.BusinessEntity</a>.BusinessEntityID</span>Foreign key to BusinessEntity.BusinessEntityID, Used for Application Filter.</td>
+                </tr>
+                <tr>
+                    <th>TaxOperationId</th>
+                    <td class="type">int</td>
+                    <td class="null">☐</td>
+                    <td>Name Of Tax Operation</td>
+                </tr>
+                <tr>
+                    <th>ProductTaxId</th>
+                    <td class="type">char (2)</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag">DEFAULT ('SL')</span>Function of this Tax SL = Sales; DV = Return Request; NT = Not Applicate; TR = Transfer; </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="table">
+        <h2 id="409104548"><a href="#toc" class="tocref">⇧</a>Table dbo.TaxGroup</h2>
+        <p>Group for Tax. Using in Product Tax</p>
+        <table>
+            <caption>Table ID: 409104548; Created: December 21, 2017, 16:56:56; Modified: December 22, 2017, 16:54:59</caption>
+            <thead>
+                <tr>
+                    <th style="width:30ex">Name</th>
+                    <th style="width:20ex">Type</th>
+                    <th style="width:4ex">NULL</th>
+                    <th>Comment</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th><span class="pk" title="PRIMARY KEY PK_ProductTax">◆</span>TaxGroupId</th>
+                    <td class="type">int</td>
+                    <td class="null">☐</td>
+                    <td>Primary key for Product records.</td>
+                </tr>
+                <tr>
+                    <th>BusinessEntityID</th>
+                    <td class="type">int</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag" title="FK_ProductTax_BusinessEntity">⇨ <a href="#1043534801">dbo.BusinessEntity</a>.BusinessEntityID</span>Foreign key to BusinessEntity.BusinessEntityID, Used for Application Filter.</td>
+                </tr>
+                <tr>
+                    <th>Name</th>
+                    <td class="type">varchar (120)</td>
+                    <td class="null">☐</td>
+                    <td>Name of the product.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="table">
+        <h2 id="313104206"><a href="#toc" class="tocref">⇧</a>Table dbo.TaxOperation</h2>
+        <p>Operation tax, using for Invoice And Tax</p>
+        <table>
+            <caption>Table ID: 313104206; Created: December 21, 2017, 16:45:00; Modified: December 22, 2017, 17:26:05</caption>
+            <thead>
+                <tr>
+                    <th style="width:30ex">Name</th>
+                    <th style="width:20ex">Type</th>
+                    <th style="width:4ex">NULL</th>
+                    <th>Comment</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th><span class="pk" title="PRIMARY KEY PK_TaxOperation">◆</span>TaxOperationId</th>
+                    <td class="type">int</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag">IDENTITY</span>Primary key of this record </td>
+                </tr>
+                <tr>
+                    <th>BusinessEntityID</th>
+                    <td class="type">int</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag" title="FK_TaxOperation_BusinessEntity">⇨ <a href="#1043534801">dbo.BusinessEntity</a>.BusinessEntityID</span>Foreign key to BusinessEntity.BusinessEntityID, Used for Application Filter.</td>
+                </tr>
+                <tr>
+                    <th>Name</th>
+                    <td class="type">varchar (80)</td>
+                    <td class="null">☐</td>
+                    <td>Name Of Tax Operation</td>
+                </tr>
+                <tr>
+                    <th>TaxFunction</th>
+                    <td class="type">char (2)</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag">DEFAULT ('SL')</span>Function of this Tax SL = Sales; DV = Return Request; NT = Not Applicate; TR = Transfer; </td>
+                </tr>
+                <tr>
+                    <th>TaxWay</th>
+                    <td class="type">char (2)</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag">DEFAULT ('O')</span>O = Out; I = In</td>
+                </tr>
+                <tr>
+                    <th>DefaultCode</th>
+                    <td class="type">char (4)</td>
+                    <td class="null">☐</td>
+                    <td>Special Code State like CFOP</td>
+                </tr>
+                <tr>
+                    <th>StockTrigger</th>
+                    <td class="type">bit</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag">DEFAULT ((1))</span>Trigger to move stock; If 1 = All products are move in stock; 0 = Not move stock</td>
+                </tr>
+                <tr>
+                    <th>CostTrigger</th>
+                    <td class="type">bit</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag">DEFAULT ((1))</span>Trigger to move cost product; If 1 = buy product are make history in Cost</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="table">
+        <h2 id="661629450"><a href="#toc" class="tocref">⇧</a>Table dbo.Warehouse</h2>
+        <p>Warehouse using for stock production and location</p>
+        <table>
+            <caption>Table ID: 661629450; Created: December 22, 2017, 08:02:02; Modified: December 22, 2017, 16:56:58</caption>
+            <thead>
+                <tr>
+                    <th style="width:30ex">Name</th>
+                    <th style="width:20ex">Type</th>
+                    <th style="width:4ex">NULL</th>
+                    <th>Comment</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th><span class="pk" title="PRIMARY KEY PK_Warehouse">◆</span>WarehouseId</th>
+                    <td class="type">int</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag">IDENTITY</span>Primary key. Unique identifier of this record.</td>
+                </tr>
+                <tr>
+                    <th>BusinessEntityID</th>
+                    <td class="type">int</td>
+                    <td class="null">☐</td>
+                    <td>Foreign key to BusinessEntity.BusinessEntityID, Used for Application Filter.</td>
+                </tr>
+                <tr>
+                    <th>Name</th>
+                    <td class="type">varchar (50)</td>
+                    <td class="null">☒</td>
+                    <td>Name of this Warehouse</td>
+                </tr>
+                <tr>
+                    <th>CreateDate</th>
+                    <td class="type">datetime</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag">DEFAULT (getdate())</span>Date and time the record was create. </td>
+                </tr>
+                <tr>
+                    <th>ModifiedDate</th>
+                    <td class="type">datetime</td>
+                    <td class="null">☐</td>
+                    <td><span class="flag">DEFAULT (getdate())</span>Date and time the record was last updated.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="table">
+        <h2 id="309576141"><a href="#toc" class="tocref">⇧</a>View dbo.GetNewID</h2>
+        <table>
+            <caption>Table ID: 309576141; Created: June 17, 2016, 11:13:32; Modified: June 17, 2016, 11:16:16</caption>
+            <thead>
+                <tr>
+                    <th style="width:30ex">Name</th>
+                    <th style="width:20ex">Type</th>
+                    <th style="width:4ex">NULL</th>
+                    <th>Comment</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th>NewID</th>
+                    <td class="type">uniqueidentifier</td>
+                    <td class="null">☒</td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="footer">
+        Generated by <a href="http://SqlDbDoc.codeplex.com/">DB&gt;doc</a> on
+        December 22, 2017, 19:30:16
+    </div>
+</body>
+</html>

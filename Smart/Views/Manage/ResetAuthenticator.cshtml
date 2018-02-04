@@ -1,0 +1,20 @@
+﻿@{
+    ViewData["Title"] = "Reset authenticator key";
+    ViewData.AddActivePage(ManageNavPages.TwoFactorAuthentication);
+}
+<h4>@ViewData["Title"]</h4>
+<div class="alert alert-warning" role="alert">
+    <p>
+        <span class="glyphicon glyphicon-warning-sign"></span>
+        <strong>@LoginLocalizer["Se você resetar sua chave de autenticação, o aplicativo de autenticação não irá funcionar, e então deverá gerar outra chave"].</strong>
+    </p>
+    <p>
+        @LoginLocalizer["Este processo irá desabilitar o 2FA até que você re-configure novamente a autenticação e irá perder os códigos de recuperação"].
+        @LoginLocalizer["Se você não completar a configuração no aplicativo autenticador, você irá perder o acesso a sua conta"].
+    </p>
+</div>
+<div>
+    <form asp-action="ResetAuthenticator" method="post" class="form-group">
+        <button class="btn btn-danger" type="submit">@LoginLocalizer["Resetar chaves de autenticação"]</button>
+</form>
+</div>

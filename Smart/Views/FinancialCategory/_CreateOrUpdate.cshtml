@@ -1,0 +1,30 @@
+@model Core.Domain.Finance.CategoryFinancial
+   @{ Layout = null; }
+    @Html.HiddenFor(a => a.ChartAccountId)
+    @Html.HiddenFor(a => a.BusinessEntityId)
+<div class="controls">
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label asp-for="Name">@Localizer["Nome"]</label>
+                <input asp-for="Name" placeholder="@Localizer["Nome"]" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label asp-for="Type">@Localizer["Tipo da Categoria"]</label>
+                <select asp-for="Type" asp-items="Html.GetEnumSelectList<Core.Fake.FinancialTypeEnum>()" class="form-control"></select>
+                <span asp-validation-for="Type" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <div class="checkbox">
+                    <label>
+                        <input asp-for="Active" type="checkbox" class="checkbox style-0" />
+                        <span><label asp-for="Active">@Localizer["Ativo"]</label></span>
+                    </label>
+                </div>
+            </div>
+        </div>
+</div>

@@ -1,0 +1,206 @@
+﻿@model Smart.Models.Financial.FinancialReportsModel
+@{ ViewData["Title"] = Localizer["Contas a Pagar"]; ViewBag.PageClass = "container"; ViewData.AddActivePageApp(ActivePagesApp.FinanceReports);}
+@{ bool hasrecord = Model.BankTrans == null ? false : Model.BankTrans.Count() > 0 ? true : false; }
+
+
+<div class="row">
+    <div class="col-4">
+        <p class="text-info h3">@Localizer["Extrato"]</p>
+
+    </div>
+
+    <div class="col-2 ml-auto text-right">
+
+        <a class="btn btn-outline-secondary filter" data-toggle="collapse" href="#filter" role="button"
+           aria-expanded="false">@Localizer["Filtros"]</a>
+    </div>
+</div>
+
+
+<div class="collapse multi-collapse collapse @( !hasrecord ? "show" : "" )" id="filter">
+    <form method="post">
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                <label asp-for="suplier">@Localizer["Descrição"]</label>
+                <input asp-for="suplier" placeholder="@Localizer["Descrição"]" class="form-control" />
+            </div>
+            <div class="form-group col-md-2">
+                <label asp-for="dueDateStart">@Localizer["Compensação"]</label>
+                <input asp-for="dueDateStart" placeholder="@Localizer["De"]" class="form-control datepicker" />
+
+            </div>
+            <div class="form-group col-md-2">
+                <label asp-for="dueDateEnd"> <br /></label>
+                <input asp-for="dueDateEnd" placeholder="@Localizer["Até"]" class="form-control datepicker" />
+
+            </div>
+            <div class="form-group col-md-2">
+                <label asp-for="createDateStart">@Localizer["Emissão"]</label>
+                <input asp-for="createDateStart" placeholder="@Localizer["De"]" class="form-control datepicker" />
+
+            </div>
+            <div class="form-group col-md-2">
+                <label asp-for="createDateEnd"> <br /></label>
+                <input asp-for="createDateEnd" placeholder="@Localizer["Até"]" class="form-control datepicker" />
+
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                <label asp-for="value">@Localizer["Total"]</label>
+                <input asp-for="value" placeholder="@Localizer["Total"]" class="form-control"
+                       data-thousands="." data-decimal="," />
+
+            </div>
+
+
+            <div class="form-group col-md-4">
+                <label asp-for="CategoryId">@Localizer["Categoria"]</label>
+                <select asp-for="CategoryId" class="form-control" asp-items="ViewBag.CategoryId">
+                    <option></option>
+                </select>
+            </div>
+
+
+            <div class="form-group col-md-4">
+                <label asp-for="BankId">@Localizer["Banco/Caixa"]</label>
+                <select asp-for="BankId" class="form-control" asp-items="ViewBag.BankId">
+                    <option></option>
+                </select>
+            </div>
+
+        </div>
+
+        <div class="form-row">
+            <div class="col-4">
+                <button type="submit" class="btn btn-success btn-bdr btn-block">@Localizer["Pesquisar"]</button>
+            </div>
+        </div>
+    </form>
+</div>
+<hr />
+
+<div class="collapse multi-collapse show" id="tablerows">
+
+    <div class="row padding-top-15">
+        <div class="col-12">
+            <div class="table-responsive">
+                @if (!hasrecord)
+                {
+                    <div class="no-registry-content">
+                        <div class="text-center">
+                            <div style="font-size:3em; color:darkseagreen">
+                                <i class="fas fa-exclamation-circle"></i>
+                            </div>
+                        </div>
+                        <div class="fade-item">
+                            <h2 class="no-registry-title">
+                                @SharedLocalizer["Nenhum registro de"]  <span class="text-info">@ViewData["Title"]</span> @SharedLocalizer["encontrado"].
+                            </h2>
+                            <a class="btn btn-outline-secondary filter" data-toggle="collapse" href="#filter" role="button">@Localizer["Clique aqui para ver os Filtros"]</a>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="container">
+                        <table id="resultTableCashFlow" class="table table-hover table-sm" cellspacing="0" cellpadding="0">
+                            
+                            <tr class="table-row-body">
+                                <td class="table-item-body text-left">
+                                    <b>@Localizer["Saldo inicial"]:</b>
+                                    <vc:card-bank-trans-fix-stats bank-id="null" time="@ModelCards.BankAmountBefore"
+                                                                  title="Saldo Anterior" ref-date="Model.dueDateStart"
+                                                                  css-card="text-info"
+                                                                  model="@ModelCards.SimpleNumber">
+                                    </vc:card-bank-trans-fix-stats>
+                                </td>
+                           
+                                <td class="table-item-body text-right">
+                                    <b>@Localizer["Saldo Final"]:</b>
+                                    <vc:card-bank-trans-fix-stats bank-id="null" time="@ModelCards.BankAmountBefore"
+                                                                  title="Saldo Anterior" ref-date="Model.dueDateEnd"
+                                                                  css-card="text-info"
+                                                                  model="@ModelCards.SimpleNumber">
+                                    </vc:card-bank-trans-fix-stats>
+                                </td>
+                            </tr>
+                        </table>
+
+                    </div>
+
+                    <table id="resultTable" class="table table-hover table-sm" cellspacing="0" cellpadding="0">
+                        <thead>
+                            <tr>
+                                <th> @Localizer["Número"]</th>
+                                <th> @Localizer["Descrição"]</th>
+                                <th> @Localizer["Lançamento"]</th>
+
+                                <th> @Localizer["Compensação"]</th>
+                                <th> @Localizer["Valor"]</th>
+                                <th> @Localizer["Sinal"]</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model != null)
+                            {
+
+
+                                decimal saldo = 0;
+                                foreach (var item in Model.BankTrans)
+                                {
+                                    string suplier = item.Description.Truncate(20, true);
+                                    if (item.Signal == 1)
+                                    {
+                                        saldo -= item.Total;
+                                    }
+                                    else
+                                    {
+                                        saldo += item.Total;
+                                    };
+                                    <tr class="table-row-body">
+                                        <td class="table-item-body">
+                                            @Html.DisplayFor(modelItem => item.Id)
+                                        </td>
+                                        <td class="table-item-body" data-toggle="tooltip" data-placement="top" title="@Html.DisplayFor(modelItem => item.Description)">
+                                            @suplier
+                                        </td>
+                                        <td class="table-item-body">
+                                            @Html.DisplayFor(modelItem => item.CreateDate)
+                                        </td>
+                                        <td class="table-item-body">
+                                            @Html.DisplayFor(modelItem => item.DueDate)
+                                        </td>
+
+
+                                        <td class="table-item-body">
+                                            @item.Total.ToString("c")
+                                        </td>
+                                        <td class="table-item-body">
+                                            @Enum.GetName(typeof(Core.Fake.DebitAndCredit), item.Signal)
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+
+                    
+                    <div class="text-center">
+                        <a class="btn btn-outline-secondary filter" data-toggle="collapse" href="#filter" role="button">@Localizer["Clique aqui para ver os Filtros"]</a>
+
+                    </div>
+                }
+                <br />
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script>setupTable.tableInitExport("resultTable", 50, 1, 1, 'desc', 3);</script>
+
+     
+}

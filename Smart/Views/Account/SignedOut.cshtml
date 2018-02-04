@@ -1,0 +1,11 @@
+﻿@{
+    ViewData["Title"] = "Signed out";
+}
+<p class="lead text-center">@LoginLocalizer["Logout"]!</p>
+<hr class="my-4">
+<div class="container">
+    <p class="lead">
+        @LoginLocalizer["Você saiu com da apllicação"].
+    </p>
+    Please <a asp-action="Login">@LoginLocalizer["Voltar ao Login"]</a>
+</div>

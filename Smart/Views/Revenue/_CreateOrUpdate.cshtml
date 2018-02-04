@@ -1,0 +1,138 @@
+﻿@model Core.Domain.Finance.Revenue
+@functions{
+    public string GetAntiXsrfRequestToken()
+    {
+        return Xsrf.GetAndStoreTokens(Context).RequestToken;
+    }
+}
+@{ bool isedit = Model.RevenueId > 0; }
+@{ Layout = null; }
+@Html.HiddenFor(a => a.RevenueId)
+@Html.HiddenFor(a => a.ModifiedDate)
+@Html.HiddenFor(a => a.Deleted)
+@Html.HiddenFor(a => a.BusinessEntityId)
+@*@if (isedit)
+{
+    <input type="hidden" asp-for="Total" />
+}*@
+<div class="controls">
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label asp-for="Name">@Localizer["Nome da Conta"]</label>
+            <input asp-for="Name" placeholder="@Localizer["Nome da Conta"]" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-6">
+            <label asp-for="CategoryId">@Localizer["Categoria"]</label>
+            <select asp-for="CategoryId" class="form-control" asp-items="ViewBag.CategoryId">
+                <option></option>
+            </select>
+            <span asp-validation-for="CategoryId" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-4">
+            <label asp-for="PersonId">@Localizer["Cliente/Fornecedor"]</label>
+            <select asp-for="PersonId" class="form-control" asp-items="ViewBag.PersonId">
+                <option></option>
+            </select>
+            <span asp-validation-for="PersonId" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-4">
+            <label asp-for="DueDate">@Localizer["Vencimento"]</label>
+            <input asp-for="DueDate" placeholder="@Localizer["Vencimento"]" class="form-control datepicker" />
+            <span asp-validation-for="DueDate" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-4">
+            <label asp-for="Total">@Localizer["Total"]</label>
+            <input asp-for="Total" placeholder="@Localizer["Total"]" disabled="@isedit" class="form-control" 
+                   data-thousands="." data-decimal="," />
+            <span asp-validation-for="Total" class="text-danger"></span>
+        </div>
+    </div>
+    <br />
+    <p>
+        <a class="btn btn-outline-link" data-toggle="collapse" href="#multiCollapseDetails" role="button"
+           aria-expanded="false" aria-controls="multiCollapseExample1"><i class="fas fa-sort-down"></i>&nbsp;@Localizer["Detalhes da Conta"]</a>
+    </p>
+    <div class="collapse multi-collapse collapse" id="multiCollapseDetails">
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                <label asp-for="CreateDate">@Localizer["Data Criação"]</label>
+                <input asp-for="CreateDate" placeholder="@Localizer["Data Criação"]" class="form-control datepicker" />
+                <span asp-validation-for="CreateDate" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-4">
+                <label asp-for="RevenueNumber">@Localizer["Número da Conta"]</label>
+                <input asp-for="RevenueNumber" placeholder="@Localizer["Número da Conta"]" class="form-control" />
+                <span asp-validation-for="RevenueNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-4">
+                <label asp-for="PaymentConditionId">@Localizer["Forma de Pagamento"]</label>
+                <select asp-for="PaymentConditionId" class="form-control " asp-items="ViewBag.PaymentConditionId">
+                    <option></option>
+                </select>
+                <span asp-validation-for="PaymentConditionId" class="text-danger"></span>
+            </div>
+        </div>
+        @if (!isedit)
+        {
+            <div class="form-row">
+                <div class="form-group col-md-2">
+                    <label asp-for="RevenueTotalSeq">@Localizer["Total de Parcelas"]</label>
+                </div>
+                <div class="form-group col-md-2">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-2">
+                    <input asp-for="RevenueTotalSeq"
+                           onchange="ChangeParcela(tableparcelas,btGeraParcela, this.value)"
+                           onclick="ChangeParcela(tableparcelas,btGeraParcela, this.value)"
+                           placeholder="@Localizer["Total de Parcelas"]" class="form-control" />
+                </div>
+                <div class="form-group col-md-2">
+                    <a class="btn btn-light btn-bdr" style="visibility: hidden;" id="btGeraParcela" data-url="@Url.Action("GetSplit", "Revenue")" data-token="@GetAntiXsrfRequestToken()"> Gerar Parcelas</a>
+                </div>
+            </div>
+        }
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <table id="tableparcelas" class="table table-bordered table-hover">
+                    @*<thead>
+                            <tr>
+                                <th>Parcela</th>
+                                <th>Vencimento</th>
+                                <th>Valor</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>*@
+                </table>
+            </div>
+        </div>
+        <hr class="mr-4" />
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label asp-for="CostCenterId">@Localizer["Centro de Custo"]</label>
+                <select asp-for="CostCenterId" class="form-control" asp-items="ViewBag.CostCenterId">
+                    <option></option>
+                </select>
+                <span asp-validation-for="CostCenterId" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-6">
+                <label asp-for="DuePayment">@Localizer["Data de Pagamento"]</label>
+                <input asp-for="DuePayment" placeholder="@Localizer["Data de Pagamento"]" class="form-control datepicker" />
+                <span asp-validation-for="DuePayment" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label asp-for="Comment">@Localizer["Obs"]</label>
+                <textarea asp-for="Comment" placeholder="@Localizer["Obs"]" class="form-control"></textarea>
+                <span asp-validation-for="Comment" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+    <hr class="mr-4" />
+</div>

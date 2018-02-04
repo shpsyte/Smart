@@ -1,0 +1,169 @@
+﻿@model Smart.Models.PersonModel.PersonModel
+@{ Layout = null; }
+@Html.HiddenFor(a => a.PersonId)
+@Html.HiddenFor(a => a.AddressId)
+@Html.HiddenFor(a => a.CreateDate)
+@Html.HiddenFor(a => a.ModifiedDate)
+@Html.HiddenFor(a => a.Deleted)
+@Html.HiddenFor(a => a.BusinessEntityId)
+@Html.HiddenFor(a => a.Image)
+@Html.HiddenFor(a => a.avatarImage)
+@Html.HiddenFor(a => a.PersonCode)
+<div class="controls">
+    <div class="form-row">
+        <div class="form-group col-md-4">
+            <label asp-for="Type">@Localizer["Tipo de Pessoa"]</label>
+            <select asp-for="Type" asp-items="Html.GetEnumSelectList<Core.Fake.ClassPersonEnum>()" class="form-control"></select>
+            <span asp-validation-for="Type" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-4">
+            <label asp-for="RegistrationCode">@Localizer["Cnpj/Cpf"]</label>
+            <input asp-for="RegistrationCode" placeholder="@Localizer["Cnpj/Cpf"]" class="form-control" />
+            <span asp-validation-for="RegistrationCode" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-4">
+            <label asp-for="FirstName">@Localizer["Razão"]</label>
+            <input asp-for="FirstName" placeholder="@Localizer["Razão"]" class="form-control" />
+            <span asp-validation-for="FirstName" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-4">
+            <label asp-for="LastName">@Localizer["Fantasia"]</label>
+            <input asp-for="LastName" placeholder="@Localizer["Fantasia"]" class="form-control" />
+            <span asp-validation-for="LastName" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-4">
+            <label asp-for="RegistrationState">@Localizer["Incrição Estadual"]</label>
+            <input asp-for="RegistrationState" placeholder="@Localizer["Incrição Estadual"]" class="form-control" />
+            <span asp-validation-for="RegistrationState" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-4">
+            <label asp-for="PersonType">@Localizer["Tipo do Cadastro"]</label>
+            <select asp-for="Type" asp-items="Html.GetEnumSelectList<Core.Fake.TypePersonEnum>()" class="form-control"></select>
+            <span asp-validation-for="PersonType" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-4">
+            <label asp-for="CategoryId">@Localizer["Categoria"]</label>
+            <select asp-for="CategoryId" class="form-control" asp-items="ViewBag.CategoryId">
+                <option value="">-- Not specified --</option>
+            </select>
+            <span asp-validation-for="CategoryId" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label asp-for="Email">@Localizer["Email"]</label>
+            <input asp-for="Email" placeholder="@Localizer["Email"]" class="form-control" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-4">
+            <label asp-for="Phone">@Localizer["Telefone"]</label>
+            <input asp-for="Phone" placeholder="@Localizer["Telefone"]" class="form-control" />
+            <span asp-validation-for="Phone" class="text-danger"></span>
+        </div>
+    </div>
+    <br />
+    <p>
+        <a class="btn btn-outline-link" data-toggle="collapse" href="#multiCollapseAddress" role="button"
+           aria-expanded="false" aria-controls="multiCollapseExample1"> @Localizer["Endereço"]</a>
+    </p>
+    <div class="collapse multi-collapse collapse" id="multiCollapseAddress">
+        <div class="form-row">
+            <div class="input-group col-md-3">
+                <input asp-for="PostalCode" placeholder="@Localizer["Cep"]" class="form-control" />
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" onclick="pesquisacep(document.querySelector('#PostalCode').value)" type="button">Buscar</button>
+                </div>
+                <span asp-validation-for="PostalCode" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label asp-for="StreetAddress">@Localizer["Endereço"]</label>
+                <input asp-for="StreetAddress" placeholder="@Localizer["Endereço"]" class="form-control" />
+                <span asp-validation-for="StreetAddress" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-2">
+                <label asp-for="Number">@Localizer["Número"]</label>
+                <input asp-for="Number" placeholder="@Localizer["Número"]" class="form-control" />
+                <span asp-validation-for="Number" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                <label asp-for="StreetAddressLine2">@Localizer["Complemento"]</label>
+                <input asp-for="StreetAddressLine2" placeholder="@Localizer["Complemento"]" class="form-control" />
+                <span asp-validation-for="StreetAddressLine2" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-4">
+                <label asp-for="District">@Localizer["Bairro"]</label>
+                <input asp-for="District" placeholder="@Localizer["Bairro"]" class="form-control" />
+                <span asp-validation-for="District" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-3">
+                <label asp-for="StateProvinceId">@Localizer["Estado"]</label>
+                <select asp-for="StateProvinceId" class="form-control" asp-items="ViewBag.StateProvinceId">
+                    <option value="">-- Not specified --</option>
+                </select>
+                <span asp-validation-for="StateProvinceId" class="text-danger"></span>
+            </div>
+            @*<div class="form-group col-md-3">
+                    <label asp-for="CityId">@Localizer["Cidade"]</label>
+                    <input asp-for="CityId" class="form-control" />
+                    <span asp-validation-for="CityId" class="text-danger"></span>
+                </div>*@
+            <div class="form-group col-md-3">
+                <label asp-for="CityName">@Localizer["Nome"]</label>
+                <input asp-for="CityName" class="form-control" />
+                <span asp-validation-for="CityName" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-3">
+                <label asp-for="CityCode">@Localizer["IBGE"]</label>
+                <input asp-for="CityCode" class="form-control" />
+                <span asp-validation-for="CityCode" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-3">
+                <label asp-for="SpatialLocation">@Localizer["Coordenadas"]</label>
+                <input asp-for="SpatialLocation" placeholder="@Localizer["Coordenadas"]" class="form-control" />
+                <span asp-validation-for="SpatialLocation" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+    <hr class="mr-4" />
+    <br />
+    <p>
+        <a class="btn btn-outline-link" data-toggle="collapse" href="#multiCollapseExample1" role="button"
+           aria-expanded="false" aria-controls="multiCollapseExample1"> @Localizer["Foto/Obs"]</a>
+    </p>
+    <div class="collapse multi-collapse" id="multiCollapseExample1">
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <img id="imageID" name="imageID" src="@Url.Action("Avatar", "Person", new { id = Model.PersonId })" class="img-thumbnail" />
+                <br />
+                <input type="file" class="form-control" name="avatarImage" onchange="imgsrccomponent.readURL(this)" />
+            </div>
+            <div class="form-group col-md-12">
+                <label asp-for="Comments">@Localizer["Observação"]</label>
+                <textarea type="search" asp-for="Comments" placeholder="@Localizer["Comments"]" class="form-control">
+                    </textarea>
+                <span asp-validation-for="Comments" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+    <hr class="mr-4" />
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <div class="checkbox">
+                <label>
+                    <input asp-for="Active" type="checkbox" class="checkbox style-0" />
+                    <span><label asp-for="Active">@Localizer["Ativo"]</label></span>
+                </label>
+            </div>
+        </div>
+    </div>
+</div>

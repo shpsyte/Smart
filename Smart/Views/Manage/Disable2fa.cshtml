@@ -1,0 +1,22 @@
+﻿@{
+    ViewData["Title"] = LoginLocalizer["Sesabilitar dupla autenticação (2FA)"];
+    ViewData.AddActivePage(ManageNavPages.TwoFactorAuthentication);
+}
+<h2>@ViewData["Title"]</h2>
+<div class="alert alert-warning" role="alert">
+    <p>
+        <span class="glyphicon glyphicon-warning-sign"></span>
+        <strong>@LoginLocalizer["Esta ação irá desabilitar a dupla autenticação"].</strong>
+</p>
+    <p>
+        @LoginLocalizer["Desabilitar a 2FA, não irá mudar as chaves usadas na autenticação. Se você precisa alterar esta chaves, use este link: "]
+        <a asp-action="ResetAuthenticatorWarning">
+            @LoginLocalizer["Resetar chaves da Dupla Autenticação"]
+        </a>
+    </p>
+</div>
+<div>
+    <form asp-action="Disable2fa" method="post" class="form-group">
+        <button class="btn btn-danger" type="submit">@LoginLocalizer["Desabilitar 2FA"]</button>
+</form>
+</div>

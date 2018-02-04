@@ -1,0 +1,34 @@
+﻿@model Core.Domain.Region.StateProvince
+@{ Layout = null; }
+@Html.HiddenFor(a => a.StateProvinceId)
+<div class="controls">
+    <div class="form-row">
+        <div class="form-group col-md-4">
+            <label asp-for="StateProvinceCode">@Localizer["Código ISO do Estado"]</label>
+            <input asp-for="StateProvinceCode" placeholder="@Localizer["Código ISO do Estado"]" class="form-control" />
+            <span asp-validation-for="StateProvinceCode" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-8">
+            <label asp-for="Name">@Localizer["Nome"]</label>
+            <input asp-for="Name" placeholder="@Localizer["Nome"]" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-row">
+            <div class="form-group col-md-6">
+                <label asp-for="CountryRegionId">@Localizer["País"]</label>
+                <select asp-for="CountryRegionId" class="form-control" asp-items="ViewBag.CountryRegionId"></select>
+                <span asp-validation-for="CountryRegionId" class="text-danger"></span>
+            </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <div class="checkbox">
+                <label>
+                    <input asp-for="IsOnlyStateProvinceFlag" type="checkbox" class="checkbox style-0" />
+                    <span><label asp-for="IsOnlyStateProvinceFlag">@Localizer["Estado Único"]</label></span>
+                </label>
+            </div>
+        </div>
+    </div>
+</div>

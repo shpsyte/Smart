@@ -1,0 +1,48 @@
+﻿@model Core.Domain.Sale.Condition
+   @{ Layout = null; }
+    @Html.HiddenFor(a => a.ConditionId)
+    @Html.HiddenFor(a => a.Deleted)
+    @Html.HiddenFor(a => a.BusinessEntityId)
+<div class="controls">
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label asp-for="Name">@Localizer["Nome"]</label>
+                <input asp-for="Name" placeholder="@Localizer["Nome"]" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label asp-for="PaymentQty">@Localizer["Qtde Parcelas"]</label>
+                <input asp-for="PaymentQty" placeholder="@Localizer["Qtde Parcelas"]" class="form-control" />
+                <span asp-validation-for="PaymentQty" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-6">
+                <label asp-for="PaymentDays">@Localizer["Dias entre vcto"]</label>
+                <input asp-for="PaymentDays" placeholder="@Localizer["Dias entre vcto"]" class="form-control" />
+                <span asp-validation-for="PaymentDays" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label asp-for="Tax">@Localizer["Tax"]</label>
+                <input asp-for="Tax" placeholder="@Localizer["Taxa/Impostos"]" class="form-control" />
+                <span asp-validation-for="Tax" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-6">
+                <label asp-for="PaymentUse">@Localizer["Setor de Uso"]</label>
+                <select asp-for="PaymentUse" asp-items="Html.GetEnumSelectList<Core.Fake.PaymentUseEnum>()" class="form-control"></select>
+                <span asp-validation-for="PaymentUse" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <div class="checkbox">
+                <label>
+                    <input asp-for="Active" type="checkbox" class="checkbox style-0"  />
+                    <span><label asp-for="Active">@Localizer["Ativo"]</label></span>
+                </label>
+                </div>
+            </div>
+        </div>
+</div>

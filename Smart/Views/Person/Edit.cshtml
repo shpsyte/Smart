@@ -1,0 +1,26 @@
+﻿@model Smart.Models.PersonModel.PersonModel
+@{ ViewData["Title"] = ViewsLocalizer["Clientes e Fornecedores"]; ViewBag.PageClass = "container"; }
+@{ ViewData.AddActivePageApp(ActivePagesApp.Person); }
+<h4>@SharedLocalizer["Dados "] @ViewData["Title"]</h4>
+<hr class="myb-4" />
+<div class="row">
+    <div class="col-12">
+        <form asp-action="Edit" method="post" asp-antiforgery="true" enctype="multipart/form-data" class="form-horizontal">
+            @{ await Html.RenderPartialAsync("_CreateOrUpdate"); }
+            <div class="form-actions text-align-left">
+                <div class="row">
+                    <div class="col-12">
+                        <button asp-route-continueAdd="false" type="submit" class="btn btn-success btn-bdr">
+                            <span class="btn-label"></span>@SharedLocalizer["Salvar"]
+                        </button>
+                        <a asp-action="List" asp-controller="Person" class="btn btn-light btn-bdr"> <span class="btn-label"><i class="glyphicon glyphicon-chevron-left"></i></span>@SharedLocalizer["Voltar"] </a>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+@section Scripts {
+    <script src="~/js/imgSrcComponent.js"></script>
+    <script src="~/js/cep.js"></script>
+}
