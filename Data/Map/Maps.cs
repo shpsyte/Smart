@@ -712,7 +712,7 @@ namespace Data.Map
                 .WithMany(p => p.InvoiceShipToAddress)
                 .HasForeignKey(d => d.ShipToAddressId)
                 .HasConstraintName("FK_Order_Address1");
-            entity.HasOne(d => d.Warehouse)
+            entity.HasOne(d => d.Location)
                 .WithMany(p => p.Invoice)
                 .HasForeignKey(d => d.WarehouseId)
                 .HasConstraintName("FK_Order_Warehouse");
@@ -1055,11 +1055,12 @@ namespace Data.Map
             
         }
     }
-    public class Warehousemap : IMapConfiguration<Warehouse>
+    public class Warehousemap : IMapConfiguration<Location>
     {
-        public void Map(EntityTypeBuilder<Warehouse> entity)
+        public void Map(EntityTypeBuilder<Location> entity)
         {
-            entity.ToTable("Warehouse", "Production");
+            entity.HasKey(a => a.WarehouseId);
+            entity.ToTable("Location", "Production");
             entity.HasIndex(e => e.Name)
                 .HasName("IX_Warehouse");
             entity.Property(e => e.BusinessEntityId).HasColumnName("BusinessEntityID");

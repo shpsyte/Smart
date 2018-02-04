@@ -6,8 +6,8 @@
 <div class="row">
     <div class="col-12" style="padding-bottom:20px">
         <p>
-            <a class="btn btn-outline-link" data-toggle="collapse" href="#multiCollapseDetails" role="button"
-               aria-expanded="false" aria-controls="multiCollapseExample1">@Localizer["Resumo"]&nbsp;<i class="fas fa-sort-down"></i></a>
+            <a class="btn btn-outline-info" data-toggle="collapse" href="#multiCollapseDetails" role="button"
+               aria-expanded="false" aria-controls="multiCollapseExample1">@Localizer["Resumo"]</a>
         </p>
         <div class="collapse multi-collapse collapse @( Model.Count() > 0 ? "show" : "")" id="multiCollapseDetails">
             @{ await Html.RenderPartialAsync("_RevenueStats"); }
@@ -74,7 +74,7 @@
                     <tbody>
                         @foreach (var item in Model)
                         {
-                            <tr class="table-row-body text-@( item.DueDate < System.DateTime.Now ? "danger" : "" )">
+                            <tr class="table-row-body">
                                 <td class="table-item-body">
                                     @Html.DisplayFor(modelItem => item.RevenueNumber)/@Html.DisplayFor(modelItem => item.RevenueSeq)
                                 </td>
@@ -96,9 +96,23 @@
                                     @saldo
                                 </td>
                                 <td class="table-item-body">
-                                    <a href="#payrevenue" data-payday="@item.DueDate" data-id="@item.RevenueId" data-value="@item.AmountFinal" data-name="@item.Name" data-conta="@item.RevenueNumber/@item.RevenueSeq" class="pay">
-                                        <i class="fas fa-certificate" style="color:@( item.DueDate < System.DateTime.Now ? "tomato" : "#d1d1d1" ) "></i>
-                                    </a>
+                                    <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                                        <button type="button" class="btn btn-sm btn-bdr btn-@( item.DueDate < System.DateTime.Now ? "danger" : "secondary" ) pay" data-payday="@item.DueDate" data-id="@item.RevenueId" data-value="@item.AmountFinal" data-name="@item.Name" data-conta="@item.RevenueNumber/@item.RevenueSeq">
+                                             Receber
+                                        </button>
+                                        @*<div class="btn-group" role="group">
+                                            <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                 
+                                            </button>
+                                            <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                                <a class="dropdown-item" href="#">Dropdown link</a>
+                                                <a class="dropdown-item" href="#">Dropdown link</a>
+                                            </div>
+                                        </div>*@
+                                    </div>
+
+
+                                   
                                 </td>
                             </tr>
                         }
@@ -180,7 +194,7 @@
     </div>
 </div>
 @section Scripts {
-    <script>setupTable.tableInit("resultTable", 50, 1, 1, 'desc', 3);</script>
+    <script>setupTable.tableInit("resultTable", 50, 1, 1, 'asc', 3);</script>
     <script src="~/js/views/revenue.min.js"></script>
     <script>    revenueJS.InitList();</script>
 }

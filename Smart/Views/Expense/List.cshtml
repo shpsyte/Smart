@@ -6,8 +6,8 @@
 <div class="row">
     <div class="col-12" style="padding-bottom:20px">
         <p>
-            <a class="btn btn-outline-link" data-toggle="collapse" href="#multiCollapseDetails" role="button"
-               aria-expanded="false" aria-controls="multiCollapseExample1">@Localizer["Resumo"]&nbsp;<i class="fas fa-sort-down"></i></a>
+            <a class="btn btn-outline-info" data-toggle="collapse" href="#multiCollapseDetails" role="button"
+               aria-expanded="false" aria-controls="multiCollapseExample1">@Localizer["Resumo"]</a>
         </p>
         <div class="collapse multi-collapse collapse @( Model.Count() > 0 ? "show" : "")" id="multiCollapseDetails">
             @{ await Html.RenderPartialAsync("_ExpenseStats"); }
@@ -95,10 +95,25 @@
                                     @item.AmountFinal.ToString("c")
                                 </td>
                                 <td class="table-item-body">
-                                    <a href="#payexpense" data-payday="@item.DueDate" data-id="@item.ExpenseId" data-value="@item.AmountFinal" data-name="@item.Name" data-conta="@item.ExpenseNumber/@item.ExpenseSeq" class="pay">
-                                        <i class="fas fa-certificate" style="color:@( item.DueDate < System.DateTime.Now ? "tomato" : "#d1d1d1" ) "></i>
-                                    </a>
+                                    <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                                        <button type="button" class="btn btn-sm btn-bdr btn-@( item.DueDate < System.DateTime.Now ? "danger" : "secondary" ) pay" data-payday="@item.DueDate" data-id="@item.ExpenseId" data-value="@item.AmountFinal" data-name="@item.Name" data-conta="@item.ExpenseNumber/@item.ExpenseSeq" >
+                                            Pagar
+                                        </button>
+                                        @*<div class="btn-group" role="group">
+                                                <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+                                                </button>
+                                                <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                                    <a class="dropdown-item" href="#">Dropdown link</a>
+                                                    <a class="dropdown-item" href="#">Dropdown link</a>
+                                                </div>
+                                            </div>*@
+                                    </div>
+
+
+
                                 </td>
+ 
                             </tr>
                         }
                     </tbody>
@@ -179,7 +194,7 @@
     </div>
 </div>
 @section Scripts {
-    <script>setupTable.tableInit("resultTable", 50, 1, 1, 'desc', 3);</script>
+    <script>setupTable.tableInit("resultTable", 50, 1, 1, 'asc', 3);</script>
     <script src="~/js/views/expense.min.js"></script>
     <script>    expenseJS.InitList();</script>
 }

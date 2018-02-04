@@ -22,6 +22,6 @@ namespace Core.Domain.Sale
         
         public Invoice Invoice { get; set; }
         public Product Product { get; set; }
-        public Warehouse Warehouse { get; set; }
+        public Location Warehouse { get; set; }
     }
 }

@@ -93,8 +93,8 @@
             <span asp-validation-for="MaximumStocklevel" class="text-danger"></span>
         </div>
         <div class="form-group col-md-3">
-            <label asp-for="ReorderPoint">@Localizer["Estoque de Compra"]</label>
-            <input asp-for="ReorderPoint" placeholder="@Localizer["Estoque de Compra"]" class="form-control" data-thousands="." data-decimal="," />
+            <label asp-for="ReorderPoint">@Localizer["Ponto de Compra"]</label>
+            <input asp-for="ReorderPoint" placeholder="@Localizer["Ponto de Compra"]" class="form-control" data-thousands="." data-decimal="," />
             <span asp-validation-for="ReorderPoint" class="text-danger"></span>
         </div>
     </div>
@@ -121,7 +121,7 @@
 
     </div>
     <p>
-        <a class="btn btn-outline-link" data-toggle="collapse" href="#caracter" role="button"
+        <a class="btn btn-outline-info" data-toggle="collapse" href="#caracter" role="button"
            aria-expanded="false" aria-controls="stock">@Localizer["Características"]</a>
     </p>
     <div class="collapse multi-collapse collapse" id="caracter">
@@ -215,7 +215,7 @@
     <hr />
 
     <p>
-        <a class="btn btn-outline-link" data-toggle="collapse" href="#fiscal" role="button"
+        <a class="btn btn-outline-info" data-toggle="collapse" href="#fiscal" role="button"
            aria-expanded="false" aria-controls="stock">@Localizer["Fiscais e Tributárias"]</a>
     </p>
     <div class="collapse multi-collapse collapse" id="fiscal">
@@ -268,7 +268,7 @@
 
     <hr />
     <p>
-        <a class="btn btn-outline-link" data-toggle="collapse" href="#imagem" role="button"
+        <a class="btn btn-outline-info" data-toggle="collapse" href="#imagem" role="button"
            aria-expanded="false" aria-controls="stock">@Localizer["Imagens"]</a>
     </p>
     <div class="collapse multi-collapse collapse" id="imagem">

@@ -14,11 +14,11 @@ namespace Smart.Controllers
     public class WarehouseController : BaseController
     {
         #region vars
-        private readonly  IServices<Warehouse> _warehouseServices;
+        private readonly  IServices<Location> _warehouseServices;
         #endregion
         #region ctor
             public WarehouseController(
-                                    IServices<Warehouse> warehouseServices, 
+                                    IServices<Location> warehouseServices, 
                                     IUser currentUser, 
                                     IEmailSender emailSender, 
                                     IHttpContextAccessor accessor
@@ -46,13 +46,13 @@ namespace Smart.Controllers
         [Route("warehouse-management/warehouse-add")]
         public IActionResult Add()
         {
-          var data = new Warehouse();
+          var data = new Location();
           return View(data);
         }
         // POST: Warehouse/Add
         [HttpPost, ValidateAntiForgeryToken]
         [Route("warehouse-management/warehouse-add")]
-        public async Task<IActionResult> Add([Bind("WarehouseId,Name,BusinessEntityId")] Warehouse warehouse, bool continueAdd)
+        public async Task<IActionResult> Add([Bind("WarehouseId,Name,BusinessEntityId")] Location warehouse, bool continueAdd)
         {
             if (ModelState.IsValid)
             {
@@ -79,7 +79,7 @@ namespace Smart.Controllers
         // POST: Warehouse/Edit/5
         [HttpPost, ValidateAntiForgeryToken]
         [Route("warehouse-management/warehouse-edit/{id?}")]
-        public async Task<IActionResult> Edit(int id, [Bind("WarehouseId,Name,BusinessEntityId")] Warehouse warehouse, bool continueAdd)
+        public async Task<IActionResult> Edit(int id, [Bind("WarehouseId,Name,BusinessEntityId")] Location warehouse, bool continueAdd)
         {
             if (id != warehouse.WarehouseId)
             {
@@ -115,7 +115,7 @@ namespace Smart.Controllers
          }  
          [HttpPost, ValidateAntiForgeryToken]
          [Route("warehouse-management/warehouse-delete/{id?}")]
-         public async Task<IActionResult> Delete (Warehouse warehouse)
+         public async Task<IActionResult> Delete (Location warehouse)
          {
              await _warehouseServices.DeleteAsync(warehouse);
              return RedirectToAction(nameof(List));

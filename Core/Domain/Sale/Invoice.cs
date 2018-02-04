@@ -52,7 +52,7 @@ namespace Core.Domain.Sale
         public Person Customer { get; set; }
         public Person SalesPerson { get; set; }
         public Address ShipToAddress { get; set; }
-        public Warehouse Warehouse { get; set; }
+        public Location Location { get; set; }
         public ICollection<InvoiceDetail> InvoiceDetail { get; set; }
     }
 }

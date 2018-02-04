@@ -6,9 +6,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Core.Domain.Production
 {
-    public partial class Warehouse : BaseEntity
+    public partial class Location : BaseEntity
     {
-        public Warehouse()
+        public Location()
         {
             Invoice = new HashSet<Invoice>();
             InvoiceDetail = new HashSet<InvoiceDetail>();

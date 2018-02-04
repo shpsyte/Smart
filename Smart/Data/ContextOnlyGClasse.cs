@@ -574,7 +574,7 @@ namespace Smart.Data
                     .HasForeignKey(d => d.ShipToAddressId)
                     .HasConstraintName("FK_Order_Address1");
 
-                entity.HasOne(d => d.Warehouse)
+                entity.HasOne(d => d.Location)
                     .WithMany(p => p.Invoice)
                     .HasForeignKey(d => d.WarehouseId)
                     .HasConstraintName("FK_Order_Warehouse");
@@ -1121,7 +1121,7 @@ namespace Smart.Data
 
 
 
-            modelBuilder.Entity<Warehouse>(entity =>
+            modelBuilder.Entity<Location>(entity =>
             {
                 entity.HasKey(e => e.WarehouseId);
                 entity.ToTable("Warehouse", "Production");
@@ -1176,7 +1176,7 @@ namespace Smart.Data
 
 
 
-        public DbSet<Core.Domain.Production.Warehouse> Warehouse { get; set; }
+        public DbSet<Core.Domain.Production.Location> Warehouse { get; set; }
 
 
 
