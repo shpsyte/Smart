@@ -80,5 +80,11 @@
     "inputFiles": [
       "wwwroot/js/views/product-reports.js"
     ]
+  },
+  {
+    "outputFileName": "wwwroot/js/views/invoice.min.js",
+    "inputFiles": [
+      "wwwroot/js/views/invoice.js"
+    ]
   }
 ]

@@ -1,6 +1,8 @@
 ﻿
 using Core.Domain.Base;
 using Core.Domain.Business;
+using Core.Domain.Sale;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Core.Domain.Accounting
@@ -12,6 +14,7 @@ namespace Core.Domain.Accounting
         {
             this.CostTrigger = false;
             this.StockTrigger = true;
+            this.Invoice = new HashSet<Invoice>();
         }
 
         [Key]
@@ -25,6 +28,6 @@ namespace Core.Domain.Accounting
         public bool StockTrigger { get; set; }
         public bool CostTrigger { get; set; }
 
-        
+        public ICollection<Invoice> Invoice { get; set; }
     }
 }

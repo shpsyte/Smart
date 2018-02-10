@@ -1,0 +1,312 @@
+﻿@model Core.Domain.Sale.Invoice
+
+
+@{ Layout = null; }
+@Html.HiddenFor(a => a.InvoiceId)
+@Html.HiddenFor(a => a.ModifiedDate)
+@Html.HiddenFor(a => a.BusinessEntityId)
+@Html.HiddenFor(a => a.RevisionNumber)
+@Html.HiddenFor(a => a.InvoiceCodeOper)
+@Html.HiddenFor(a => a.Finality)
+@Html.HiddenFor(a => a.InvoiceTp)
+@Html.HiddenFor(a => a.BillToAddressId)
+@Html.HiddenFor(a => a.ShipToAddressId)
+ 
+
+
+@functions{
+    public string GetAntiXsrfRequestToken()
+    {
+        return Xsrf.GetAndStoreTokens(Context).RequestToken;
+    }
+}
+
+
+@{ await Html.RenderPartialAsync("_ErrorMsg"); }
+
+
+<div class="controls">
+
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label asp-for="TaxOperationId">@Localizer["Natureza de Operação"]</label>
+            <select asp-for="TaxOperationId" class="custom-select" asp-items="ViewBag.TaxOperationId"></select>
+            <span asp-validation-for="TaxOperationId" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-2">
+            <label asp-for="InvoiceDate">@Localizer["Data Emissão"]</label>
+            <input asp-for="InvoiceDate" placeholder="@Localizer[" InvoiceDate"]" class="form-control datepicker" />
+            <span asp-validation-for="InvoiceDate" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-2">
+            <label asp-for="Sequence">@Localizer["Série"]</label>
+            <input asp-for="Sequence" placeholder="@Localizer[" Série"]" class="form-control" />
+            <span asp-validation-for="Sequence" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-2">
+            <label asp-for="Number">@Localizer["Número"]</label>
+            <input asp-for="Number" placeholder="@Localizer[" Número"]" class="form-control" />
+            <span asp-validation-for="Number" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="form-group col-md-8">
+            <label asp-for="CustomerId">@Localizer["Cliente"]</label>
+            <input type="hidden" asp-for="CustomerId" />
+            <input asp-for="CustomerName" required data-url="@Url.Action("GetCustomer","Invoice")" data-token="@GetAntiXsrfRequestToken()" class="form-control" />
+            <span asp-validation-for="CustomerId" class="text-danger"></span>
+            <span asp-validation-for="CustomerName" class="text-danger"></span>
+        </div>
+
+        <div class="form-group col-md-4">
+            <label asp-for="SalesPersonId">@Localizer["Vendedor"]</label>
+            <select asp-for="SalesPersonId" class="custom-select" asp-items="ViewBag.SalesPersonId">
+                <option></option>
+            </select>
+            <span asp-validation-for="SalesPersonId" class="text-danger"></span>
+        </div>
+    </div>
+
+    <h1 class="text-info mt-5 h4">@Localizer["Produtos"]</h1>
+
+
+
+    @*<input id="ProductId_0" name="product[0].ProductId" type="hidden" />
+        <input id="WarehouseId_0" name="product[0].WarehouseId" type="hidden" />
+        <input id="ProductNumber_0" name="product[0].ProductNumber" type="hidden" />
+        <input id="StandartCost_0" name="product[0].StandartCost" type="hidden" />
+        <input id="TaxOperationId_0" name="product[0].TaxOperationId" type="hidden" />
+
+        <div class="form-group col-md-4">
+            <label>@Localizer["Produto/Serviço"]</label>
+            <input name="product[0].Name" data-id="0"
+                   data-url="@Url.Action(" GetProduct","Invoice")" data-token="@GetAntiXsrfRequestToken()" class="form-control nameProduct"
+                   autocomplete="on" />
+            <div id="result"></div>
+        </div>
+
+
+        <div class="form-group col-md-1">
+            <label>@Localizer["Qtde"]</label>
+            <input id="Qty_0" data-id="0" name="product[0].Qty" class="form-control totalprice" data-thousands="." data-decimal="," data-precision="0" />
+        </div>
+
+        <div class="form-group col-md-1">
+            <label>@Localizer["Valor"]</label>
+            <input id="UnitPrice_0" data-id="0" name="product[0].UnitPrice" class="form-control totalprice" data-thousands="." data-decimal="," data-precision="2" />
+        </div>
+
+        <div class="form-group col-md-1">
+            <label>@Localizer["% IPI"]</label>
+            <input id="TaxProduction_0" data-id="0" name="product[0].TaxProduction" class="form-control totalprice" data-thousands="." data-decimal="," data-precision="2" />
+        </div>
+
+        <div class="form-group col-md-1">
+            <label>@Localizer["% ICMS"]</label>
+            <input id="TaxSales_0" data-id="0" name="product[0].TaxSales" class="form-control totalprice" data-thousands="." data-decimal="," data-precision="2" />
+        </div>
+
+        <div class="form-group col-md-1">
+            <label>@Localizer["CFOP"]</label>
+            <input id="CodOper_0" data-id="0" name="product[0].CodOper" class="form-control" data-thousands="." data-decimal="," data-precision="0" />
+        </div>
+        <div class="form-group col-md-1">
+            <label>@Localizer["% Desc."]</label>
+            <input id="Discont_0" data-id="0" name="product[0].Discont" class="form-control totalprice" data-thousands="." data-decimal="," data-precision="2" />
+        </div>
+
+        <div class="form-group col-md-2">
+            <label>@Localizer["Total"]</label>
+            <input id="Total_0" data-id="0" name="product[0].Total" disabled="disabled" class="form-control" data-thousands="." data-decimal="," data-precision="2" />
+        </div>*@
+
+    @{ await Html.RenderPartialAsync("_Products"); }
+
+
+
+
+
+
+
+    <h1 class="text-info mt-5 h4">@Localizer["Totais"]</h1>
+    <div class="form-row">
+        <div class="form-group col-md-3">
+
+            <label asp-for="SubTotal">@Localizer["Produtos"]</label>
+            <input asp-for="SubTotal" placeholder="@Localizer[" Produtos"]" disabled="disabled" class="form-control" data-thousands="." data-decimal="," />
+            <span asp-validation-for="SubTotal" class="text-danger"></span>
+
+
+
+
+        </div>
+        <div class="form-group col-md-3">
+            <label asp-for="Freight">@Localizer["Frete"]</label>
+            <input asp-for="Freight" placeholder="@Localizer[" Frete"]" class="form-control" data-thousands="." data-decimal="," />
+            <span asp-validation-for="Freight" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-3">
+            <label asp-for="TaxAmt">@Localizer["Outras Despesas"]</label>
+            <input asp-for="TaxAmt" placeholder="@Localizer[" Outras Despesas"]" class="form-control" data-thousands="." data-decimal="," />
+            <span asp-validation-for="TaxAmt" class="text-danger"></span>
+        </div>
+
+
+        <div class="form-group col-md-3">
+            <label asp-for="Discount">@Localizer["Desconto"]</label>
+            <input asp-for="Discount" placeholder="@Localizer[" Desconto"]" class="form-control" data-thousands="." data-decimal="," />
+            <span asp-validation-for="Discount" class="text-danger"></span>
+        </div>
+
+
+    </div>
+
+
+    <h1 class="text-info mt-5 h4">@Localizer["Pagamentos"]</h1>
+
+
+
+    <h1 class="text-info mt-5 h4">@Localizer["Transporte"]</h1>
+
+    <div class="form-row">
+
+
+        <div class="form-group col-md-2">
+            <label asp-for="TotalWeight">@Localizer["Peso"]</label>
+            <input asp-for="TotalWeight" placeholder="@Localizer[" Bruto"]" class="form-control" />
+            <span asp-validation-for="TotalWeight" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-2">
+            <label asp-for="Weight"><br /></label>
+            <input asp-for="Weight" placeholder="@Localizer[" Liquido"]" class="form-control" />
+            <span asp-validation-for="Weight" class="text-danger"></span>
+        </div>
+
+
+        <div class="form-group col-md-3">
+            <label asp-for="Volumes">@Localizer["Volumes"]</label>
+            <input asp-for="Volumes" placeholder="@Localizer[" Volumes"]" class="form-control" data-thousands="" data-decimal="" data-precision="0" />
+            <span asp-validation-for="Volumes" class="text-danger"></span>
+        </div>
+
+        <div class="form-group col">
+            <label asp-for="Package">@Localizer["Espécie"]</label>
+            <input asp-for="Package" placeholder="@Localizer[" Espécie"]" class="form-control" />
+            <span asp-validation-for="Package" class="text-danger"></span>
+        </div>
+
+
+
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-3">
+            <label asp-for="FreightType">@Localizer["Modalidade do Frete"]</label>
+            <select asp-for="FreightType" asp-items="Html.GetEnumSelectList<Core.Fake.FreightType>()" class="custom-select"></select>
+            <span asp-validation-for="FreightType" class="text-danger"></span>
+        </div>
+
+        <div class="form-group col-md-6">
+            <label asp-for="CarrierId">@Localizer["Transportador"]</label>
+            <select asp-for="CarrierId" class="form-control" asp-items="ViewBag.CarrierId"><option></option></select>
+            <span asp-validation-for="CarrierId" class="text-danger"></span>
+        </div>
+
+
+        <div class="form-group col-md-3">
+            <label asp-for="CarrierTruckId">@Localizer["Placa"]</label>
+            <input asp-for="CarrierTruckId" placeholder="@Localizer[" Placa"]" class="form-control" />
+            <span asp-validation-for="CarrierTruckId" class="text-danger"></span>
+        </div>
+    </div>
+
+
+
+
+    <h1 class="text-info mt-5 h4">@Localizer["Detalhes da Nota"]</h1>
+
+
+    <div class="form-row">
+
+
+        <div class="form-group col-md-2">
+            <label asp-for="DueDate">@Localizer["Data Saída"]</label>
+            <input asp-for="DueDate" placeholder="@Localizer[" Data Saída"]" class="form-control datepicker" />
+            <span asp-validation-for="DueDate" class="text-danger"></span>
+        </div>
+
+        <div class="form-group col-md-2">
+            <label asp-for="ShipDate">@Localizer["Data Entrega"]</label>
+            <input asp-for="ShipDate" placeholder="@Localizer[" Data Entrega"]" class="form-control datepicker" />
+            <span asp-validation-for="ShipDate" class="text-danger"></span>
+        </div>
+
+        <div class="form-group col-md-3">
+            <label asp-for="PurchaseOrderNumber">@Localizer["Ordem de Compra"]</label>
+            <input asp-for="PurchaseOrderNumber" placeholder="@Localizer[" Ordem de Compra"]" class="form-control" />
+            <span asp-validation-for="PurchaseOrderNumber" class="text-danger"></span>
+        </div>
+
+        <div class="form-group col-md-3">
+            <label asp-for="AccountNumber">@Localizer["Pedido de Venda"]</label>
+            <input asp-for="AccountNumber" placeholder="@Localizer[" Pedido de Venda"]" class="form-control" />
+            <span asp-validation-for="AccountNumber" class="text-danger"></span>
+        </div>
+    </div>
+
+
+
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label asp-for="Comment">@Localizer["Obs"]</label>
+            <textarea asp-for="Comment" placeholder="@Localizer[" Obs"]" class="form-control"></textarea>
+            <span asp-validation-for="Comment" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-6">
+            <label asp-for="OnlineInvoiceFlag"><Br /></label>
+            <div class="checkbox">
+                <label>
+                    <input asp-for="OnlineInvoiceFlag" type="checkbox" class="checkbox style-0" />
+                    <span><label asp-for="OnlineInvoiceFlag">@Localizer["Indicador de venda On-Line"]</label></span>
+                </label>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="form-row">
+        <div class="form-group col-md-3">
+            <label asp-for="WarehouseId">@Localizer["Depósito das Mercadorias"]</label>
+            <select asp-for="WarehouseId" class="custom-select" asp-items="ViewBag.WarehouseId"></select>
+            <span asp-validation-for="WarehouseId" class="text-danger"></span>
+        </div>
+
+        @*<div class="form-group col-md-3">
+                <label asp-for="BillToAddressId">@Localizer["Endereço de Cobrança"]</label>
+                <select asp-for="BillToAddressId" class="form-control" asp-items="ViewBag.BillToAddressId"></select>
+                <span asp-validation-for="BillToAddressId" class="text-danger"></span>
+            </div>
+
+            <div class="form-group col-md-3">
+                <label asp-for="ShipToAddressId">@Localizer["Endereço de Entrega"]</label>
+                <select asp-for="ShipToAddressId" class="form-control" asp-items="ViewBag.ShipToAddressId"></select>
+                <span asp-validation-for="ShipToAddressId" class="text-danger"></span>
+            </div>*@
+
+        <div class="form-group col-md-3">
+            <label asp-for="CarrierTrackingNumber">@Localizer["Número Rastreio Entrega"]</label>
+            <input asp-for="CarrierTrackingNumber" placeholder="@Localizer[" Número Rastreio Entrega"]" class="form-control" />
+            <span asp-validation-for="CarrierTrackingNumber" class="text-danger"></span>
+        </div>
+
+        <div class="form-group col-md-3">
+            <label asp-for="Status">@Localizer["Status"]</label>
+            <select asp-for="Status" asp-items="Html.GetEnumSelectList<Core.Fake.StatusInvoiceType>()" class="custom-select"></select>
+
+            <span asp-validation-for="Status" class="text-danger"></span>
+        </div>
+    </div>
+
+
+
+</div>

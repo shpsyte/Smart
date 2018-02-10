@@ -14,8 +14,9 @@
     <link rel="icon" href="~/images/favicon/favicon.png" type="image/x-icon">
 </head>
 <body>
-    <header style="background-color: #17a2b8;">
+    <header style="background-color: #176c9b;">
         @{ await Html.RenderPartialAsync("_HeaderWarning"); }
+        @{ Html.RenderPartialIf("_HeaderUser", SignInManager.IsSignedIn(User)); }
         @{ Html.RenderPartialIf("_HeaderMenu", SignInManager.IsSignedIn(User)); }
     </header>
     @(IsSectionDefined("topright") ? RenderSection("topright", false) : null)

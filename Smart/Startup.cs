@@ -22,6 +22,7 @@ using Smart.Mappers;
 using Microsoft.Extensions.Options;
 using Smart.Extensions.Financial;
 using Newtonsoft.Json;
+using Smart.Extensions.Invoices;
 
 namespace Smart
 {
@@ -132,6 +133,7 @@ namespace Smart
 
 
             services.AddTransient<FinancialExtension>();
+            services.AddTransient<InvoiceExtension>();
 
             // Bind the settings instance as a singleton and expose it as an options type (IOptions<AppSettings>)
             // Note: This ensures that injecting both IOptions<T> and T is made possible and will resolve

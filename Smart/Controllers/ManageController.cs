@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.Encodings.Web;
@@ -7,6 +8,7 @@ using System.Threading.Tasks;
 using Core.Domain.Identity;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -17,11 +19,12 @@ using Smart.Services;
 namespace Smart.Controllers
 {
     [Authorize]
-   // [Route("[controller]/[action]")]
+    // [Route("[controller]/[action]")]
     public class ManageController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
+        protected IHttpContextAccessor _accessor;
         private readonly IEmailSender _emailSender;
         private readonly ILogger _logger;
         private readonly UrlEncoder _urlEncoder;
@@ -30,6 +33,7 @@ namespace Smart.Controllers
           UserManager<ApplicationUser> userManager,
           SignInManager<ApplicationUser> signInManager,
           IEmailSender emailSender,
+          IHttpContextAccessor accessor,
           ILogger<ManageController> logger,
           UrlEncoder urlEncoder)
         {
@@ -38,6 +42,7 @@ namespace Smart.Controllers
             _emailSender = emailSender;
             _logger = logger;
             _urlEncoder = urlEncoder;
+            _accessor = accessor;
         }
         [TempData]
         public string StatusMessage { get; set; }
@@ -56,20 +61,33 @@ namespace Smart.Controllers
                 Email = user.Email,
                 PhoneNumber = user.PhoneNumber,
                 IsEmailConfirmed = user.EmailConfirmed,
-                StatusMessage = StatusMessage
+                StatusMessage = StatusMessage ,
+                Image = user.AvatarImage
             };
             return View(model);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Route("manage-account")]
-        public async Task<IActionResult> Index(IndexViewModel model)
+        public async Task<IActionResult> Index(IndexViewModel model, IFormFile files)
         {
             if (!ModelState.IsValid)
             {
                 return View(model);
             }
+
+
+
+
             var user = await _userManager.GetUserAsync(User);
+
+            using (var memoryStream = new MemoryStream())
+            {
+                model.avatarImage.CopyTo(memoryStream);
+                user.AvatarImage = memoryStream.ToArray();
+               
+            }
+
             if (user == null)
             {
                 throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
@@ -92,9 +110,56 @@ namespace Smart.Controllers
                     throw new ApplicationException($"Unexpected error occurred setting phone number for user with ID '{user.Id}'.");
                 }
             }
+
+            if (user.AvatarImage != model.Image)
+            {
+                var resultImage = await _userManager.UpdateAsync(user);
+                if (!resultImage.Succeeded)
+                {
+                    throw new ApplicationException($"Unexpected error occurred setting image avatar for user with ID '{user.Id}'.");
+                }
+                else
+                {
+                    _accessor.HttpContext.Session.Set("User.Settings.AvatarImage", user.AvatarImage);
+                }
+                
+            }
             StatusMessage = "Your profile has been updated";
             return RedirectToAction(nameof(Index));
         }
+
+
+        public async Task<ActionResult> AvatarAsync()
+        {
+            byte[] data = _accessor.HttpContext.Session.Get("User.Settings.AvatarImage");
+            if (data == null)
+            {
+                var user = await _userManager.GetUserAsync(User);
+
+                try
+                {
+                    data = user.AvatarImage;
+                    _accessor.HttpContext.Session.Set("User.Settings.AvatarImage", data);
+                }
+                catch (System.Exception)
+                {
+                    data = null;
+                }
+
+
+
+                if (data == null)
+                { data = new byte[0]; }
+
+
+            }
+
+            //
+            return File(data, "image/png");
+
+             
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Route("manage-account-send-verification-email")]
@@ -376,6 +441,10 @@ namespace Smart.Controllers
         {
             return View(nameof(ResetAuthenticator));
         }
+
+
+
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Route("manage-account-re2factor")]

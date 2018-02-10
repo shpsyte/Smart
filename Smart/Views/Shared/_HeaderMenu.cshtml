@@ -1,8 +1,7 @@
 ﻿<div class="container">
-    <nav class="navbar navbar-expand-md navbar-dark" style="background-color: #17a2b8">
-        <a class="navbar-brand" href="/">
-            <img src="~/images/logo-white.png" width="118" alt="">
-        </a>
+    @*#17a2b8*@
+    <nav class="navbar navbar-expand-md navbar-dark" style="background-color: #176c9b">
+
         <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -13,22 +12,21 @@
                     <li class="nav-item" @ActivePagesApp.DashboardNavClass(ViewContext)>
                         <a asp-area="" asp-controller="Home" asp-action="Index" class="nav-link">Home</a>
                     </li>
-                    <li class="nav-item" @ActivePagesApp.DashboardNavClass(ViewContext)>
-                        <a asp-area="" asp-controller="Home" asp-action="About" class="nav-link">About</a>
-                    </li>
+
                     <li class="nav-item dropdown @ActivePagesApp.RegNavClass(ViewContext)">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a class="nav-link dropdown-toggles" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                             Cadastros
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <li> <a class="dropdown-item @ActivePagesApp.IndexPersonNavClass(ViewContext)" asp-action="List" asp-controller="Person">Clientes e Fornecedores</a> </li>
-                            <li><div class="dropdown-divider"></div></li>
                             <li> <a class="dropdown-item @ActivePagesApp.ProductNavClass(ViewContext)" asp-action="List" asp-controller="Product">Produtos e Serviços</a>  </li>
+                            <li><div class="dropdown-divider"></div></li>
+                            <li> <a class="dropdown-item @ActivePagesApp.RegBankNavClass(ViewContext)" asp-action="List" asp-controller="Bank">Conta Bancária</a>  </li>
                         </ul>
 
                     </li>
                     <li class="nav-item dropdown @ActivePagesApp.FinanceNavClass(ViewContext)">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a class="nav-link dropdown-toggles" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Financeiro
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
@@ -64,35 +62,70 @@
 
                     </li>
 
+
+
+
+                    <li class="nav-item dropdown @ActivePagesApp.SalesNavClass(ViewContext)">
+                        <a class="nav-link dropdown-toggles" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Vendas
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+
+                            <li> <a class="dropdown-item @ActivePagesApp.InvoiceNavClass(ViewContext)" asp-action="List" asp-controller="Invoice">Notas Fiscais</a> </li>
+                            @*<li>
+                                <a class="dropdown-item dropdown-toggle" href="#">Submenu</a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#">Submenu action</a></li>
+                                    <li><a class="dropdown-item" href="#">Another submenu action</a></li>
+
+                                    <li>
+                                        <a class="dropdown-item dropdown-toggle" href="#">Subsubmenu</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a class="dropdown-item" href="#">Subsubmenu action aa</a></li>
+                                            <li><a class="dropdown-item" href="#">Another subsubmenu action</a></li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item dropdown-toggle" href="#">Second subsubmenu</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a class="dropdown-item" href="#">Subsubmenu action bb</a></li>
+                                            <li><a class="dropdown-item" href="#">Another subsubmenu action</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>*@
+                        </ul>
+
+                    </li>
                     <li class="nav-item dropdown @ActivePagesApp.ReportsNavClass(ViewContext)">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a class="nav-link dropdown-toggles" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Relatórios
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                             <li> <a class="dropdown-item  @ActivePagesApp.FinanceReportsNavClass(ViewContext)" asp-action="Reports" asp-controller="FinancialStats">Financeiro</a> </li>
                             <li> <a class="dropdown-item  @ActivePagesApp.StockReportsNavClass(ViewContext)" asp-action="Reports" asp-controller="StockStats">Estoque</a> </li>
                             @*<li>
-            <a class="dropdown-item dropdown-toggle" href="#">Financeiro</a>
-            <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">Submenu action</a></li>
-                <li><a class="dropdown-item" href="#">Another submenu action</a></li>
+                                    <a class="dropdown-item dropdown-toggle" href="#">Financeiro</a>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="#">Submenu action</a></li>
+                                        <li><a class="dropdown-item" href="#">Another submenu action</a></li>
 
-                <li>
-                    <a class="dropdown-item dropdown-toggle" href="#">Subsubmenu</a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Subsubmenu action aa</a></li>
-                        <li><a class="dropdown-item" href="#">Another subsubmenu action</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a class="dropdown-item dropdown-toggle" href="#">Second subsubmenu</a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Subsubmenu action bb</a></li>
-                        <li><a class="dropdown-item" href="#">Another subsubmenu action</a></li>
-                    </ul>
-                </li>
-            </ul>
-        </li>*@
+                                        <li>
+                                            <a class="dropdown-item dropdown-toggle" href="#">Subsubmenu</a>
+                                            <ul class="dropdown-menu">
+                                                <li><a class="dropdown-item" href="#">Subsubmenu action aa</a></li>
+                                                <li><a class="dropdown-item" href="#">Another subsubmenu action</a></li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item dropdown-toggle" href="#">Second subsubmenu</a>
+                                            <ul class="dropdown-menu">
+                                                <li><a class="dropdown-item" href="#">Subsubmenu action bb</a></li>
+                                                <li><a class="dropdown-item" href="#">Another subsubmenu action</a></li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>*@
                         </ul>
 
                     </li>
@@ -104,7 +137,7 @@
                         </li>*@
                 </ul>
             }
-            @await Html.PartialAsync("_LoginPartial")
+
         </div>
     </nav>
 </div>

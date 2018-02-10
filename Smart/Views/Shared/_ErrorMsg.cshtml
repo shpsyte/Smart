@@ -1,0 +1,9 @@
+﻿
+@if (ViewData["ErrorMessage"] != null)
+{
+    var statusMessageClass = ViewData["ErrorMessage"].ToString().StartsWith("Erro") ? "danger" : "success";
+    <div class="alert alert-@statusMessageClass alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        @ViewData["ErrorMessage"]
+    </div>
+}

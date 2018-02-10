@@ -23,7 +23,7 @@
                 </div>
                 <div class="col">
                     <div class="input-group mb-3">
-                        <input id="search" name="search" value="@ViewData["search"]" type="text" class="form-control" placeholder="@SharedLocalizer["Pesquisar..."]" aria-label="@SharedLocalizer["Pesquisar..."]" aria-describedby="basic-addon2">
+                        <input id="search" name="search" value="@ViewData["search"]" type="text" class="form-control"   placeholder="@SharedLocalizer["Pesquisar..."]" aria-label="@SharedLocalizer["Pesquisar..."]" aria-describedby="basic-addon2">
                         <div class="input-group-append">
                             <button class="btn btn-info btn-secondary" type="submit"> <i class="fas fa-search"></i></button>
                         </div>
@@ -35,6 +35,7 @@
 </div>
 <div class="row padding-top-15">
     <div class="col-12">
+
         <div class="table-responsive">
             @if (Model.Count() == 0)
             {
@@ -75,17 +76,17 @@
                         @foreach (var item in Model)
                         {
                         <tr class="table-row-body">
-                            <td class="table-item-body">
+                            <td class="table-item-body clickable-row" data-href="@Url.Action("Edit", "Product", new { id = item.ProductId })">
                                 @Html.DisplayFor(modelItem => item.ProductId)
                             </td>
                             <td class="table-item-body">
-                                <a asp-action="Edit" asp-route-id="@item.ProductId" class="btn btn-link btn-sm"> @item.ProductNumber</a>
+                                @item.ProductNumber
                             </td>
-                            <td class="table-item-body">
-                                <a asp-action="Edit" asp-route-id="@item.ProductId" class="btn btn-link btn-sm"> @item.Name</a>
+                            <td class="table-item-body clickable-row" data-href="@Url.Action("Edit", "Product", new { id = item.ProductId })">
+                                @item.Name
                             </td>
 
-                            <td class="table-item-body">
+                            <td class="table-item-body clickable-row" data-href="@Url.Action("Edit", "Product", new { id = item.ProductId })">
                                 @( item.VProduct.Stock.HasValue ? item.VProduct.Stock.Value.ToString("0") : "0" )
                             </td>
 
@@ -93,10 +94,20 @@
                                 @( item.ListPrice.HasValue ? item.ListPrice.Value.ToString("c") : "0" )
                             </td>
 
-                            <td class="table-item-body">
-                                <button type="button" class="btn btn-sm btn-info btn-bdr pay" data-id="@item.ProductId">
-                                    @Localizer["Movimentar"]
-                                </button>
+                            <td class="table-item-body clickable-row" data-href="@Url.Action("Edit", "Product", new { id = item.ProductId })">
+                                <div class="btn-group btn-group-sm" role="group" aria-label="Button group with nested dropdown">
+                                    <a asp-action="Edit" asp-route-id="@item.ProductId" class="btn btn-secondary btn-sm"> @SharedLocalizer["Editar"]</a>
+                                    
+
+                                    <div class="btn-group btn-group-sm" role="group">
+                                        <button id="btnGroupDrop1" type="button" class="btn btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+                                        <div class="dropdown-menu btn-group-sm" aria-labelledby="btnGroupDrop1">
+                                            
+                                            <a class="dropdown-item btn-group-sm pay" data-id="@item.ProductId" href="javascript:void(0)">@Localizer["Movimentar"]</a>
+                                        </div>
+                                    </div>
+                                </div>
+
                             </td>
                         </tr>
                         }
@@ -106,6 +117,8 @@
         </div>
     </div>
 </div>
+
+
 <!-- Modal -->
 <div class="modal fade bd-example-modal-lg" id="stockmov" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
@@ -161,7 +174,7 @@
                             </div>
                             <div class="form-group col-md-4">
                                 <label>@Localizer["Quantidade"]</label>
-                                <input id="Quantity" required name="Quantity" placeholder="@Localizer["Qtde"]" class="form-control" data-thousands="." data-decimal="," />
+                                <input id="Quantity" required name="Quantity" placeholder="@Localizer["Qtde"]" class="form-control" data-thousands="." data-decimal="," data-precision="0" />
                             </div>
 
 

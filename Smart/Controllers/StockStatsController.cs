@@ -121,10 +121,14 @@ namespace Smart.Controllers
             if (filter.WithStock)
             {
                 data = data.Where(a => a.VProduct.Stock.Value > 0);
-            } 
+            }
 
+            
+           if (filter.TypeView.Equals("_ProductWithutSaldo", StringComparison.CurrentCultureIgnoreCase))
+            {
+                data = data.Where(a => a.VProduct.Stock.Value == 0);
 
-
+            }
 
             if (filter.TypeView.Equals("_ProductMinimumStocklevel", StringComparison.CurrentCultureIgnoreCase))
             {
@@ -149,6 +153,15 @@ namespace Smart.Controllers
         public IActionResult Product(StockReportsModel filter)
         {
             LoadViewData();
+            return View(filter);
+        }
+
+        [Route("stock-reports/products-stock")]
+        [HttpGet]
+        public IActionResult ProductStock(StockReportsModel filter)
+        {
+            LoadViewData();
+            filter.TypeView = "_ProductStock";
             return View(filter);
         }
 

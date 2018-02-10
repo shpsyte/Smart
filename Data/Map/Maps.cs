@@ -640,7 +640,7 @@ namespace Data.Map
         public void Map(EntityTypeBuilder<Invoice> entity)
         {
             entity.ToTable("Invoice", "Sales");
-            entity.Property(e => e.InvoiceId).ValueGeneratedNever();
+            //entity.Property(e => e.InvoiceId).ValueGeneratedNever();
             entity.Property(e => e.AccountNumber)
                 .HasMaxLength(50)
                 .IsUnicode(false);
@@ -659,7 +659,7 @@ namespace Data.Map
             entity.Property(e => e.InvoiceDate)
                 .HasColumnType("datetime")
                 .HasDefaultValueSql("(getdate())");
-            entity.Property(e => e.InvoiceCode).IsRequired();
+          
             entity.Property(e => e.InvoiceNumber)
                 .IsRequired()
                 .HasMaxLength(25)
@@ -685,9 +685,11 @@ namespace Data.Map
             entity.Property(e => e.TaxAmt)
                 .HasColumnType("numeric(12, 4)")
                 .HasDefaultValueSql("((0.00))");
+
             entity.Property(e => e.TotalDue)
                 .HasColumnType("numeric(14, 4)")
                 .HasComputedColumnSql("(isnull(([SubTotal]+[TaxAmt])+[Freight],(0)))");
+
             entity.Property(e => e.TotalWeight).HasColumnType("numeric(9, 2)");
             entity.Property(e => e.Weight).HasColumnType("numeric(9, 2)");
             entity.HasOne(d => d.BillToAddress)
@@ -716,6 +718,9 @@ namespace Data.Map
                 .WithMany(p => p.Invoice)
                 .HasForeignKey(d => d.WarehouseId)
                 .HasConstraintName("FK_Order_Warehouse");
+            entity.HasOne(d => d.TaxOperation)
+             .WithMany(p => p.Invoice)
+             .HasForeignKey(d => d.TaxOperationId);
         }
     }
     public class InvoiceDetailMap : IMapConfiguration<InvoiceDetail>
@@ -735,6 +740,16 @@ namespace Data.Map
                 .HasDefaultValueSql("(getdate())");
             entity.Property(e => e.OrderQty).HasColumnType("numeric(5, 3)");
             entity.Property(e => e.ProductId).HasColumnName("ProductID");
+
+            entity.Property(e => e.ProductNumber).HasColumnName("ProductNumber").HasColumnType("varchar(100)").IsUnicode(false);
+            entity.Property(e => e.CodOper).HasColumnName("CodOper").HasColumnType("varchar(50)").IsUnicode(false);
+            entity.Property(e => e.TaxOperationId).HasColumnName("TaxOperationId");
+            entity.Property(e => e.TaxProduction).HasColumnName("TaxProduction");
+            entity.Property(e => e.TaxSales).HasColumnName("TaxSales");
+            entity.Property(e => e.StandartCost).HasColumnName("StandartCost");
+
+
+
             entity.Property(e => e.UnitPrice).HasColumnType("numeric(12, 4)");
             entity.Property(e => e.UnitPriceDiscount)
                 .HasColumnType("numeric(6, 3)")

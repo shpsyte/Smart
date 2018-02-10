@@ -1,6 +1,7 @@
-@model Core.Domain.Finance.Bank
-@{ ViewData["Title"] = ViewsLocalizer["Conta Caixa"]; ViewBag.PageClass = "container"; }
-@{ ViewData.AddActivePageApp(ActivePagesApp.RegBank); }
+﻿@model Core.Domain.Sale.Invoice
+@{ ViewData["Title"] = ViewsLocalizer["Notas Fiscais"]; ViewBag.PageClass = "container"; }
+@{ ViewData.AddActivePageApp(ActivePagesApp.Invoice); }
+
 
 <h4>@SharedLocalizer["Dados da"] @ViewData["Title"]</h4>
 <hr class="myb-4" />
@@ -14,10 +15,15 @@
                         <button asp-route-continueAdd="false" type="submit" class="btn btn-success btn-bdr">
                             <span class="btn-label"></span>@SharedLocalizer["Salvar"]
                         </button>
-                        <a asp-action="List" asp-controller="Bank" class="btn btn-light btn-bdr"> <span class="btn-label"><i class="glyphicon glyphicon-chevron-left"></i></span>@SharedLocalizer["Voltar"] </a>
+                        <a asp-action="List" asp-controller="Invoice" class="btn btn-light btn-bdr"> <span class="btn-label"><i class="glyphicon glyphicon-chevron-left"></i></span>@SharedLocalizer["Voltar"] </a>
                     </div>
                 </div>
             </div>
         </form>
     </div>
 </div>
+
+@section Scripts{
+    <script src="~/js/views/invoice.js"></script>
+
+}

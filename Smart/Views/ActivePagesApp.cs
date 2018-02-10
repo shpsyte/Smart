@@ -12,20 +12,24 @@ namespace Smart.Views
         public static string Person => "Person";
         public static string Revenue => "Revenue";
         public static string Bank => "Bank";
+        public static string RegBank => "RegBank";
         public static string Expense => "Expense";
         public static string Dashboard => "Dashboard";
         public static string BankTrans => "BankTrans";
+        public static string Invoice => "Invoice";
         public static string CashFlow => "CashFlow";
         public static string FinanceReports => "FinanceReports";
         public static string StockReports => "StockReports";
         public static string Product => "Product";
         public static string IndexPersonNavClass(ViewContext viewContext) => PageNavClassApp(viewContext, Person);
         public static string RevenueNavClass(ViewContext viewContext) => PageNavClassApp(viewContext, Revenue);
+        public static string InvoiceNavClass(ViewContext viewContext) => PageNavClassApp(viewContext, Invoice);
         public static string ExpenseNavClass(ViewContext viewContext) => PageNavClassApp(viewContext, Expense);
         public static string DashboardNavClass(ViewContext viewContext) => PageNavClassApp(viewContext, Dashboard);
         public static string BankTransNavClass(ViewContext viewContext) => PageNavClassApp(viewContext, BankTrans);
         public static string CashFlowNavClass(ViewContext viewContext) => PageNavClassApp(viewContext, CashFlow);
         public static string ProductNavClass(ViewContext viewContext) => PageNavClassApp(viewContext, Product);
+        public static string RegBankNavClass(ViewContext viewContext) => PageNavClassApp(viewContext, RegBank);
         public static string StockReportsNavClass(ViewContext viewContext) => PageNavClassApp(viewContext, StockReports);
         public static string FinanceReportsNavClass(ViewContext viewContext) => PageNavClassApp(viewContext, FinanceReports);
         
@@ -36,6 +40,15 @@ namespace Smart.Views
                 PageNavClassApp(viewContext, Revenue),
                 PageNavClassApp(viewContext, Expense),
                 PageNavClassApp(viewContext, CashFlow)
+
+
+                );
+        }
+
+        public static string SalesNavClass(ViewContext viewContext)
+        {
+            return string.Concat(
+                PageNavClassApp(viewContext, Invoice)
 
 
                 );
@@ -56,7 +69,8 @@ namespace Smart.Views
         {
             return string.Concat(
                 PageNavClassApp(viewContext, Person),
-                PageNavClassApp(viewContext, Product)
+                PageNavClassApp(viewContext, Product),
+                PageNavClassApp(viewContext, RegBank)
                 );
         }
 

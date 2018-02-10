@@ -21,11 +21,21 @@ h1 {
 /*
  * Sidebar
  */
+.clickable-row {
+ cursor:pointer;
 
-.datepicker{
+}
 
-} 
-
+.datepicker {
+}
+.ui-menu .ui-menu-item-wrapper{
+    padding: 10px 20px;
+    cursor: pointer;
+    color: #737373;
+    font-size: 13px;
+ 
+   
+}
 
 .sidebar {
     position: fixed;

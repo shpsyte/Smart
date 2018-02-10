@@ -53,7 +53,13 @@ namespace Smart.Data
 
 
 
+            
+                 modelBuilder.Entity<VProduct>(entity =>
+                 {
+                     entity.HasKey(e => e.ProductId);
+                     entity.ToTable("VProduct", "Production");
 
+                 });
             modelBuilder.Entity<VExpense>(entity =>
                 {
                     entity.HasKey(e => e.ExpenseId);
@@ -1209,6 +1215,10 @@ namespace Smart.Data
 
 
         public DbSet<Core.Domain.Production.Product> Product { get; set; }
+
+
+
+        public DbSet<Core.Domain.Sale.Invoice> Invoice { get; set; }
 
 
     }

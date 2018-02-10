@@ -4,8 +4,11 @@
         <ul class="nav navbar-nav navbar-right">
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    @UserManager.GetUserName(User)
+                    <img src="~/images/favicon/favicon.png" />
+                     
+
                 </a>
+
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <button type="submit" class="dropdown-item">Sair</button>
                     <div class="dropdown-divider"></div>
@@ -22,30 +25,12 @@
                     <a asp-area="" asp-controller="Manage" asp-action="ExternalLogins" title="ExternalLogins" class="dropdown-item">
                         Logins Externos
                     </a>
-                    <div class="dropdown-divider"></div>
-                    <a asp-controller="Component" asp-action="EasyPieCharts" title="EasyPieCharts" class="dropdown-item">
-                        Easy Pie Chart
-                    </a>
-                    <a asp-controller="Component" asp-action="Sparkline" title="Sparkline" class="dropdown-item">
-                        Sparkline Chart
-                    </a>
-                    <a asp-controller="Component" asp-action="FlotCharts" title="FlotCharts" class="dropdown-item">
-                        Flot Charts
-                    </a>
-                    <a asp-controller="Component" asp-action="MorrisCharts" title="MorrisCharts" class="dropdown-item">
-                        Morris Charts
-                    </a>
-                    <a asp-controller="Component" asp-action="HighChartTable" title="HighChartTable" class="dropdown-item">
-                        Hight Chart Tabels
-                    </a>
-                    <a asp-controller="Component" asp-action="DataTables" title="DataTables" class="dropdown-item">
-                        DataTables
-                    </a>
+
                 </div>
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Help
+                    Ajuda
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <a class="dropdown-item" href="#">Videos</a>

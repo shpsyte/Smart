@@ -74,15 +74,16 @@
                     <tbody>
                         @foreach (var item in Model)
                         {
+                            string urlEdit = Url.Action("Edit", "Expense", new { id = item.ExpenseId });
                             <tr class="table-row-body text-@( item.DueDate < System.DateTime.Now ? "danger" : "" )">
-                                <td class="table-item-body">
+                                <td class="table-item-body clickable-row " data-href="@urlEdit">
                                     @Html.DisplayFor(modelItem => item.ExpenseNumber)/@Html.DisplayFor(modelItem => item.ExpenseSeq)
                                 </td>
-                                <td class="table-item-body">
+                                <td class="table-item-body clickable-row " data-href="@urlEdit">
                                     @Html.DisplayFor(modelItem => item.DueDate)
                                 </td>
-                                <td class="table-item-body" data-toggle="tooltip" data-placement="top" title="@item.Name : @item.Comment">
-                                    <a asp-action="Edit" asp-route-id="@item.ExpenseId" class=" "> @item.Name.Truncate(30, true) </a>
+                                <td class="table-item-body clickable-row " data-href="@urlEdit" data-toggle="tooltip" data-placement="top" title="@item.Name : @item.Comment">
+                                   @item.Name.Truncate(30, true)
                                     @if (item.ExpenseTotalSeq > 1)
                                     {
                                         <span class="badge badge-success">
@@ -91,7 +92,7 @@
                                         </span>
                                     }
                                 </td>
-                                <td class="table-item-body">
+                                <td class="table-item-body clickable-row " data-href="@urlEdit">
                                     @item.AmountFinal.ToString("c")
                                 </td>
                                 <td class="table-item-body">

@@ -1,0 +1,115 @@
+﻿@functions{
+    public string GetAntiXsrfRequestToken()
+    {
+        return Xsrf.GetAndStoreTokens(Context).RequestToken;
+    }
+}
+
+@{ int seq = 0; }
+@{ int qtde = ((List<Core.Domain.Sale.InvoiceDetail>)ViewData["products"]).Count(); }
+
+<div class="form-row">
+    <div class="form-group col-md-4">
+        <label>@Localizer["Produto/Serviço"]</label>
+    </div>
+    <div class="form-group col-md-1">
+        <label>@Localizer["Qtde"]</label>
+    </div>
+    <div class="form-group col-md-1">
+        <label>@Localizer["Valor"]</label>
+    </div>
+    <div class="form-group col-md-1">
+        <label>@Localizer["% IPI"]</label>
+    </div>
+    <div class="form-group col-md-1">
+        <label>@Localizer["% ICMS"]</label>
+    </div>
+    <div class="form-group col-md-1">
+        <label>@Localizer["CFOP"]</label>
+    </div>
+    <div class="form-group col-md-1">
+        <label>@Localizer["% Desc."]</label>
+    </div>
+    <div class="form-group col-md-2">
+        <label>@Localizer["Sub Total"]</label>
+    </div>
+
+</div>
+
+
+<div class="form-row">
+    <input type="hidden" id="QtdeProdutos" class="form-control col-2" value="@qtde" />
+</div>
+
+<div id="listproduct">
+    @if (ViewData["products"] != null)
+    {
+        @foreach (var item in ((List<Core.Domain.Sale.InvoiceDetail>)ViewData["products"]).OrderByDescending(a => a.ProductId))
+        {
+            <div class="form-row" id="@seq" style="margin-bottom:-28px;">
+                <input data-id="@seq" id="ProductId_@seq" name="product[@seq].ProductId" type="hidden" asp-for="@item.ProductId" />
+                <input data-id="@seq" id="WarehouseId_@seq" name="product[@seq].ProductId" type="hidden" asp-for="@item.WarehouseId" />
+                <input data-id="@seq" id="ProductNumber_@seq" name="product[@seq].ProductId" type="hidden" asp-for="@item.ProductNumber" />
+                <input data-id="@seq" id="StandartCost_@seq" name="product[@seq].ProductId" type="hidden" asp-for="@item.StandartCost" />
+                <input data-id="@seq" id="TaxOperationId_@seq" name="product[@seq].ProductId" type="hidden" asp-for="@item.TaxOperationId" />
+
+
+
+
+
+                <div class="form-group col-md-4">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1">@(seq + 1)</span>
+                            <a href="javascript:void(0)" onclick="ExcluirLinha(@seq)" class="input-group-text text-danger"  data-code="@seq"  data-tooltip="Remover produto"><i class="far fa-trash-alt"></i></a>
+                        </div>
+                        <input id="@seq" name="product[@seq].Name" data-id="@seq"
+                               data-url="@Url.Action("GetProduct", "Invoice")" data-token="@GetAntiXsrfRequestToken()" class="form-control nameProduct"
+                               autocomplete="on" value="@(item.Product != null ? item.Product.Name : "")" />
+                    </div>
+
+                </div>
+
+
+                <div class="form-group col-md-1">
+                    <input value="@item.OrderQty.ToString("0")" id="Qty_@seq" data-id="@seq" name="product[@seq].Qty" class="form-control totalprice" data-thousands="." data-decimal="," data-precision="0" data-allow-zero="true" />
+                </div>
+
+                <div class="form-group col-md-1">
+
+                    <input asp-for="@item.UnitPrice" id="UnitPrice_@seq" data-id="@seq" name="product[@seq].UnitPrice" class="form-control totalprice" data-thousands="." data-decimal="," data-precision="2" data-allow-zero="true" />
+                </div>
+
+                <div class="form-group col-md-1">
+
+                    <input asp-for="@item.TaxProduction" id="TaxProduction_@seq" data-id="@seq" name="product[@seq].TaxProduction" class="form-control totalprice" data-thousands="." data-decimal="," data-precision="2" data-allow-zero="true" />
+                </div>
+
+                <div class="form-group col-md-1">
+
+                    <input asp-for="@item.TaxSales" id="TaxSales_@seq" data-id="@seq" name="product[@seq].TaxSales" class="form-control totalprice" data-thousands="." data-decimal="," data-precision="2" data-allow-zero="true" />
+                </div>
+
+                <div class="form-group col-md-1">
+                    <input asp-for="@item.CodOper" id="CodOper_@seq" data-id="@seq" name="product[@seq].CodOper" class="form-control" data-thousands="." data-decimal="," data-precision="0" data-allow-zero="true" />
+                </div>
+                <div class="form-group col-md-1">
+                    <input asp-for="@item.UnitPriceDiscount" id="Discont_@seq" data-id="@seq" name="product[@seq].Discont" class="form-control totalprice" data-thousands="." data-decimal="," data-precision="2" data-allow-zero="true" />
+                </div>
+
+                <div class="form-group col-md-2">
+                    <input asp-for="@item.LineTotal" id="Total_@seq" data-id="@seq" name="product[@seq].Total" disabled="disabled" class="form-control" data-thousands="." data-decimal="," data-precision="2" data-allow-zero="true" />
+                </div>
+                @{ seq += 1; }
+
+
+            </div>
+        }
+
+    }
+</div>
+
+
+<div class="form-row">
+    <a href="javascript:void(0)" onclick="AddLineItem('New')" class="bold">+ adicionar outro produto</a>
+</div>

@@ -54,6 +54,40 @@ namespace Core.Fake
     }
 
 
+
+    public enum FreightType
+    {
+        [Display(Name = "Emitente")]
+        Emitente = 0,
+        [Display(Name = "Destinatário")]
+        Destinatario = 2,
+        [Display(Name = "Terceiros")]
+        Terceiros = 2,
+        [Display(Name ="Sem Frete")]
+        SemFrete = 9
+
+
+    }
+    
+    public enum StatusInvoiceType
+    {
+        [Display(Name = "Em Digitação")]
+        Digitacao  = 1,
+        [Display(Name = "Aprovado")]
+        Aprovado  = 2,
+        [Display(Name = "Devolvida")]
+        Devolvida = 3,
+        [Display(Name = "Rejeitada")]
+        Rejeitada = 4,
+        [Display(Name = "Enviada")]
+        Enviada = 5,
+        [Display(Name = "Cancelada")]
+        Cancelada = 6
+
+
+    }
+
+
     public enum TypePersonEnum
     {
         [Display(Name = "Contato")]

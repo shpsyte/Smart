@@ -32,20 +32,20 @@ dotnet ef dbcontext scaffold "Data Source=IDELLSERVER\\eXPRESS,1433;Database=Sma
 }
 
 --Gerar Controller Sem View
-dotnet aspnet-codegenerator --project . --no-build controller --force --controllerName ProductController --model Core.Domain.Production.Product --dataContext ContextOnlyGClasse --relativeFolderPath Controllers --noViews
+dotnet aspnet-codegenerator --project . --no-build controller --force --controllerName InvoiceController --model Core.Domain.Sale.Invoice --dataContext ContextOnlyGClasse --relativeFolderPath Controllers --noViews
 
 
 --Gerar View List
-dotnet.exe aspnet-codegenerator --project . --no-build view List List --force --model Core.Domain.Production.Product --dataContext ContextOnlyGClasse --relativeFolderPath Views\Product --useDefaultLayout
+dotnet.exe aspnet-codegenerator --project . --no-build view List List --force --model Core.Domain.Sale.Invoice --dataContext ContextOnlyGClasse --relativeFolderPath Views\Invoice --useDefaultLayout
 
 --Gerar View Edit
-dotnet.exe aspnet-codegenerator --project . --no-build view Edit Create --force --model Core.Domain.Production.Product --dataContext ContextOnlyGClasse --relativeFolderPath Views\Product --useDefaultLayout
+dotnet.exe aspnet-codegenerator --project . --no-build view Edit Create --force --model Core.Domain.Sale.Invoice --dataContext ContextOnlyGClasse --relativeFolderPath Views\Invoice --useDefaultLayout
 
 --Gerar View Add
-dotnet.exe aspnet-codegenerator --project . --no-build view Add Create --force --model Core.Domain.Production.Product --dataContext ContextOnlyGClasse --relativeFolderPath Views\Product --useDefaultLayout
+dotnet.exe aspnet-codegenerator --project . --no-build view Add Create --force --model Core.Domain.Sale.Invoice --dataContext ContextOnlyGClasse --relativeFolderPath Views\Invoice --useDefaultLayout
 
 --Gerar View _CreateOrUpdate
-dotnet.exe aspnet-codegenerator --project . --no-build view _CreateOrUpdate Details --force --model Core.Domain.Production.Product --dataContext ContextOnlyGClasse --relativeFolderPath Views\Product --useDefaultLayout
+dotnet.exe aspnet-codegenerator --project . --no-build view _CreateOrUpdate Details --force --model Core.Domain.Sale.Invoice --dataContext ContextOnlyGClasse --relativeFolderPath Views\Invoice --useDefaultLayout
 
 
 

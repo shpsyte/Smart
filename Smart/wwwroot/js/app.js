@@ -100,7 +100,6 @@ $("body").on("hidden.bs.modal",
 /* ~ END: DELETE MODEL DATA ON HIDDEN */
 
 
-
 /*
  * INITIALIZE CHARTS
  * Description: Sparklines, PieCharts
@@ -592,13 +591,22 @@ function runAllForms() {
     //    zeroCents: false
     //});
 
-    $(".valor").on("enter", function () {
-        alert("test");
+
+
+    /*
+   *clickable Row
+   */
+    $(".clickable-row").click(function () {
+        window.location = $(this).data("href");
     });
+
 
     $('[data-decimal]').each(function () {
         var $this = $(this);
 
+        var zero = $this.attr('data-zeroCents') || 'false';
+      
+       
 
         $this.maskMoney();
 
@@ -669,7 +677,7 @@ function runAllForms() {
 
             var $this = $(this);
             var availableTags = $this.data('autocomplete') || ["The", "Quick", "Brown", "Fox", "Jumps", "Over", "Three", "Lazy", "Dogs"];
-
+            
             $this.autocomplete({
                 source: availableTags
             });

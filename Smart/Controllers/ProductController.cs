@@ -72,6 +72,15 @@ namespace Smart.Controllers
         #endregion
         #region methods
 
+
+        //public JsonResult GetProduct(string name)
+        //{
+        //    var products = _productServices.QueryAsync(a => a.Name.Contains(name)).Result;
+        //    var ret = (from a in products select new { id = a.ProductId, name = a.Name, cod = a.ProductNumber });
+        //    return Json(ret);
+        //}
+
+
         [HttpPost, ValidateAntiForgeryToken]
         public JsonResult GetNextCode(string partialName)
         {

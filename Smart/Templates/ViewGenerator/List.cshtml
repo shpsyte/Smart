@@ -97,6 +97,8 @@
                                     @:@@foreach (var item in Model) {
                                            @:<tr class="table-row-body">
                                             var pkName = GetPrimaryKeyName();
+                                            string urlEdit =  "@Url.Action(\"Edit\", \""+Model.ModelMetadata.EntitySetName+"\", new { id = item."+ pkName +"})";
+
                                             foreach (PropertyMetadata property in properties)
                                             {
                                                    if (
@@ -119,7 +121,7 @@
                                                 }*@
                                                 if (property.Scaffold && !property.IsPrimaryKey && !property.IsForeignKey)
                                                 {
-                                                @:<td class="table-item-body">
+                                                @:<td class="table-item-body clickable-row" data-href="@urlEdit">
                                                 
                                                 if (property.PropertyName == "Image")
                                                 {  
@@ -138,7 +140,8 @@
                                             }
                                             foreach (var navigation in Model.ModelMetadata.Navigations)
                                             {
-                                                @:<td class="table-item-body">
+                                                
+                                                @:<td class="table-item-body clickable-row" data-href="@urlEdit">
                                                     @: @@Html.DisplayFor(modelItem => item.@GetValueExpression(navigation).@navigation.DisplayPropertyName)
                                                 @:</td>
                                             }
