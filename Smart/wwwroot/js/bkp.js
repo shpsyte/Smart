@@ -795,9 +795,6 @@ function runAllForms() {
         });
     }
 
-   
-    */
-
     /*
      * AUTOCOMPLETE
      * Dependency: js/jqui

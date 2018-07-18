@@ -47,8 +47,8 @@ namespace Smart
             services.AddDbContext<ContextOnlyGClasse>(options => options.UseSqlServer(connection));
 
 
-            services.AddDbContext<SmartContext>(options => options.UseSqlServer(connection, b => b.MigrationsAssembly("Smart")));
-            //services.AddDbContext<SmartContext>(options => options.UseInMemoryDatabase("local"));
+            //services.AddDbContext<SmartContext>(options => options.UseSqlServer(connection, b => b.MigrationsAssembly("Smart")));
+            services.AddDbContext<SmartContext>(options => options.UseInMemoryDatabase("local"));
 
             // Add the localization services to the services container
             services.AddLocalization(options => options.ResourcesPath = "Resources");

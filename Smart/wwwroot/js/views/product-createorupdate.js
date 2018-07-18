@@ -18,17 +18,19 @@
             return false;
     }
 
-
-    InitCreateorUpdate() {
-
-        document.querySelector('#Image').addEventListener("change", previewImages, false);
-    }
 }
 var productJS = new ProductJS();
 
 
- 
 
+
+
+
+
+
+
+
+document.querySelector('#Image').addEventListener("change", previewImages, false);
 $(document).ready(function () {
 
 

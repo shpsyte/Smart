@@ -18,6 +18,7 @@ namespace Data.Map
         {
             public void Map(EntityTypeBuilder<VRevenue> entity)
             {
+                
                 entity.ToTable("VRevenue", "Financial");
                 entity.HasKey(e => new { e.RevenueId });
                 // entity.Property(e => e.Id).ValueGeneratedNever();
@@ -27,6 +28,7 @@ namespace Data.Map
                 entity.HasOne(d => d.Revenue)
                 .WithOne(p => p.VRevenue)
                 .HasForeignKey<VRevenue>(b => b.RevenueId);
+
 
             }
         }
