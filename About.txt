@@ -1,6 +1,9 @@
 Informações gerais do projeto
 Trata-se de um site/aplicativo para uso comercial em empresas de pequeno e médio porte, onde através de funções pré-definidas o cliente poderá exercer funções administrativas pertinentes a gestão empresarial.
 
+Projeto obsoleto, será substituido por mariaBD, e mais tarde por NodeJS.
+
+
 O Projeto principal terá um CORE, onde existirá funções administrativas comuns a todas as empresas, este conjunto de funções será igual a todos que usarem o software, alternativamente serão criados plug-ins que poderão ser injetados ao software que estenderão funções ou criarão novas funções, estes plug-ins além de especializar o software ao negócio do cliente terão uma loja especial para sua comercialização.
 Informações Técnicas Gerais:
 Descreve em linhas gerais informações técnicas do projeto
