@@ -8,18 +8,19 @@ using Services.Interfaces;
 using Smart.Services;
 using Core.Domain.Region;
 using Smart.Data;
-using Core.Interfaces;
+using Data.Repository;
+
 namespace Smart.Controllers
 {
     [Authorize]    
     public class CountryController : BaseController
     {
         #region vars
-        private readonly  IRepository<Country> _countryServices;
+        private readonly  IServices<Country> _countryServices;
         #endregion
         #region ctor
             public CountryController(
-                                    IRepository<Country> countryServices, 
+                                    IServices<Country> countryServices, 
                                     IUser currentUser, 
                                     IEmailSender emailSender, 
                                     IHttpContextAccessor accessor
@@ -34,7 +35,7 @@ namespace Smart.Controllers
         public async Task<IActionResult> List(string search)
         {
             ViewData["search"] = search;
-            var data = await _countryServices.QueryAsync();
+            var data =   _countryServices.Query();
             if (!string.IsNullOrEmpty(search)) 
             {
                data = data.Where(p =>  

@@ -13,7 +13,7 @@ namespace Data.Map
     {
         public void Map(EntityTypeBuilder<ApplicationUser> builder)
         {
-            builder.ToTable("User", "Security");
+            builder.ToTable("User", Shema.shemaSecurity);
             builder.HasKey(p => p.Id);
             
         }
@@ -23,7 +23,7 @@ namespace Data.Map
     {
         public void Map(EntityTypeBuilder<IdentityRole> builder)
         {
-            builder.ToTable("Role", "Security");
+            builder.ToTable("Role", Shema.shemaSecurity);
             builder.HasKey(p => p.Id);
         }
     }
@@ -31,7 +31,7 @@ namespace Data.Map
     {
         public void Map(EntityTypeBuilder<IdentityUserClaim<string>> builder)
         {
-            builder.ToTable("UserClaim", "Security");
+            builder.ToTable("UserClaim", Shema.shemaSecurity);
             builder.HasKey(a => a.Id);
         }
     }
@@ -39,7 +39,7 @@ namespace Data.Map
     {
         public void Map(EntityTypeBuilder<IdentityUserRole<string>> builder)
         {
-            builder.ToTable("UserRole", "Security");
+            builder.ToTable("UserRole", Shema.shemaSecurity);
             builder.HasKey(a => new { a.UserId, a.RoleId });
         }
     }
@@ -47,7 +47,7 @@ namespace Data.Map
     {
         public void Map(EntityTypeBuilder<IdentityUserLogin<string>> builder)
         {
-            builder.ToTable("UserLogin", "Security");
+            builder.ToTable("UserLogin", Shema.shemaSecurity);
             builder.HasKey(a => new { a.LoginProvider, a.ProviderKey });
         }
     }
@@ -55,7 +55,7 @@ namespace Data.Map
     {
         public void Map(EntityTypeBuilder<IdentityRoleClaim<string>> builder)
         {
-            builder.ToTable("RoleClaim", "Security");
+            builder.ToTable("RoleClaim", Shema.shemaSecurity);
             builder.HasKey(a => a.Id);
         }
     }
@@ -63,7 +63,7 @@ namespace Data.Map
     {
         public void Map(EntityTypeBuilder<IdentityUserToken<string>> builder)
         {
-            builder.ToTable("UserToken", "Security");
+            builder.ToTable("UserToken", Shema.shemaSecurity);
             builder.HasKey(a => new {  a.UserId, a.LoginProvider, a.Name });
         }
     }

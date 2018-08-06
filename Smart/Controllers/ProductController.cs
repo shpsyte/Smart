@@ -99,10 +99,10 @@ namespace Smart.Controllers
             var productimage = _productImageServices.SingleOrDefaultAsync(a => a.ImageId == id).Result;
 
             if (image != null)
-                _imageServices.DeleteNoSave(image);
+                _imageServices.Delete (image, false);
 
             if (productimage != null)
-                _productImageServices.DeleteNoSave(productimage);
+                _productImageServices.Delete (productimage, false);
 
             try
             {
@@ -218,7 +218,7 @@ namespace Smart.Controllers
                                     Product = product
                                 };
 
-                                await _productImageServices.AddAsyncNoSave(productimage);
+                                await _productImageServices.AddAsync (productimage, false);
                             }
                         }
                     }
@@ -324,7 +324,7 @@ namespace Smart.Controllers
                                     ProductId = id
                                 };
 
-                                await _productImageServices.AddAsyncNoSave(productimage);
+                                await _productImageServices.AddAsync (productimage, false);
                             }
                         }
                     }
@@ -332,7 +332,7 @@ namespace Smart.Controllers
                 }
                 else
                 {
-                    await _productServices.UpdateAsyncNoSave(product);
+                    await _productServices.UpdateAsync (product, false);
 
                 }
 

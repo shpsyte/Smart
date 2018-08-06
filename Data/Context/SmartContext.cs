@@ -1,4 +1,5 @@
-﻿using Core.Domain.Finance;
+﻿using Core.Domain.Base;
+using Core.Domain.Finance;
 using Core.Domain.Finance.Views;
 using Core.Domain.Identity;
 using Core.Domain.PersonAndData;
@@ -9,6 +10,9 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 using System.Reflection;
+using System.Security.Principal;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Data.Context
 {
@@ -19,9 +23,6 @@ namespace Data.Context
         //public DbSet<VRevenue> VRevenue { get; set; }
 
            
-
-
-     
         public SmartContext(DbContextOptions<SmartContext> options)
             : base(options)
         {
@@ -80,6 +81,53 @@ namespace Data.Context
             #endregion
 
 
+        }
+
+
+        public string UserProvider
+        {
+            get
+            {
+                if (!string.IsNullOrEmpty(WindowsIdentity.GetCurrent().Name))
+                    return WindowsIdentity.GetCurrent().Name.Split('\\')[1];
+                return string.Empty;
+            }
+        }
+
+        public Func<DateTime> TimestampProvider { get; set; } = ()
+            => DateTime.UtcNow;
+        public override int SaveChanges()
+        {
+            TrackChanges();
+            return base.SaveChanges();
+        }
+
+        public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
+        {
+            TrackChanges();
+            return await base.SaveChangesAsync(cancellationToken);
+        }
+
+        private void TrackChanges()
+        {
+            foreach (var entry in this.ChangeTracker.Entries().Where(e => e.State == EntityState.Added || e.State == EntityState.Modified))
+            {
+                if (entry.Entity is BaseEntity)
+                {
+                    var auditable = entry.Entity as BaseEntity;
+                    if (entry.State == EntityState.Added)
+                    {
+                        var a  = UserProvider;//  
+                        var b = TimestampProvider();
+                        //auditable.UpdatedOn = TimestampProvider();
+                    }
+                    //else
+                    //{
+                    //    auditable.UpdatedBy = UserProvider;
+                    //    auditable.UpdatedOn = TimestampProvider();
+                    //}
+                }
+            }
         }
     }
 }

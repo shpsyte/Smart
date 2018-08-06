@@ -88,6 +88,17 @@ $("body").on("click",
     });
 /* ~ END: ONE POP OVER THEORY */
 
+$(".clickable-row").on("click",
+    function (e) {
+        var $this = $(this);
+
+        var url = $this.attr('data-href') || '';
+        window.location.href = url;
+
+        //alert(url);
+    });
+ 
+
 /*
  * DELETE MODEL DATA ON HIDDEN
  * Clears the model data once it is hidden, this way you do not create duplicated data on multiple modals

@@ -97,22 +97,22 @@ namespace Smart.Controllers
                 RevenueTrans revenueTrans = _financialExtension.GetRevenueTrans(data,_BusinessId,"PAG", revenue.DueDate.HasValue ? 2 : 3);
                 BankTrans bankTrans = _financialExtension.GetBankTrans(data, revenueTrans, _BusinessId, revenue.CategoryId);
                 //await _revenueTransServices.AddAsyncNoSave(revenue);
-                await _bankTransServices.AddAsyncNoSave(bankTrans);
+                await _bankTransServices.AddAsync (bankTrans, false);
             }
             if (data.Tax.HasValue)
             {
                 RevenueTrans revenueTrans = _financialExtension.GetRevenueTrans(data, _BusinessId, "JUR", 1);
-                await _revenueTransServices.AddAsyncNoSave(revenueTrans);
+                await _revenueTransServices.AddAsync(revenueTrans,false);
             }
             if (data.Discont.HasValue)
             {
                 RevenueTrans revenueTrans = _financialExtension.GetRevenueTrans(data, _BusinessId, "DIS", 2);
-                await _revenueTransServices.AddAsyncNoSave(revenueTrans);
+                await _revenueTransServices.AddAsync(revenueTrans,false);
             }
             if (data.Active)
             {
                 revenue.DuePayment = data.DueDate;
-                await _revenueServices.UpdateAsyncNoSave(revenue);
+                await _revenueServices.UpdateAsync(revenue, false);
             }
             var insert = await _revenueTransServices.SaveAsync();
             return RedirectToAction(nameof(List));

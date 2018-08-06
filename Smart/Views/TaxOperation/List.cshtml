@@ -64,23 +64,23 @@
                     <tbody>
                         @foreach (var item in Model)
                         {
-                            <tr>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Name)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.DefaultCode)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.StockTrigger)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.CostTrigger)
-                                </td>
-                                <td>
-                                    <a asp-action="Edit" asp-route-id="@item.TaxOperationId" class="btn btn-light btn-bdr"> @SharedLocalizer["Editar"] </a>
-                                </td>
-                            </tr>
+                        <tr class="table-row-body">
+                            <td class="table-item-body clickable-row" data-href="@Url.Action("Edit", "TaxOperation", new { id = item.TaxOperationId })">
+                                @Html.DisplayFor(modelItem => item.Name)
+                            </td>
+                            <td class="table-item-body clickable-row" data-href="@Url.Action("Edit", "TaxOperation", new { id = item.TaxOperationId })">
+                                @Html.DisplayFor(modelItem => item.DefaultCode)
+                            </td>
+                            <td class="table-item-body clickable-row" data-href="@Url.Action("Edit", "TaxOperation", new { id = item.TaxOperationId })">
+                                @Html.DisplayFor(modelItem => item.StockTrigger)
+                            </td>
+                            <td class="table-item-body clickable-row" data-href="@Url.Action("Edit", "TaxOperation", new { id = item.TaxOperationId })">
+                                @Html.DisplayFor(modelItem => item.CostTrigger)
+                            </td>
+                            <td>
+                                <a asp-action="Edit" asp-route-id="@item.TaxOperationId" class="btn btn-light btn-bdr"> @SharedLocalizer["Editar"] </a>
+                            </td>
+                        </tr>
                         }
                     </tbody>
                 </table>

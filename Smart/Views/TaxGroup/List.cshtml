@@ -61,14 +61,14 @@
                     <tbody>
                         @foreach (var item in Model)
                         {
-                            <tr>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Name)
-                                </td>
-                                <td>
-                                    <a asp-action="Edit" asp-route-id="@item.TaxGroupId" class="btn btn-light btn-bdr"> @SharedLocalizer["Editar"] </a>
-                                </td>
-                            </tr>
+                        <tr class="table-row-body">
+                            <td class="table-item-body clickable-row" data-href="@Url.Action("Edit", "TaxGroup", new { id = item.TaxGroupId })">
+                                @Html.DisplayFor(modelItem => item.Name)
+                            </td>
+                            <td>
+                                <a asp-action="Edit" asp-route-id="@item.TaxGroupId" class="btn btn-light btn-bdr"> @SharedLocalizer["Editar"] </a>
+                            </td>
+                        </tr>
                         }
                     </tbody>
                 </table>

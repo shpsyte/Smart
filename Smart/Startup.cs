@@ -7,7 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Smart.Services;
 using Data.Context;
 using Core.Domain.Identity;
-using Core.Interfaces;
+
 using Services.Interfaces;
 using Data.Repository;
 using Services.Entity;
@@ -42,40 +42,34 @@ namespace Smart
         public void ConfigureServices(IServiceCollection services)
         {
             string connection = Configuration["ConnectionStrings:SmartConnection"].ToString();
-
-         
-            services.AddDbContext<ContextOnlyGClasse>(options => options.UseSqlServer(connection));
-
-
-            //services.AddDbContext<SmartContext>(options => options.UseSqlServer(connection, b => b.MigrationsAssembly("Smart")));
-            services.AddDbContext<SmartContext>(options => options.UseInMemoryDatabase("local"));
+            services.AddDbContext<SmartContext>(options => options.UseMySql(connection, b => b.MigrationsAssembly("Smart")));
+            //services.AddDbContext<SmartContext>(options => options.UseInMemoryDatabase("local"));
 
             // Add the localization services to the services container
             services.AddLocalization(options => options.ResourcesPath = "Resources");
 
 
-            services.AddIdentity<ApplicationUser, IdentityRole>(
-                config =>
-                {
-                    config.User.RequireUniqueEmail = true;
-                }
-                ).AddEntityFrameworkStores<SmartContext>()
+            services.AddIdentity<ApplicationUser, IdentityRole>(config =>{config.User.RequireUniqueEmail = true;})
+                .AddEntityFrameworkStores<SmartContext>()
                 .AddDefaultTokenProviders();
 
 
-            services.AddAuthentication().AddFacebook(facebookOptions =>
-            {
-                facebookOptions.AppId = "111005312889133";//Configuration["Authentication:Facebook:AppId"];
-                facebookOptions.AppSecret = "bac679d3539f5a822e407e3ae371d2a8";//Configuration["Authentication:Facebook:AppSecret"];
-            }).AddGoogle(googleOptions =>
+            services.AddAuthentication()
+            //.AddFacebook(facebookOptions =>
+            //{
+            //    facebookOptions.AppId = "111005312889133";//Configuration["Authentication:Facebook:AppId"];
+            //    facebookOptions.AppSecret = "bac679d3539f5a822e407e3ae371d2a8";//Configuration["Authentication:Facebook:AppSecret"];
+            //})
+            .AddGoogle(googleOptions =>
             {
                 googleOptions.ClientId = "830389168682-a93bammk7qanhh8o36nsttg6qb6hhhpi.apps.googleusercontent.com";//Configuration["Authentication:Google:ClientId"];
                 googleOptions.ClientSecret = "RE4WPzMJClftuhT-TkMDezBp";//Configuration["Authentication:Google:ClientSecret"];
-            }).AddTwitter(twitterOptions =>
-            {
-                twitterOptions.ConsumerKey = "QcrD2f4Mwxoe33XM1xcD2DI3p";//Configuration["Authentication:Twitter:ConsumerKey"];
-                twitterOptions.ConsumerSecret = "QxpA54AfH9hZSlt8rWcRPvRWiJqGo7sMbJUWEPHdxw3CumZccb";//Configuration["Authentication:Twitter:ConsumerSecret"];
             });
+            //.AddTwitter(twitterOptions =>
+            //{
+            //    twitterOptions.ConsumerKey = "QcrD2f4Mwxoe33XM1xcD2DI3p";//Configuration["Authentication:Twitter:ConsumerKey"];
+            //    twitterOptions.ConsumerSecret = "QxpA54AfH9hZSlt8rWcRPvRWiJqGo7sMbJUWEPHdxw3CumZccb";//Configuration["Authentication:Twitter:ConsumerSecret"];
+            //});
 
             services.ConfigureApplicationCookie(options =>
             {
@@ -99,22 +93,13 @@ namespace Smart
                 options.DefaultRequestCulture = new RequestCulture(ptBRCulture);
                 options.SupportedCultures = supportedCultures;
                 options.SupportedUICultures = supportedCultures;
-
-                //options.RequestCultureProviders.Insert(0, new CustomRequestCultureProvider(async context =>
-                //{
-                //    // My custom request culture logic
-                //    return new ProviderCultureResult("en");
-                //}));
             });
 
             services
                 .AddMvc()
                 .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix, opts => { opts.ResourcesPath = "Resources"; })
                 .AddDataAnnotationsLocalization()
-                .AddJsonOptions(options =>
-                {
-                    options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
-                });
+                .AddJsonOptions(options =>{options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;});
 
             services
                 .AddDistributedMemoryCache()
@@ -150,8 +135,6 @@ namespace Smart
             app.UseRequestLocalization(locOptions.Value);
             
             app.UseSession();
-
-
 
             if (env.IsDevelopment())
             {

@@ -1,23 +1,63 @@
 @model Core.Domain.Finance.Bank
-   @{ Layout = null; }
-    @Html.HiddenFor(a => a.BankId)
-    @Html.HiddenFor(a => a.BusinessEntityId)
+@{ Layout = null; }
+@Html.HiddenFor(a => a.AccountBankId)
+@Html.HiddenFor(a => a.BusinessEntityId)
 <div class="controls">
-        <div class="form-row">
-            <div class="form-group col-md-6">
-                <label asp-for="Name">@Localizer["Nome"]</label>
-                <input asp-for="Name" placeholder="@Localizer["Nome"]" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
-            </div>
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label asp-for="Name">@Localizer["Nome"]</label>
+            <input asp-for="Name" placeholder="@Localizer["Nome"]" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
         </div>
-        <div class="form-row">
-            <div class="form-group col-md-6">
-                <div class="checkbox">
+
+
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-3">
+            <label asp-for="Code">@Localizer["Code"]</label>
+            <input asp-for="Code" placeholder="@Localizer["Code"]" class="form-control" />
+            <span asp-validation-for="Code" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-4">
+            <label asp-for="Agency">@Localizer["Agency"]</label>
+            <input asp-for="Agency" placeholder="@Localizer["Agency"]" class="form-control" />
+            <span asp-validation-for="Agency" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-4">
+            <label asp-for="DigitAgency">@Localizer["DigitAgency"]</label>
+            <input asp-for="DigitAgency" placeholder="@Localizer["DigitAgency"]" class="form-control" />
+            <span asp-validation-for="DigitAgency" class="text-danger"></span>
+        </div>
+
+
+    </div>
+
+    <div class="form-row">
+       
+        <div class="form-group col-md-4">
+            <label asp-for="Account">@Localizer["Account"]</label>
+            <input asp-for="Account" placeholder="@Localizer["Account"]" class="form-control" />
+            <span asp-validation-for="Account" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-4">
+            <label asp-for="DigitAccount">@Localizer["DigitAgency"]</label>
+            <input asp-for="DigitAccount" placeholder="@Localizer["DigitAccount"]" class="form-control" />
+            <span asp-validation-for="DigitAccount" class="text-danger"></span>
+        </div>
+
+
+    </div>
+
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <div class="checkbox">
                 <label>
-                    <input asp-for="Active" type="checkbox" class="checkbox style-0"  />
+                    <input asp-for="Active" type="checkbox" class="checkbox style-0" />
                     <span><label asp-for="Active">@Localizer["Ativo"]</label></span>
                 </label>
-                </div>
             </div>
         </div>
+
+
+    </div>
 </div>

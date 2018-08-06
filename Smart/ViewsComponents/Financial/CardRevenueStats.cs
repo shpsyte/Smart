@@ -24,7 +24,7 @@ namespace Smart.ViewsComponents.Financial
 
         public async Task<IViewComponentResult> InvokeAsync(bool payed, DateTime? dueStartDate, DateTime? dueEndDate, string searchTerm, string model, string title, string cssCard)
         {
-            var revenue = await _vrevenueServices.QueryAsync();
+            var revenue =   _vrevenueServices.Query ();
 
             if (payed)
             {

@@ -205,9 +205,7 @@ namespace Smart.Data
                     .HasColumnType("datetime")
                     .HasDefaultValueSql("(getdate())");
 
-                entity.Property(e => e.ModifiedDate)
-                    .HasColumnType("datetime")
-                    .HasDefaultValueSql("(getdate())");
+              
 
                 entity.Property(e => e.Name)
                     .IsRequired()
@@ -1043,7 +1041,7 @@ namespace Smart.Data
                 entity.HasKey(e => e.StateProvinceId);
                 entity.ToTable("StateProvince", "Person");
 
-                entity.HasIndex(e => e.CountryRegionId);
+                entity.HasIndex(e => e.CountryID);
 
                 entity.HasIndex(e => new { e.Name, e.StateProvinceCode })
                     .HasName("IX_StateProvince");
@@ -1063,9 +1061,9 @@ namespace Smart.Data
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
-                entity.HasOne(d => d.CountryRegion)
+                entity.HasOne(d => d.Country)
                     .WithMany(p => p.StateProvince)
-                    .HasForeignKey(d => d.CountryRegionId)
+                    .HasForeignKey(d => d.CountryID)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_StateProvince_Territory");
             });

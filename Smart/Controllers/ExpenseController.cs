@@ -90,22 +90,22 @@ namespace Smart.Controllers
                 ExpenseTrans expenseTrans = _financialExtension.GetExpenseTrans(data, _BusinessId, "PAG", expense.DueDate.HasValue ? 2 : 3);
                 BankTrans bankTrans = _financialExtension.GetBankTrans(data, expenseTrans, _BusinessId, expense.CategoryId);
                 //await _expenseTransServices.AddAsyncNoSave(expense);
-                await _bankTransServices.AddAsyncNoSave(bankTrans);
+                await _bankTransServices.AddAsync(bankTrans,false);
             }
             if (data.Tax.HasValue)
             {
                 ExpenseTrans expenseTrans = _financialExtension.GetExpenseTrans(data, _BusinessId, "JUR", 1);
-                await _expenseTransServices.AddAsyncNoSave(expenseTrans);
+                await _expenseTransServices.AddAsync(expenseTrans,false);
             }
             if (data.Discont.HasValue)
             {
                 ExpenseTrans expenseTrans = _financialExtension.GetExpenseTrans(data, _BusinessId, "DIS", 2);
-                await _expenseTransServices.AddAsyncNoSave(expenseTrans);
+                await _expenseTransServices.AddAsync(expenseTrans,false);
             }
             if (data.Active)
             {
                 expense.DuePayment = data.DueDate;
-                await _expenseServices.UpdateAsyncNoSave(expense);
+                await _expenseServices.UpdateAsync(expense,false);
             }
             var insert = await _expenseTransServices.SaveAsync();
             return RedirectToAction(nameof(List));

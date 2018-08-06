@@ -64,23 +64,23 @@
                     <tbody>
                         @foreach (var item in Model)
                         {
-                            <tr>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Name)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.MiddleName)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.SpecialCodeRegion)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.StateProvince.StateProvinceCode)
-                                </td>
-                                <td>
-                                    <a asp-action="Edit" asp-route-id="@item.CityId" class="btn btn-light btn-bdr"> @SharedLocalizer["Editar"] </a>
-                                </td>
-                            </tr>
+                        <tr class="table-row-body">
+                            <td class="table-item-body clickable-row" data-href="@Url.Action("Edit", "City", new { id = item.CityId })">
+                                @Html.DisplayFor(modelItem => item.Name)
+                            </td>
+                            <td class="table-item-body clickable-row" data-href="@Url.Action("Edit", "City", new { id = item.CityId })">
+                                @Html.DisplayFor(modelItem => item.MiddleName)
+                            </td>
+                            <td class="table-item-body clickable-row" data-href="@Url.Action("Edit", "City", new { id = item.CityId })">
+                                @Html.DisplayFor(modelItem => item.SpecialCodeRegion)
+                            </td>
+                            <td class="table-item-body clickable-row" data-href="@Url.Action("Edit", "City", new { id = item.CityId })">
+                                @Html.DisplayFor(modelItem => item.StateProvince.StateProvinceCode)
+                            </td>
+                            <td class="table-item-body clickable-row" data-href="@Url.Action("Edit", "City", new { id = item.CityId })">
+                                <a asp-action="Edit" asp-route-id="@item.CityId" class="btn btn-light btn-bdr"> @SharedLocalizer["Editar"] </a>
+                            </td>
+                        </tr>
                         }
                     </tbody>
                 </table>

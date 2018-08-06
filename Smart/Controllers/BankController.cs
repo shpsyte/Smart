@@ -52,7 +52,7 @@ namespace Smart.Controllers
         // POST: Bank/Add
         [HttpPost, ValidateAntiForgeryToken]
         [Route("bank-management/bank-add")]
-        public async Task<IActionResult> Add([Bind("BankId,Name,Active,BusinessEntityId")] Bank bank, bool continueAdd)
+        public async Task<IActionResult> Add([Bind("AccountBankId,Name,Active,BusinessEntityId,Code,Agency,DigitAgency,Account,DigitAccount")] Bank bank, bool continueAdd)
         {
             if (ModelState.IsValid)
             {
@@ -65,11 +65,11 @@ namespace Smart.Controllers
         [Route("bank-management/bank-edit/{id?}")]
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null)
+            if (id == null || id == 0)
             {
                 return RedirectToAction("AccessDenied", "Account");
             }
-            var bank = await _bankServices.SingleOrDefaultAsync(m => m.BankId == id);
+            var bank = await _bankServices.SingleOrDefaultAsync(m => m.AccountBankId == id);
             if (bank == null)
             {
                 return RedirectToAction("AccessDenied", "Account");
@@ -79,9 +79,9 @@ namespace Smart.Controllers
         // POST: Bank/Edit/5
         [HttpPost, ValidateAntiForgeryToken]
         [Route("bank-management/bank-edit/{id?}")]
-        public async Task<IActionResult> Edit(int id, [Bind("BankId,Name,Active,BusinessEntityId")] Bank bank, bool continueAdd, bool addTrash)
+        public async Task<IActionResult> Edit(int id, [Bind("AccountBankId,Name,Active,BusinessEntityId,Code,Agency,DigitAgency,Account,DigitAccount")] Bank bank, bool continueAdd, bool addTrash)
         {
-            if (id != bank.BankId)
+            if (id != bank.AccountBankId)
             {
                 return NotFound();
             }
@@ -95,7 +95,7 @@ namespace Smart.Controllers
                 {
                         throw;
                 }
-                return continueAdd ? RedirectToAction(nameof(Edit), new { id = bank.BankId }) : RedirectToAction(nameof(List));
+                return continueAdd ? RedirectToAction(nameof(Edit), new { id = bank.AccountBankId }) : RedirectToAction(nameof(List));
             }
             return View(bank);
         }
@@ -106,7 +106,7 @@ namespace Smart.Controllers
             {
                 return NotFound();
             }
-               var bank = await  _bankServices.SingleOrDefaultAsync(m => m.BankId == id);
+               var bank = await  _bankServices.SingleOrDefaultAsync(m => m.AccountBankId == id);
                if (bank == null)
                {
                     return NotFound();

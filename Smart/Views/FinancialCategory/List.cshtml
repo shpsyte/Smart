@@ -63,20 +63,20 @@
                     <tbody>
                         @foreach (var item in Model)
                         {
-                            <tr>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Name)
-                                </td>
-                                <td>
-                                    @Enum.GetName(typeof(Core.Fake.FinancialTypeEnum), item.Type)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Active)
-                                </td>
-                                <td>
-                                    <a asp-action="Edit" asp-route-id="@item.ChartAccountId" class="btn btn-light btn-bdr"> @SharedLocalizer["Editar"] </a>
-                                </td>
-                            </tr>
+                        <tr class="table-row-body">
+                            <td class="table-item-body clickable-row" data-href="@Url.Action("Edit", "FinancialCategory", new { id = item.ChartAccountId })">
+                                @Html.DisplayFor(modelItem => item.Name)
+                            </td>
+                            <td class="table-item-body clickable-row" data-href="@Url.Action("Edit", "FinancialCategory", new { id = item.ChartAccountId })">
+                                @Enum.GetName(typeof(Core.Fake.FinancialTypeEnum), item.Type)
+                            </td>
+                            <td class="table-item-body clickable-row" data-href="@Url.Action("Edit", "FinancialCategory", new { id = item.ChartAccountId })">
+                                @Html.DisplayFor(modelItem => item.Active)
+                            </td>
+                            <td>
+                                <a asp-action="Edit" asp-route-id="@item.ChartAccountId" class="btn btn-light btn-bdr"> @SharedLocalizer["Editar"] </a>
+                            </td>
+                        </tr>
                         }
                     </tbody>
                 </table>

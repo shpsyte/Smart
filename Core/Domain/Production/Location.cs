@@ -19,7 +19,7 @@ namespace Core.Domain.Production
         public int WarehouseId { get; set; }
         [Required]
         public string Name { get; set; }
-            public bool DefaultLocation { get; set; }
+        public bool DefaultLocation { get; set; }
 
 
         public ICollection<Invoice> Invoice { get; set; }

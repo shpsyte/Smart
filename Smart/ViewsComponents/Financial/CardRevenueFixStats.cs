@@ -23,7 +23,7 @@ namespace Smart.ViewsComponents.Financial
 
         public async Task<IViewComponentResult> InvokeAsync(int time, string model, string title, string cssCard)
         {
-            var revenue = await _vrevenueServices.QueryAsync(a => a.DuePayment.HasValue == false);
+            var revenue =   _vrevenueServices.Query (a => a.DuePayment.HasValue == false);
             CardFinancialModel data = ReturnDataModel(time, model, title, cssCard, revenue);
 
             return View(data);

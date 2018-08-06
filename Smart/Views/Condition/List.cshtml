@@ -64,23 +64,23 @@
                     <tbody>
                         @foreach (var item in Model)
                         {
-                            <tr>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Name)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.PaymentQty)
-                                </td>
-                                <td>
-                                    @Enum.GetName(typeof(Core.Fake.PaymentUseEnum), item.PaymentUse)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Active)
-                                </td>
-                                <td>
-                                    <a asp-action="Edit" asp-route-id="@item.ConditionId" class="btn btn-light btn-bdr"> @SharedLocalizer["Editar"] </a>
-                                </td>
-                            </tr>
+                        <tr class="table-row-body">
+                            <td class="table-item-body clickable-row" data-href="@Url.Action("Edit", "Condition", new { id = item.ConditionId })">
+                                @Html.DisplayFor(modelItem => item.Name)
+                            </td>
+                            <td class="table-item-body clickable-row" data-href="@Url.Action("Edit", "Condition", new { id = item.ConditionId })">
+                                @Html.DisplayFor(modelItem => item.PaymentQty)
+                            </td>
+                            <td class="table-item-body clickable-row" data-href="@Url.Action("Edit", "Condition", new { id = item.ConditionId })">
+                                @Enum.GetName(typeof(Core.Fake.PaymentUseEnum), item.PaymentUse)
+                            </td>
+                            <td class="table-item-body clickable-row" data-href="@Url.Action("Edit", "Condition", new { id = item.ConditionId })">
+                                @Html.DisplayFor(modelItem => item.Active)
+                            </td>
+                            <td class="table-item-body clickable-row" data-href="@Url.Action("Edit", "Condition", new { id = item.ConditionId })">
+                                <a asp-action="Edit" asp-route-id="@item.ConditionId" class="btn btn-light btn-bdr"> @SharedLocalizer["Editar"] </a>
+                            </td>
+                        </tr>
                         }
                     </tbody>
                 </table>

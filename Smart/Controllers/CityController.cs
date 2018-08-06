@@ -9,7 +9,8 @@ using Smart.Services;
 using Core.Domain.Region;
 using Smart.Data;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Core.Interfaces;
+using Data.Repository;
+
 namespace Smart.Controllers
 {
     [Authorize]
@@ -38,7 +39,7 @@ namespace Smart.Controllers
         public async Task<IActionResult> List(string search)
         {
             ViewData["search"] = search;
-            var data = await _cityServices.QueryAsync();
+            var data =  _cityServices.Query();
             if (!string.IsNullOrEmpty(search))
             {
                 data = data.Where(p =>

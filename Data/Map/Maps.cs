@@ -11,6 +11,140 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 namespace Data.Map
 {
+    public class BusinessEntityMap : IMapConfiguration<BusinessEntity>
+    {
+        public void Map(EntityTypeBuilder<BusinessEntity> entity)
+        {
+            entity.ToTable("BusinessEntity", Shema.shemaBusiness);
+            entity.HasKey(e => e.BusinessEntityId);
+        }
+    }
+    public class CategoryPersonMap : IMapConfiguration<CategoryPerson>
+    {
+        public void Map(EntityTypeBuilder<CategoryPerson> entity)
+        {
+            entity.ToTable("CategoryPerson", Shema.shemaPerson);
+            entity.HasKey(e => e.CategoryId);
+        }
+    }
+    public class TaxGroupMap : IMapConfiguration<TaxGroup>
+    {
+        public void Map(EntityTypeBuilder<TaxGroup> entity)
+        {
+            entity.ToTable("TaxGroup", Shema.shemaAccounting);
+            entity.HasKey(e => e.TaxGroupId);
+        }
+    }
+
+    public class TaxOperationMap : IMapConfiguration<TaxOperation>
+    {
+        public void Map(EntityTypeBuilder<TaxOperation> entity)
+        {
+            entity.ToTable("TaxOperation", Shema.shemaAccounting);
+            entity.HasKey(P => P.TaxOperationId);
+        }
+    }
+
+    public class CategoryFinancialMap : IMapConfiguration<CategoryFinancial>
+    {
+        public void Map(EntityTypeBuilder<CategoryFinancial> entity)
+        {
+            entity.ToTable("CategoryFinancial", Shema.shemaFinancial);
+            entity.HasKey(e => e.ChartAccountId);
+        }
+    }
+    public class CostCenterMap : IMapConfiguration<CostCenter>
+    {
+        public void Map(EntityTypeBuilder<CostCenter> entity)
+        {
+            entity.ToTable("CostCenter", Shema.shemaFinancial);
+            entity.HasKey(e => e.CostCenterId);
+        }
+    }
+    public class BankMap : IMapConfiguration<Bank>
+    {
+        public void Map(EntityTypeBuilder<Bank> entity)
+        {
+            entity.ToTable("AccountBank", Shema.shemaFinancial);
+            entity.HasKey(e => e.AccountBankId);
+
+        }
+    }
+
+
+    public class CountryMap : IMapConfiguration<Country>
+    {
+        public void Map(EntityTypeBuilder<Country> entity)
+        {
+            entity.ToTable("Country", Shema.shemaPerson);
+            entity.HasKey(e => e.CountryId);
+        }
+    }
+
+    public class StateProvinceMap : IMapConfiguration<StateProvince>
+    {
+        public void Map(EntityTypeBuilder<StateProvince> entity)
+        {
+            entity.ToTable("StateProvince", Shema.shemaPerson);
+            entity.HasKey(e => e.StateProvinceId);
+
+            entity.HasOne(d => d.Country)
+                .WithMany(p => p.StateProvince)
+                .HasForeignKey(d => d.CountryID)
+                .OnDelete(DeleteBehavior.Cascade);
+        }
+    }
+
+    public class CityMap : IMapConfiguration<City>
+    {
+        public void Map(EntityTypeBuilder<City> entity)
+        {
+            entity.ToTable("City", Shema.shemaPerson);
+            entity.HasKey(e => e.CityId);
+
+            entity.HasOne(d => d.StateProvince)
+                .WithMany(p => p.City)
+                .HasForeignKey(d => d.StateProvinceId);
+        }
+    }
+
+    public class CategoryProductMap : IMapConfiguration<CategoryProduct>
+    {
+        public void Map(EntityTypeBuilder<CategoryProduct> entity)
+        {
+            entity.ToTable("CategoryProduct", Shema.shemaProduction);
+            entity.HasKey(e => e.CategoryId);
+        }
+    }
+    public class ClassProductMap : IMapConfiguration<ClassProduct>
+    {
+        public void Map(EntityTypeBuilder<ClassProduct> entity)
+        {
+            entity.ToTable("ProductClass", Shema.shemaProduction);
+            entity.HasKey(e => e.ClassId);
+        }
+    }
+    public class Warehousemap : IMapConfiguration<Location>
+    {
+        public void Map(EntityTypeBuilder<Location> entity)
+        {
+            entity.HasKey(a => a.WarehouseId);
+            entity.ToTable("Location", Shema.shemaProduction);
+        }
+    }
+
+    public class ConditionMap : IMapConfiguration<Condition>
+    {
+        public void Map(EntityTypeBuilder<Condition> entity)
+        {
+            entity.ToTable("PaymentCondition", Shema.shemaSales);
+            entity.HasKey(e => e.ConditionId);
+        }
+    }
+
+
+
+
     public class AddressMap : IMapConfiguration<Address>
     {
 
@@ -163,26 +297,6 @@ namespace Data.Map
             }
         }
 
-
-        public class BankMap : IMapConfiguration<Bank>
-        {
-            public void Map(EntityTypeBuilder<Bank> entity)
-            {
-                entity.ToTable("Bank", "Financial");
-                entity.HasKey(e => e.BankId);
-
-                entity.Property(e => e.Active).HasDefaultValueSql("((1))");
-
-                entity.Property(e => e.BusinessEntityId).HasColumnName("BusinessEntityID");
-
-                entity.Property(e => e.Name)
-                            .IsRequired()
-                            .HasMaxLength(80)
-                            .IsUnicode(false);
-
-
-            }
-        }
 
 
         public class BankTransMap : IMapConfiguration<BankTrans>
@@ -353,183 +467,7 @@ namespace Data.Map
 
         }
     }
-    public class BusinessEntityMap : IMapConfiguration<BusinessEntity>
-    {
-        public void Map(EntityTypeBuilder<BusinessEntity> entity)
-        {
-            entity.HasKey(e => e.BusinessEntityId);
-            entity.ToTable("BusinessEntity", "Business");
-            entity.Property(e => e.BusinessEntityId).HasColumnName("BusinessEntityID");
-            entity.Property(e => e.Active).HasDefaultValueSql("((1))");
-            entity.Property(e => e.CreateDate)
-                .HasColumnType("datetime")
-                .HasDefaultValueSql("(getdate())");
-            entity.Property(e => e.EmailCreate)
-                .IsRequired()
-                .HasMaxLength(255)
-                .IsUnicode(false);
-            entity.Property(e => e.ExternalCode)
-                .IsRequired()
-                .HasMaxLength(40)
-                .IsUnicode(false)
-                .HasDefaultValueSql("((0))");
-            entity.Property(e => e.Name)
-                .IsRequired()
-                .HasMaxLength(50)
-                .IsUnicode(false);
-            entity.Property(e => e.Validate)
-                .HasColumnType("datetime")
-                .HasDefaultValueSql("(getdate())");
-        }
-    }
-    public class CategoryProductMap : IMapConfiguration<CategoryProduct>
-    {
-        public void Map(EntityTypeBuilder<CategoryProduct> entity)
-        {
-            entity.HasKey(e => e.CategoryId);
-            entity.ToTable("Category", "Production");
-            entity.HasIndex(e => e.Name)
-                .HasName("IX_ProductCategory");
-            entity.Property(e => e.BusinessEntityId).HasColumnName("BusinessEntityID");
-            entity.Property(e => e.Name)
-                .IsRequired()
-                .HasMaxLength(120)
-                .IsUnicode(false);
-
-        }
-    }
-    public class CategoryFinancialMap : IMapConfiguration<CategoryFinancial>
-    {
-        public void Map(EntityTypeBuilder<CategoryFinancial> entity)
-        {
-            entity.HasKey(e => e.ChartAccountId);
-            entity.ToTable("Category", "Financial");
-            entity.Property(e => e.Active).HasDefaultValueSql("((1))");
-            entity.Property(e => e.BusinessEntityId).HasColumnName("BusinessEntityID");
-            entity.Property(e => e.Name)
-                .IsRequired()
-                .HasMaxLength(80)
-                .IsUnicode(false);
-            entity.Property(e => e.Type)
-                .IsRequired();
-
-        }
-    }
-    public class CategoryPersonMap : IMapConfiguration<CategoryPerson>
-    {
-        public void Map(EntityTypeBuilder<CategoryPerson> entity)
-        {
-            entity.HasKey(e => e.CategoryId);
-            entity.ToTable("Category", "Person");
-            entity.HasIndex(e => e.Name)
-                .HasName("IX_PersonType");
-            entity.Property(e => e.BusinessEntityId).HasColumnName("BusinessEntityID");
-            entity.Property(e => e.CreateDate)
-                .HasColumnType("datetime")
-                .HasDefaultValueSql("(getdate())");
-            entity.Property(e => e.ModifiedDate)
-                .HasColumnType("datetime")
-                .HasDefaultValueSql("(getdate())");
-            entity.Property(e => e.Name)
-                .IsRequired()
-                .HasMaxLength(80)
-                .IsUnicode(false);
-
-        }
-    }
-    public class CityMap : IMapConfiguration<City>
-    {
-        public void Map(EntityTypeBuilder<City> entity)
-        {
-            entity.ToTable("City", "Person");
-            entity.HasIndex(e => e.Name)
-                .HasName("IX_City");
-
-            entity.Property(e => e.MiddleName)
-                .HasMaxLength(50)
-                .IsUnicode(false);
-
-            entity.Property(e => e.Name)
-                .IsRequired()
-                .HasMaxLength(150)
-                .IsUnicode(false);
-            entity.Property(e => e.SpecialCodeRegion)
-                .HasMaxLength(80)
-                .IsUnicode(false);
-            entity.HasOne(d => d.StateProvince)
-                .WithMany(p => p.City)
-                .HasForeignKey(d => d.StateProvinceId)
-                .HasConstraintName("FK_City_StateProvince");
-        }
-    }
-    public class ClassProductMap : IMapConfiguration<ClassProduct>
-    {
-        public void Map(EntityTypeBuilder<ClassProduct> entity)
-        {
-            entity.HasKey(e => e.ClassId);
-            entity.ToTable("Class", "Production");
-            entity.HasIndex(e => e.Name)
-                .HasName("IX_ProductClass");
-            entity.Property(e => e.BusinessEntityId).HasColumnName("BusinessEntityID");
-            entity.Property(e => e.Name)
-                .IsRequired()
-                .HasMaxLength(120)
-                .IsUnicode(false);
-
-        }
-    }
-    public class ConditionMap : IMapConfiguration<Condition>
-    {
-        public void Map(EntityTypeBuilder<Condition> entity)
-        {
-            entity.HasKey(e => e.ConditionId);
-            entity.ToTable("Condition", "Sales");
-            entity.Property(e => e.Active).HasDefaultValueSql("((1))");
-            entity.Property(e => e.BusinessEntityId).HasColumnName("BusinessEntityID");
-
-            entity.Property(e => e.Name)
-                .IsRequired()
-                .HasMaxLength(50)
-                .IsUnicode(false);
-            entity.Property(e => e.Tax).HasColumnType("numeric(5, 2)");
-
-        }
-    }
-    public class CostCenterMap : IMapConfiguration<CostCenter>
-    {
-        public void Map(EntityTypeBuilder<CostCenter> entity)
-        {
-            entity.ToTable("CostCenter", "Financial");
-            entity.Property(e => e.Active).HasDefaultValueSql("((1))");
-            entity.Property(e => e.BusinessEntityId).HasColumnName("BusinessEntityID");
-
-            entity.Property(e => e.Name)
-                .IsRequired()
-                .HasMaxLength(80)
-                .IsUnicode(false);
-
-        }
-    }
-    public class CountryMap : IMapConfiguration<Country>
-    {
-        public void Map(EntityTypeBuilder<Country> entity)
-        {
-            entity.ToTable("Country", "Person");
-            entity.HasIndex(e => new { e.MiddleName, e.Name })
-                .HasName("IX_CountryRegion");
-            entity.Property(e => e.CountryRegionCode).HasColumnType("char(6)");
-
-            entity.Property(e => e.MiddleName)
-                .HasMaxLength(30)
-                .IsUnicode(false);
-
-            entity.Property(e => e.Name)
-                .IsRequired()
-                .HasMaxLength(80)
-                .IsUnicode(false);
-            entity.Property(e => e.SpecialCodeRegion).HasColumnType("char(10)");
-        }
-    }
+   
     public class EmailMap : IMapConfiguration<Email>
     {
         public void Map(EntityTypeBuilder<Email> entity)
@@ -1063,31 +1001,6 @@ namespace Data.Map
         }
     }
 
-    public class StateProvinceMap : IMapConfiguration<StateProvince>
-    {
-        public void Map(EntityTypeBuilder<StateProvince> entity)
-        {
-            entity.ToTable("StateProvince", "Person");
-            entity.HasIndex(e => new { e.Name, e.StateProvinceCode })
-                .HasName("IX_StateProvince");
-
-            entity.Property(e => e.IsOnlyStateProvinceFlag).HasDefaultValueSql("((1))");
-
-            entity.Property(e => e.Name)
-                .IsRequired()
-                .HasMaxLength(80)
-                .IsUnicode(false);
-            entity.Property(e => e.StateProvinceCode)
-                .IsRequired()
-                .HasMaxLength(50)
-                .IsUnicode(false);
-            entity.HasOne(d => d.CountryRegion)
-                .WithMany(p => p.StateProvince)
-                .HasForeignKey(d => d.CountryRegionId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_StateProvince_Territory");
-        }
-    }
     public class TaxMap : IMapConfiguration<Tax>
     {
         public void Map(EntityTypeBuilder<Tax> entity)
@@ -1102,54 +1015,8 @@ namespace Data.Map
 
         }
     }
-    public class TaxGroupMap : IMapConfiguration<TaxGroup>
-    {
-        public void Map(EntityTypeBuilder<TaxGroup> entity)
-        {
-            entity.ToTable("TaxGroup", "Accounting");
-
-            entity.Property(e => e.BusinessEntityId).HasColumnName("BusinessEntityID");
-            entity.Property(e => e.Name)
-                .IsRequired()
-                .HasMaxLength(120)
-                .IsUnicode(false);
-
-        }
-    }
-    public class TaxOperationMap : IMapConfiguration<TaxOperation>
-    {
-        public void Map(EntityTypeBuilder<TaxOperation> entity)
-        {
-            entity.ToTable("TaxOperation", "Accounting");
-            entity.Property(e => e.BusinessEntityId).HasColumnName("BusinessEntityID");
-            entity.Property(e => e.CostTrigger).HasDefaultValueSql("((1))");
-            entity.Property(e => e.DefaultCode)
-                .IsRequired()
-                .HasColumnType("char(4)");
-            entity.Property(e => e.Name)
-                .IsRequired()
-                .HasMaxLength(80)
-                .IsUnicode(false);
-            entity.Property(e => e.StockTrigger).HasDefaultValueSql("((1))");
-
-        }
-    }
-    public class Warehousemap : IMapConfiguration<Location>
-    {
-        public void Map(EntityTypeBuilder<Location> entity)
-        {
-            entity.HasKey(a => a.WarehouseId);
-            entity.ToTable("Location", "Production");
-            entity.HasIndex(e => e.Name)
-                .HasName("IX_Warehouse");
-            entity.Property(e => e.BusinessEntityId).HasColumnName("BusinessEntityID");
-
-            entity.Property(e => e.Name)
-                .HasMaxLength(50)
-                .IsUnicode(false);
-        }
-    }
-
+    
+   
     public class UserSettingMap : IMapConfiguration<UserSetting>
     {
         public void Map(EntityTypeBuilder<UserSetting> entity)

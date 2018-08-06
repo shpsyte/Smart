@@ -11,15 +11,15 @@ namespace Core.Domain.PersonAndData
         public CategoryPerson()
         {
             Person = new HashSet<Person>();
+            this.CreateDate = DateTime.UtcNow;
         }
+
         [Key]
         public int CategoryId { get; set; }
         [Required]
         public string Name { get; set; }
         public DateTime CreateDate { get; set; }
-        public DateTime ModifiedDate { get; set; }
 
-        
         public ICollection<Person> Person { get; set; }
     }
 }

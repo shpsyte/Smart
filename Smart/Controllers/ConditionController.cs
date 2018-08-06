@@ -34,7 +34,7 @@ namespace Smart.Controllers
         {
             ViewData["search"] = search;
             var data = await _conditionServices.QueryAsync();
-                 data = data.Where(p => p.Deleted == false);
+                data = data.Where(p => p.Deleted == false);
             if (!string.IsNullOrEmpty(search)) 
             {
                data = data.Where(p =>  

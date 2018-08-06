@@ -17,7 +17,13 @@
     <header style="background-color: #176c9b;">
         @{ await Html.RenderPartialAsync("_HeaderWarning"); }
         @{ Html.RenderPartialIf("_HeaderUser", SignInManager.IsSignedIn(User)); }
-        @{ Html.RenderPartialIf("_HeaderMenu", SignInManager.IsSignedIn(User)); }
+        @{ 
+            if (!IsSectionDefined("topright"))
+            {
+                Html.RenderPartialIf("_HeaderMenu", SignInManager.IsSignedIn(User));
+            }
+
+         }
     </header>
     @(IsSectionDefined("topright") ? RenderSection("topright", false) : null)
     <div class="@(ViewBag.PageClass == null ? "container-fluid" : ViewBag.PageClass)">
@@ -36,6 +42,7 @@
             drawBreadCrumb();
             pageSetUp();
         });
+
         $.validator.methods.range = function (value, element, param) {
             var globalizedValue = value.replace(",", ".");
             return this.optional(element) || (globalizedValue >= param[0] && globalizedValue <= param[1]);

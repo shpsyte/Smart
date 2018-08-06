@@ -213,7 +213,7 @@ namespace Smart.Extensions.Financial
 
         public async Task<IQueryable<VExpense>> GetVExpense(FinancialReportsModel filter)
         {
-            var data = await _vExpenseServices.QueryAsync();
+            var data =   _vExpenseServices.Query ();
 
             if (!string.IsNullOrEmpty(filter.suplier))
                 data = data.Where(a => a.Person.FirstName.Contains(filter.suplier) || a.Person.LastName.Contains(filter.suplier));
@@ -255,7 +255,7 @@ namespace Smart.Extensions.Financial
 
         public async Task<IQueryable<VRevenue>> GetVRevenue(FinancialReportsModel filter)
         {
-            var data = await _vRevenueServices.QueryAsync();
+            var data =   _vRevenueServices.Query ();
 
             if (!string.IsNullOrEmpty(filter.suplier))
                 data = data.Where(a => a.Person.FirstName.Contains(filter.suplier) || a.Person.LastName.Contains(filter.suplier));
@@ -298,7 +298,7 @@ namespace Smart.Extensions.Financial
 
         public async Task<IQueryable<BankTrans>> GetBankTans(FinancialReportsModel filter)
         {
-            var data = await _bankTransServices.QueryAsync(a => a.Deleted == false);
+            var data =   _bankTransServices.Query (a => a.Deleted == false);
 
             if (!string.IsNullOrEmpty(filter.suplier))
                 data = data.Where(a => a.Description.Contains(filter.suplier) );
@@ -337,7 +337,7 @@ namespace Smart.Extensions.Financial
 
         public async Task<IQueryable<VCashFlow>> GetVCashFlow(FinancialReportsModel filter)
         {
-            var data = await _cVCashFlowServices.QueryAsync();
+            var data =   _cVCashFlowServices.Query ();
 
 
             if (!string.IsNullOrEmpty(filter.suplier))

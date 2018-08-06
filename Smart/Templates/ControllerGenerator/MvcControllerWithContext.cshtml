@@ -113,7 +113,7 @@ namespace @Model.ControllerNamespace
         public async Task<IActionResult> List(string search)
         {
             ViewData["search"] = search;
-            var data = await @(serviceNameCompleteName).QueryAsync();
+            var data = await @(serviceNameCompleteName).Query();
             @if (ExistsDeletedColumn())
             {
                 @: data = data.Where(p => p.Deleted == false);
@@ -239,7 +239,7 @@ namespace @Model.ControllerNamespace
             {
                 try
                 {
-                    await @(serviceNameCompleteName).UpdateAsync(@Model.ModelVariable);
+                    await @(serviceNameCompleteName).Update(@Model.ModelVariable);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -285,7 +285,7 @@ namespace @Model.ControllerNamespace
          @:[Route("@routemanagerdelete")]
          @:public async Task<IActionResult> Delete (@Model.ModelTypeName @Model.ModelVariable)
          @:{
-            @: await @(serviceNameCompleteName).DeleteAsync(@Model.ModelVariable);
+            @: await @(serviceNameCompleteName).Delete(@Model.ModelVariable);
              @:return RedirectToAction(nameof(List));
          @:}
      }

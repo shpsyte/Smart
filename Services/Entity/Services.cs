@@ -1,6 +1,6 @@
 ﻿using Core.Domain.Base;
 using Core.Domain.PersonAndData;
-using Core.Interfaces;
+using Data.Repository;
 using Data.Context;
 using Data.Repository;
 using Microsoft.Extensions.Logging;
@@ -19,231 +19,101 @@ namespace Services.Entity
         private SmartContext _context;
         private IRepository<T> _repository;
         private IUser _currentUser;
-        private string _currentUserId;
-        private string _currentUserEmail;
         private int _businessEntityId;
         private readonly ILogger _logger;
+
+
+        #region ctor_methods
 
         public Services(SmartContext context, IRepository<T> repository, IUser currentUser, ILogger<Services<T>> logger)
         {
             this._context = context;
             this._currentUser = currentUser;
-            this._currentUserId = _currentUser.Id();
-            this._currentUserEmail = _currentUser.Email();
             this._logger = logger;
             this._businessEntityId = _currentUser.BusinessEntityId();
             this._repository = repository;
 
         }
 
-        T inject(T entity)
+
+        private T CheckTOnBusinessEntity(T entity)
+        {
+            if (entity != null)
+            {
+                if (entity.BusinessEntityId != _businessEntityId)
+                {
+                    entity = null;
+                }
+            }
+
+            return entity;
+        }
+        private T InjectBusinessEntity(T entity)
         {
             entity.BusinessEntityId = _businessEntityId;
             return entity;
         }
 
-        public Expression<Func<T, bool>> InjectCurrentBusiness()
+        private Expression<Func<T, bool>> InjectBusinessEntity(Expression<Func<T, bool>> and = null)
         {
-            return p => (p.BusinessEntityId == _businessEntityId);
-        }
+            Expression<Func<T, bool>> expr1 = p => (p.BusinessEntityId == _businessEntityId);
 
-        private List<T> ListOfEntity()
-        {
-            return _repository.GetAll(InjectCurrentBusiness()).ToList();
-        }
-
-        private List<T> ListOfEntity(Expression<Func<T, bool>> where)
-        {
-            return _repository.Query(InjectCurrentBusiness()).Where(where).ToList();
-        }
-
-
-        public T Add(T entity)
-        {
-            entity = inject(entity);
-            return _repository.Add(entity);
-        }
-
-        public async Task<T> AddAsync(T entity)
-        {
-            entity = inject(entity);
-            return await _repository.AddAsync(entity);
-        }
-
-        public async Task<T> AddAsyncNoSave(T entity)
-        {
-            entity = inject(entity);
-            return await _repository.AddAsyncNoSave(entity);
-        }
-
-        public int Count()
-        {
-            return _repository.Count(InjectCurrentBusiness());
-        }
-
-        public async Task<int> CountAsync()
-        {
-            return await _repository.CountAsync(InjectCurrentBusiness());
-        }
-
-
-
-        public void Delete(T entity)
-        {
-            entity = inject(entity);
-            _repository.Delete(entity);
-        }
-
-        public void Delete(Expression<Func<T, bool>> where)
-        {
-            List<T> _del = ListOfEntity(where);
-            _del.ForEach(a => _repository.Delete(a));
-        }
-
-
-        public void DeleteNoSave (T entity)
-        {
-            entity = inject(entity);
-            _repository.DeleteAsync(entity);
-        }
-
-
-        public async Task<int> DeleteAsync(T entity)
-        {
-            entity = inject(entity);
-            return await _repository.DeleteAsync(entity);
-        }
-
-        public T Find(params object[] key)
-        {
-            var data = _repository.Find(key);
-            if (data != null)
+            if (and != null)
             {
-                if (data.BusinessEntityId != _businessEntityId)
-                {
-                    data = null;
-                }
+                Expression<Func<T, bool>> expr2 = and;
+
+                var body = Expression.AndAlso(expr1.Body, expr2.Body);
+                var lambda = Expression.Lambda<Func<T, bool>>(body, expr1.Parameters[0]);
+
+                return lambda;
             }
-            return data;
+            else
+                return expr1;
+
         }
+        #endregion
+
+
+        public virtual T Add(T entity, bool save = true) => _repository.Add(InjectBusinessEntity(entity), save);
+        public virtual async Task<T> AddAsync(T entity, bool save = true) => await _repository.AddAsync(InjectBusinessEntity(entity), save);
+        public virtual T Delete(T entity, bool save = true) => _repository.Delete(InjectBusinessEntity(entity), save);
+        public virtual async Task<T> DeleteAsync(T entity, bool save = true) => await _repository.DeleteAsync(InjectBusinessEntity(entity), save);
+        public virtual T Update(T entity, bool save = true) => _repository.Update(InjectBusinessEntity(entity), save);
+        public virtual async Task<T> UpdateAsync(T entity, bool save = true) => await _repository.UpdateAsync(InjectBusinessEntity(entity), save);
+
+
         
+        public virtual void Save() => _repository.Save();
+        public virtual async Task<int> SaveAsync() => await _repository.SaveAsync();
+        public virtual void Dispose() => _repository.Dispose();
 
-        public async Task<T> FindAsync(params object[] key)
-        {
-            var data = _repository.FindAsync(key);
-            if (data != null)
-            {
-                if (data.Result.BusinessEntityId != _businessEntityId)
-                {
-                    data = null;
-                }
-            }
-            return await data;
-        }
+
+        public virtual T SingleOrDefault() => _repository.SingleOrDefault(InjectBusinessEntity());
+        public virtual T SingleOrDefault(Expression<Func<T, bool>> where) => _repository.Query().Where(InjectBusinessEntity()).SingleOrDefault(where);
+
+        public virtual async Task<T> SingleOrDefaultAsync() => await _repository.SingleOrDefaultAsync(InjectBusinessEntity());
+        public virtual async Task<T> SingleOrDefaultAsync(Expression<Func<T, bool>> where) => CheckTOnBusinessEntity(await _repository.SingleOrDefaultAsync(where));
+        public virtual int Count() => _repository.Count(InjectBusinessEntity());
+        public virtual int Count(Expression<Func<T, bool>> where) => _repository.Count(InjectBusinessEntity(where));
+        public virtual async Task<int> CountAsync() => await _repository.CountAsync(InjectBusinessEntity());
+        public virtual async Task<int> CountAsync(Expression<Func<T, bool>> where) => await _repository.CountAsync(InjectBusinessEntity(where));
+
+
+
+        public virtual T Find(params object[] key) => CheckTOnBusinessEntity(_repository.Find(key));
+        public virtual async Task<T> FindAsync(params object[] key) => CheckTOnBusinessEntity(await _repository.FindAsync(key));
+        public virtual IQueryable<T> FindBy(Expression<Func<T, bool>> where) => _repository.FindBy(InjectBusinessEntity(where));
+        public virtual async Task<ICollection<T>> FindByAsync(Expression<Func<T, bool>> where) => await _repository.FindByAsync(InjectBusinessEntity(where));
         
+        public virtual IEnumerable<T> GetAll() => _repository.GetAll(InjectBusinessEntity());
+        public virtual IEnumerable<T> GetAll(Expression<Func<T, bool>> where) => _repository.GetAll(InjectBusinessEntity(where));
+        public virtual async Task<IEnumerable<T>> GetAllAsync() => await _repository.GetAllAsync(InjectBusinessEntity());
+        public virtual async Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>> where) => await _repository.GetAllAsync(InjectBusinessEntity(where));
+        public virtual IQueryable<T> Query() => _repository.Query(InjectBusinessEntity());
+        public virtual IQueryable<T> Query(Expression<Func<T, bool>> where) => _repository.Query(InjectBusinessEntity()).Where(where);
 
-        public T SingleOrDefault()
-        {
-            var data = _repository.SingleOrDefault(a=>a.BusinessEntityId == _businessEntityId);
-            return data;
-        }
-        
-        public async Task<T> SingleOrDefaultAsync()
-        {
-            return await _repository.SingleOrDefaultAsync(a => a.BusinessEntityId == _businessEntityId);
-        }
+        public virtual async Task<IQueryable<T>> QueryAsync() => _repository.Query(InjectBusinessEntity());
+        public virtual async Task<IQueryable<T>> QueryAsync(Expression<Func<T, bool>> where) =>  _repository.Query(InjectBusinessEntity(where));
 
-         public T SingleOrDefault(Expression<Func<T, bool>> where)
-        {
-            return _repository.Query().Where(a => a.BusinessEntityId == _businessEntityId).SingleOrDefault(where);
-        }
-        
-        public virtual async Task<T> SingleOrDefaultAsync(Expression<Func<T, bool>> where)
-        {
-            var data = await _repository.SingleOrDefaultAsync(where);
-             if (data != null)
-            {
-                if (data.BusinessEntityId != _businessEntityId)
-                {
-                    data = null;
-                }
-            }
-            return data;
-        }
-
-        public IEnumerable<T> GetAll()
-        {
-            return _repository.GetAll(InjectCurrentBusiness());
-        }
-        public IEnumerable<T> GetAll(Expression<Func<T, bool>> where)
-        {
-            return _repository.GetAll(where).Where(a => a.BusinessEntityId == _businessEntityId);
-        }
-
-        public async Task<IEnumerable<T>> GetAllAsync()
-        {
-            return await _repository.GetAllAsync(InjectCurrentBusiness());
-        }
-
-        public async Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>> where)
-        {
-            return await Task.Run(() =>
-            {
-                return _repository.GetAllAsync(where).Result.Where(a => a.BusinessEntityId == _businessEntityId);
-            });
-        }
-
-      
-
-        public IQueryable<T> Query()
-        {
-            return _repository.Query(InjectCurrentBusiness());
-        }
-
-        public IQueryable<T> Query(Expression<Func<T, bool>> where)
-        {
-            return _repository.Query(InjectCurrentBusiness()).Where(where);
-        }
-
-        public async Task<IQueryable<T>> QueryAsync()
-        {
-            return await _repository.QueryAsync(InjectCurrentBusiness());
-        }
-
-        public async Task<IQueryable<T>> QueryAsync(Expression<Func<T, bool>> where)
-        {
-            return await Task.Run(() =>
-            {
-                return _repository.QueryAsync(InjectCurrentBusiness()).Result.Where(where);
-            });
-        }
-
-        public void Save()
-        {
-            _repository.Save();
-        }
-
-        public async Task<int> SaveAsync()
-        {
-           return await _repository.SaveAsync();
-        }
-
-        public T Update(T entity)
-        {
-            entity = inject(entity);
-            return _repository.Update(entity);
-        }
-
-        public async Task<T> UpdateAsync(T entity)
-        {
-            entity = inject(entity);
-            return await _repository.UpdateAsync(entity);
-        }
-
-        public async Task<T> UpdateAsyncNoSave(T entity)
-        {
-            entity = inject(entity);
-            return await _repository.UpdateAsyncNoSave(entity);
-        }
     }
 }

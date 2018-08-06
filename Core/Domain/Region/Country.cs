@@ -1,10 +1,11 @@
-﻿using System;
+﻿using Core.Domain.Base;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Core.Domain.Region
 {
-    public partial class Country
+    public partial class Country : BaseEntity
     {
         public Country()
         {

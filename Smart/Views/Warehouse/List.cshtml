@@ -61,8 +61,8 @@
                     <tbody>
                         @foreach (var item in Model)
                         {
-                            <tr>
-                                <td>
+                            <tr class="table-row-body">
+                                <td class="table-item-body clickable-row" data-href="@Url.Action("Edit", "Warehouse", new { id = item.WarehouseId })">
                                     @Html.DisplayFor(modelItem => item.Name)
                                 </td>
                                 <td>

@@ -14,7 +14,8 @@ using Data.Context;
 using Smart.Models.PersonModel;
 using AutoMapper;
 using Core.Domain.Region;
-using Core.Interfaces;
+using Data.Repository;
+
 namespace Smart.Controllers
 {
     [Authorize]
@@ -182,8 +183,8 @@ namespace Smart.Controllers
                 person.ModifiedDate = System.DateTime.UtcNow;
                 try
                 {
-                    await _personServices.UpdateAsyncNoSave(person);
-                    await _addressServices.UpdateAsyncNoSave(address);
+                    await _personServices.UpdateAsync (person, false);
+                    await _addressServices.UpdateAsync (address, false);
                     await _personAddressServices.SaveAsync();
                 }
                 catch (DbUpdateConcurrencyException)

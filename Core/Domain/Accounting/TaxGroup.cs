@@ -12,6 +12,7 @@ namespace Core.Domain.Accounting
         {
             Product = new HashSet<Product>();
         }
+
         [Key]
         public int TaxGroupId { get; set; }
         [Required]

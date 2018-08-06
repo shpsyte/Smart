@@ -1,6 +1,10 @@
 @model IEnumerable<Core.Domain.Finance.Bank>
 @{ ViewData["Title"] = ViewsLocalizer["Conta Caixa"]; ViewBag.PageClass = "container"; }
 @{ ViewData.AddActivePageApp(ActivePagesApp.RegBank); }
+@section topright{
+    @{ Html.RenderPartialIf("_HeaderConfiguracoes", SignInManager.IsSignedIn(User)); }
+}
+
 <h4> @ViewData["Title"] <small class="text-danger"> @Model.Count() </small></h4>
 <hr class="myb-4" />
 <div class="row">
@@ -53,6 +57,7 @@
                     <thead>
                         <tr>
                             <th> @Localizer["Nome"]</th>
+                            <th style="width:80px"> @Localizer["Account"]</th>
                             <th width="60px"> @Localizer["Ativo"]</th>
                             <th class="no-order" width="40px"> @SharedLocalizer["Ação"]</th>
                         </tr>
@@ -60,15 +65,18 @@
                     <tbody>
                         @foreach (var item in Model)
                         {
-                            <tr>
-                                <td>
+                            <tr class="table-row-body">
+                                <td class="table-item-body clickable-row" data-href="@Url.Action("Edit", "Bank", new { id = item.AccountBankId })">
                                     @Html.DisplayFor(modelItem => item.Name)
+                                </td>
+                                <td class="table-item-body clickable-row" data-href="@Url.Action("Edit", "Bank", new { id = item.AccountBankId })">
+                                    @Html.DisplayFor(modelItem => item.Account)
                                 </td>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.Active)
                                 </td>
                                 <td>
-                                    <a asp-action="Edit" asp-route-id="@item.BankId" class="btn btn-light btn-bdr"> @SharedLocalizer["Editar"] </a>
+                                    <a asp-action="Edit" asp-route-id="@item.AccountBankId" class="btn btn-light btn-bdr"> @SharedLocalizer["Editar"] </a>
                                 </td>
                             </tr>
                         }

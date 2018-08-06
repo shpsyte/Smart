@@ -9,20 +9,21 @@ using Smart.Services;
 using Core.Domain.Region;
 using Smart.Data;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Core.Interfaces;
+using Data.Repository;
+
 namespace Smart.Controllers
 {
     [Authorize]
     public class StateProvinceController : BaseController
     {
         #region vars
-        private readonly IRepository<StateProvince> _stateProvinceServices;
-        private readonly IRepository<Country> _countryServices;
+        private readonly IServices<StateProvince> _stateProvinceServices;
+        private readonly IServices<Country> _countryServices;
         #endregion
         #region ctor
         public StateProvinceController(
-                                IRepository<Country> countryServices,
-                                IRepository<StateProvince> stateProvinceServices,
+                                IServices<Country> countryServices,
+                                IServices<StateProvince> stateProvinceServices,
                                 IUser currentUser,
                                 IEmailSender emailSender,
                                 IHttpContextAccessor accessor
@@ -38,7 +39,7 @@ namespace Smart.Controllers
         public async Task<IActionResult> List(string search)
         {
             ViewData["search"] = search;
-            var data = await _stateProvinceServices.QueryAsync();
+            var data =   _stateProvinceServices.Query();
             if (!string.IsNullOrEmpty(search))
             {
                 data = data.Where(p =>
@@ -52,21 +53,21 @@ namespace Smart.Controllers
         [Route("stateprovince-management/stateprovince-add")]
         public IActionResult Add()
         {
-            ViewData["CountryRegionId"] = new SelectList(_countryServices.GetAll(), "CountryId", "Name");
+            ViewData["CountryID"] = new SelectList(_countryServices.GetAll(), "CountryId", "Name");
             var data = new StateProvince();
             return View(data);
         }
         // POST: StateProvince/Add
         [HttpPost, ValidateAntiForgeryToken]
         [Route("stateprovince-management/stateprovince-add")]
-        public async Task<IActionResult> Add([Bind("StateProvinceId,StateProvinceCode,IsOnlyStateProvinceFlag,Name,CountryRegionId")] StateProvince stateProvince, bool continueAdd)
+        public async Task<IActionResult> Add([Bind("StateProvinceId,StateProvinceCode,IsOnlyStateProvinceFlag,Name,CountryID")] StateProvince stateProvince, bool continueAdd)
         {
             if (ModelState.IsValid)
             {
                 await _stateProvinceServices.AddAsync(stateProvince);
                 return continueAdd ? RedirectToAction(nameof(Add)) : RedirectToAction(nameof(List));
             }
-            ViewData["CountryRegionId"] = new SelectList(_countryServices.GetAll(), "CountryId", "Name");
+            ViewData["CountryID"] = new SelectList(_countryServices.GetAll(), "CountryId", "Name");
             return View(stateProvince);
         }
         // GET: StateProvince/Edit/5
@@ -82,13 +83,13 @@ namespace Smart.Controllers
             {
                 return NotFound();
             }
-            ViewData["CountryRegionId"] = new SelectList(_countryServices.GetAll(), "CountryId", "Name");
+            ViewData["CountryID"] = new SelectList(_countryServices.GetAll(), "CountryId", "Name");
             return View(stateProvince);
         }
         // POST: StateProvince/Edit/5
         [HttpPost, ValidateAntiForgeryToken]
         [Route("stateprovince-management/stateprovince-edit/{id?}")]
-        public async Task<IActionResult> Edit(int id, [Bind("StateProvinceId,StateProvinceCode,IsOnlyStateProvinceFlag,Name,CountryRegionId")] StateProvince stateProvince, bool continueAdd)
+        public async Task<IActionResult> Edit(int id, [Bind("StateProvinceId,StateProvinceCode,IsOnlyStateProvinceFlag,Name,CountryID")] StateProvince stateProvince, bool continueAdd)
         {
             if (id != stateProvince.StateProvinceId)
             {

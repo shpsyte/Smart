@@ -164,7 +164,7 @@ namespace Smart.Controllers
             if (ModelState.IsValid)
             {
                 bankTrans.Total = originalValue.Total;
-                await _bankTransServices.UpdateAsyncNoSave(bankTrans);
+                await _bankTransServices.UpdateAsync(bankTrans,false);
                 if (addTrash)
                 {
                     BankTrans reversal = new BankTrans()
@@ -200,12 +200,12 @@ namespace Smart.Controllers
                             Signal = revenueTransLanc.Signal == 3 ? 3 : revenueTransLanc.Signal == 1 ? 2 : 1,
                             Total = revenueTransLanc.Total
                         };
-                        await _revenueTransServices.AddAsyncNoSave(reversalrevenueTrans);
+                        await _revenueTransServices.AddAsync(reversalrevenueTrans, false);
 
                         if (revenue.DuePayment.HasValue)
                         {
                             revenue.DuePayment = null;
-                            await _revenueServices.UpdateAsyncNoSave(revenue);
+                            await _revenueServices.UpdateAsync(revenue, false);
                         }
 
 
@@ -228,16 +228,16 @@ namespace Smart.Controllers
                             Signal = expenseTransLanc.Signal == 3 ? 3 : expenseTransLanc.Signal == 1 ? 2 : 1,
                             Total = expenseTransLanc.Total
                         };
-                        await _expenseTransServices.AddAsyncNoSave(reversalexpenseTransLanc);
+                        await _expenseTransServices.AddAsync(reversalexpenseTransLanc,false);
 
                         if (expense.DuePayment.HasValue)
                         {
                             expense.DuePayment = null;
-                            await _expenseServices.UpdateAsyncNoSave(expense);
+                            await _expenseServices.UpdateAsync(expense,false);
                         }
                     }
 
-                    await _bankTransServices.AddAsyncNoSave(reversal);
+                    await _bankTransServices.AddAsync(reversal,false);
                 }
 
                 try

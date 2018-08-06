@@ -186,12 +186,12 @@ namespace Smart.Controllers
                     invoice.BusinessEntityId = _BusinessId;
                     List<InvoiceDetail> invoiceDetailList = _invoiceExtension.CreateInvoiceDetail(product, invoice).ToList();
                     invoice.SubTotal = invoiceDetailList.Sum(a => a.LineTotal);
-                    invoiceDetailList.ForEach(a => _invoinceDetailsServices.AddAsyncNoSave(a));
+                    invoiceDetailList.ForEach(a => _invoinceDetailsServices.AddAsync (a, false));
                     ViewData["products"] = invoiceDetailList;
                 }
                 else
                 {
-                    await _invoiceServices.AddAsyncNoSave(invoice);
+                    await _invoiceServices.AddAsync (invoice, false);
                 }
 
 
@@ -263,7 +263,7 @@ namespace Smart.Controllers
             {
                     //delete any product
                 await _invoinceDetailsServices.Query(a => a.InvoiceId == id).ForEachAsync(
-                      item => _invoinceDetailsServices.DeleteNoSave(item));
+                      item => _invoinceDetailsServices.Delete (item, false));
 
                 if (product.Any())
                 {
@@ -271,7 +271,7 @@ namespace Smart.Controllers
                     List<InvoiceDetail> invoiceDetailList = _invoiceExtension.CreateInvoiceDetail(product, null).ToList();
                     invoice.SubTotal = invoiceDetailList.Sum(a => a.LineTotal);
                     invoiceDetailList.ForEach(a => a.InvoiceId = id);
-                    invoiceDetailList.ForEach(a => _invoinceDetailsServices.AddAsyncNoSave(a));
+                    invoiceDetailList.ForEach(a => _invoinceDetailsServices.AddAsync (a, false));
                 }
 
                 try
