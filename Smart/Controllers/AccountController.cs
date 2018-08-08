@@ -5,7 +5,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Core.Domain.Business;
 using Core.Domain.Identity;
-
+using Core.ValueObjects;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -230,7 +230,12 @@ namespace Smart.Controllers
         }
         private BusinessEntity IncludeBusinessEntity(string name, string email, string externalcode)
         {
-            var x = _businessEntityServices.AddAsync(new BusinessEntity(name, email, externalcode));
+            var x = _businessEntityServices.AddAsync(
+                  new BusinessEntity(
+                    new SingleName(name), 
+                    new EmailAddress(email), 
+                    externalcode)
+                  );
             return x.Result;
         }
         [HttpPost]

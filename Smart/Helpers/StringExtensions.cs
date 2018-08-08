@@ -352,5 +352,21 @@ namespace Smart.Helpers
                 return string.Concat(text.Substring(0, length), (addetc ? "..." : ""));
             return text;
         }
+
+
+        public static string FormatDocumentBR(this string s)
+        {
+            if (string.IsNullOrEmpty(s))
+                return s;
+
+            if (s.Length < 14)
+            {
+                return Convert.ToUInt64(s).ToString(@"000\.000\.000\-00");
+            }else
+            {
+                return Convert.ToUInt64(s).ToString(@"00\.000\.000\/0000\-00");
+            }
+             
+        }
     }
 }

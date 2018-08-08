@@ -1,4 +1,5 @@
 ﻿using Core.Domain.Base;
+using Core.ValueObjects;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -16,19 +17,17 @@ namespace Core.Domain.Finance
             this.Active = true;
         }
 
-        public int AccountBankId { get; set; }
+        public int AccountBankId { get; private set; }
+
         [Required]
         public string Name { get; set; }
-        [Required]
+
         public string Code { get; set; }
-        [Required]
         public string Agency { get; set; }
-        [Required]
         public string DigitAgency { get; set; }
-        [Required]
         public string Account { get; set; }
-        [Required]
         public string DigitAccount { get; set; }
+
         public bool Active { get; set; }
 
         public ICollection<BankTrans> BankTrans { get; set; }

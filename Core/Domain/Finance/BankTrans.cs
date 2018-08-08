@@ -12,7 +12,7 @@ namespace Core.Domain.Finance
             this.DueDate = System.DateTime.UtcNow;
             this.Deleted = false;
         }
-        public int Id { get; set; }
+        public int Id { get; private set; }
         public int BankId { get; set; }
         public string Description { get; set; }
 

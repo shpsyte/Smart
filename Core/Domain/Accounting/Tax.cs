@@ -8,7 +8,7 @@ namespace Core.Domain.Accounting
     {
         [Key]
         public int TaxId { get; set; }
-        public int TaxOperationId { get; set; }
+        public int TaxOperationId { get; private set; }
         public string TaxGroupId { get; set; }
         
     }

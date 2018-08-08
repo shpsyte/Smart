@@ -14,7 +14,7 @@ namespace Core.Domain.Accounting
         }
 
         [Key]
-        public int TaxGroupId { get; set; }
+        public int TaxGroupId { get; private set; }
         [Required]
         public string Name { get; set; }
 

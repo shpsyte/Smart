@@ -20,7 +20,7 @@ namespace Core.Domain.Sale
             this.PaymentQty = 1;
         }
 
-        public int ConditionId { get; set; }
+        public int ConditionId { get; private set; }
         [Required]
         public string Name { get; set; }
         public int? PaymentQty { get; set; }

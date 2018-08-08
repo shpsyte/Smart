@@ -19,11 +19,6 @@ namespace Smart.Mappers
             CreateMap<PersonModel, Address>();
             CreateMap<PersonModel, Person>();
 
-           
-
-
-
-
         }
     }
 }

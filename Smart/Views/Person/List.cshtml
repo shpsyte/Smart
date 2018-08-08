@@ -69,10 +69,9 @@
                                 </td>
                                 <td class="table-item-body clickable-row" data-toggle="tooltip" data-placement="top" title="@item.FirstName" data-href="@Url.Action("Edit", "Person",   new { id = item.PersonId })">
                                     @Html.Truncate(item.FirstName, 40) 
-
                                 </td>
                                 <td class="table-item-body clickable-row" data-href="@Url.Action("Edit", "Person",   new { id = item.PersonId })">
-                                    @Html.DisplayFor(modelItem => item.RegistrationCode)
+                                    @item.RegistrationCode.FormatDocumentBR()
                                 </td>
                                 <td class="table-item-body clickable-row" data-href="@Url.Action("Edit", "Person",   new { id = item.PersonId })">
                                     @Html.DisplayFor(modelItem => item.Phone)

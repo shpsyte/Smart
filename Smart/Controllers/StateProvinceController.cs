@@ -39,7 +39,7 @@ namespace Smart.Controllers
         public async Task<IActionResult> List(string search)
         {
             ViewData["search"] = search;
-            var data =   _stateProvinceServices.Query();
+            var data = await _stateProvinceServices.QueryAsync();
             if (!string.IsNullOrEmpty(search))
             {
                 data = data.Where(p =>

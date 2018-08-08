@@ -11,12 +11,17 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 namespace Data.Map
 {
+
+    
     public class BusinessEntityMap : IMapConfiguration<BusinessEntity>
     {
         public void Map(EntityTypeBuilder<BusinessEntity> entity)
         {
             entity.ToTable("BusinessEntity", Shema.shemaBusiness);
             entity.HasKey(e => e.BusinessEntityId);
+            entity.OwnsOne(p => p.Email).Property(p => p.Email).HasColumnName("Email");
+            entity.OwnsOne(p => p.Name).Property(p => p.Name).HasColumnName("Name");
+            
         }
     }
     public class CategoryPersonMap : IMapConfiguration<CategoryPerson>
@@ -35,7 +40,6 @@ namespace Data.Map
             entity.HasKey(e => e.TaxGroupId);
         }
     }
-
     public class TaxOperationMap : IMapConfiguration<TaxOperation>
     {
         public void Map(EntityTypeBuilder<TaxOperation> entity)
@@ -44,7 +48,6 @@ namespace Data.Map
             entity.HasKey(P => P.TaxOperationId);
         }
     }
-
     public class CategoryFinancialMap : IMapConfiguration<CategoryFinancial>
     {
         public void Map(EntityTypeBuilder<CategoryFinancial> entity)
@@ -67,11 +70,10 @@ namespace Data.Map
         {
             entity.ToTable("AccountBank", Shema.shemaFinancial);
             entity.HasKey(e => e.AccountBankId);
+            
 
         }
     }
-
-
     public class CountryMap : IMapConfiguration<Country>
     {
         public void Map(EntityTypeBuilder<Country> entity)
@@ -80,7 +82,6 @@ namespace Data.Map
             entity.HasKey(e => e.CountryId);
         }
     }
-
     public class StateProvinceMap : IMapConfiguration<StateProvince>
     {
         public void Map(EntityTypeBuilder<StateProvince> entity)
@@ -94,7 +95,6 @@ namespace Data.Map
                 .OnDelete(DeleteBehavior.Cascade);
         }
     }
-
     public class CityMap : IMapConfiguration<City>
     {
         public void Map(EntityTypeBuilder<City> entity)
@@ -107,7 +107,6 @@ namespace Data.Map
                 .HasForeignKey(d => d.StateProvinceId);
         }
     }
-
     public class CategoryProductMap : IMapConfiguration<CategoryProduct>
     {
         public void Map(EntityTypeBuilder<CategoryProduct> entity)
@@ -132,7 +131,6 @@ namespace Data.Map
             entity.ToTable("Location", Shema.shemaProduction);
         }
     }
-
     public class ConditionMap : IMapConfiguration<Condition>
     {
         public void Map(EntityTypeBuilder<Condition> entity)
@@ -141,18 +139,74 @@ namespace Data.Map
             entity.HasKey(e => e.ConditionId);
         }
     }
+    public class PersonMap : IMapConfiguration<Person>
+    {
+        public void Map(EntityTypeBuilder<Person> entity)
+        {
+            entity.ToTable("Person", Shema.shemaPerson);
+            entity.HasKey(p => p.PersonId);
 
 
-
+            entity.HasOne(d => d.Category)
+                .WithMany(p => p.Person)
+                .HasForeignKey(d => d.CategoryId);
+        }
+    }
 
     public class AddressMap : IMapConfiguration<Address>
     {
 
+        public void Map(EntityTypeBuilder<Address> entity)
+        {
+            entity.HasKey(e => e.AddressId);
+            entity.ToTable("Address", Shema.shemaPerson);
+
+
+            entity.HasOne(d => d.City)
+               .WithMany(p => p.Address)
+               .HasForeignKey(d => d.CityId)
+               .OnDelete(DeleteBehavior.Cascade);
+
+            entity.HasOne(d => d.StateProvince)
+              .WithMany(p => p.Address)
+              .HasForeignKey(d => d.StateProvinceId)
+              .OnDelete(DeleteBehavior.Cascade);
+
+        }
+    }
+    public class PersonAddressMap : IMapConfiguration<PersonAddress>
+    {
+        public void Map(EntityTypeBuilder<PersonAddress> entity)
+        {
+            entity.ToTable("PersonAddress", Shema.shemaPerson);
+            entity.HasOne(d => d.Address)
+                .WithMany(p => p.PersonAddress)
+                .HasForeignKey(d => d.AddressId)
+                .OnDelete(DeleteBehavior.ClientSetNull);
+
+            entity.HasOne(d => d.Person)
+                .WithMany(p => p.PersonAddress)
+                .HasForeignKey(d => d.PersonId)
+                .OnDelete(DeleteBehavior.ClientSetNull);
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+   
         public class VRevenueMap : IMapConfiguration<VRevenue>
         {
             public void Map(EntityTypeBuilder<VRevenue> entity)
             {
-                
+
                 entity.ToTable("VRevenue", "Financial");
                 entity.HasKey(e => new { e.RevenueId });
                 // entity.Property(e => e.Id).ValueGeneratedNever();
@@ -404,70 +458,9 @@ namespace Data.Map
 
 
 
-        public void Map(EntityTypeBuilder<Address> entity)
-        {
-            entity.HasKey(e => e.AddressId);
-
-
-            entity.ToTable("Address", "Person");
-            entity.Property(e => e.PostalCode);
 
 
 
-
-            entity.HasIndex(e => e.PostalCode)
-                .HasName("IX_Address");
-            entity.Property(e => e.Deleted).HasColumnName("deleted");
-            entity.Property(e => e.District)
-                        .HasMaxLength(50)
-                        .IsUnicode(false);
-            entity.Property(e => e.Number).HasColumnType("char(20)");
-            entity.Property(e => e.PostalCode)
-
-                        .HasMaxLength(50)
-                        .IsUnicode(false);
-            entity.Property(e => e.SpatialLocation)
-                        .HasMaxLength(150)
-                        .IsUnicode(false);
-
-            entity.Property(e => e.CityName)
-                        .HasMaxLength(150)
-                        .IsUnicode(false);
-
-            entity.Property(e => e.StateProvinceName)
-                        .HasMaxLength(150)
-                        .IsUnicode(false);
-
-            entity.Property(e => e.CityCode)
-                      .HasMaxLength(150)
-                      .IsUnicode(false);
-
-
-            entity.Property(e => e.StreetAddress)
-
-                        .HasMaxLength(150)
-                        .IsUnicode(false);
-            entity.Property(e => e.StreetAddressLine2)
-                        .HasMaxLength(150)
-                        .IsUnicode(false);
-            entity.Property(e => e.StreetAddressLine3)
-                        .HasMaxLength(150)
-                        .IsUnicode(false);
-
-
-            entity.HasOne(d => d.City)
-               .WithMany(p => p.Address)
-               .HasForeignKey(d => d.CityId)
-               .HasConstraintName("FK_CityId_Address");
-
-            entity.HasOne(d => d.StateProvince)
-              .WithMany(p => p.Address)
-              .HasForeignKey(d => d.StateProvinceId)
-              .HasConstraintName("FK_StateProvinceId_Address");
-
-        }
-    }
-   
     public class EmailMap : IMapConfiguration<Email>
     {
         public void Map(EntityTypeBuilder<Email> entity)
@@ -711,69 +704,7 @@ namespace Data.Map
                 .HasConstraintName("FK_OrderDetail_Warehouse");
         }
     }
-    public class PersonMap : IMapConfiguration<Person>
-    {
-        public void Map(EntityTypeBuilder<Person> entity)
-        {
-            entity.ToTable("Person", "Person");
-            entity.HasIndex(e => e.RegistrationCode)
-                .HasName("IX_Person_1");
-            entity.HasIndex(e => new { e.FirstName, e.LastName })
-                .HasName("IX_Person");
-            entity.Property(e => e.PersonCode).HasColumnType("char(50)");
-            entity.Property(e => e.Active).HasDefaultValueSql("((1))");
-            entity.Property(e => e.BusinessEntityId).HasColumnName("BusinessEntityID");
-            entity.Property(e => e.Comments).IsUnicode(false);
-            entity.Property(e => e.CreateDate)
-                .HasColumnType("datetime")
-                .HasDefaultValueSql("(getdate())");
-            entity.Property(e => e.Email).IsUnicode(false);
-            entity.Property(e => e.Phone).HasColumnType("varchar(50)").IsUnicode(false);
-            entity.Property(e => e.FirstName)
-                .IsRequired()
-                .HasMaxLength(120)
-                .IsUnicode(false);
-            entity.Property(e => e.LastName)
-                .HasMaxLength(80)
-                .IsUnicode(false);
-            entity.Property(e => e.ModifiedDate)
-                .HasColumnType("datetime")
-                .HasDefaultValueSql("(getdate())");
-            entity.Property(e => e.PersonType)
-                 .HasDefaultValueSql("((6))");
-            entity.Property(e => e.RegistrationCode)
-                .HasMaxLength(150)
-                .IsUnicode(false);
-            entity.Property(e => e.RegistrationState)
-                .HasMaxLength(150)
-                .IsUnicode(false);
-            entity.Property(e => e.Type)
-                .HasDefaultValueSql("((1))");
-
-            entity.HasOne(d => d.Category)
-                .WithMany(p => p.Person)
-                .HasForeignKey(d => d.CategoryId)
-                .HasConstraintName("FK_Person_PersonClass");
-        }
-    }
-    public class PersonAddressMap : IMapConfiguration<PersonAddress>
-    {
-        public void Map(EntityTypeBuilder<PersonAddress> entity)
-        {
-            entity.ToTable("PersonAddress", "Person");
-            entity.HasOne(d => d.Address)
-                .WithMany(p => p.PersonAddress)
-                .HasForeignKey(d => d.AddressId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_PersonAddress_Address");
-
-            entity.HasOne(d => d.Person)
-                .WithMany(p => p.PersonAddress)
-                .HasForeignKey(d => d.PersonId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_PersonAddress_Person");
-        }
-    }
+   
     public class PersonEmailMap : IMapConfiguration<PersonEmail>
     {
         public void Map(EntityTypeBuilder<PersonEmail> entity)

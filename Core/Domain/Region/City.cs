@@ -12,7 +12,7 @@ namespace Core.Domain.Region
         {
             Address = new HashSet<Address>();
         }
-        public int CityId { get; set; }
+        public int CityId { get; private set; }
         [Required]
         public string Name { get; set; }
         public string MiddleName { get; set; }

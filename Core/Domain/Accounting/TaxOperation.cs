@@ -18,7 +18,7 @@ namespace Core.Domain.Accounting
         }
 
         [Key]
-        public int TaxOperationId { get; set; }
+        public int TaxOperationId { get; private set; }
         [Required]
         public string Name { get; set; }
         public int TaxFunction { get; set; }

@@ -12,7 +12,7 @@ namespace Core.Domain.Production
             Product = new HashSet<Product>();
         }
 
-        public int CategoryId { get; set; }
+        public int CategoryId { get; private set; }
         [Required]
         public string Name { get; set; }
 

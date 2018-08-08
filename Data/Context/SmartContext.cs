@@ -24,9 +24,10 @@ namespace Data.Context
 
            
         public SmartContext(DbContextOptions<SmartContext> options)
-            : base(options)
+            : base(options){  }
+
+        public SmartContext()
         {
-            
         }
 
         protected override void OnModelCreating(ModelBuilder builder)

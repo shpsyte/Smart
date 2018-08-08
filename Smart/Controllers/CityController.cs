@@ -17,13 +17,15 @@ namespace Smart.Controllers
     public class CityController : BaseController
     {
         #region vars
-        private readonly IRepository<City> _cityServices;
-        private readonly IRepository<StateProvince> _stateProvinceServices;
+        private readonly IServices<City> _cityServices;
+        private readonly IServices<StateProvince> _stateProvinceServices;
         #endregion
         #region ctor
+
+        
         public CityController(
-                                IRepository<StateProvince> stateProvinceServices,
-                                IRepository<City> cityServices,
+                                IServices<StateProvince> stateProvinceServices,
+                                IServices<City> cityServices,
                                 IUser currentUser,
                                 IEmailSender emailSender,
                                 IHttpContextAccessor accessor
@@ -32,6 +34,8 @@ namespace Smart.Controllers
             this._cityServices = cityServices;
             this._stateProvinceServices = stateProvinceServices;
         }
+
+     
         #endregion
         #region methods
         // GET: City
@@ -39,7 +43,7 @@ namespace Smart.Controllers
         public async Task<IActionResult> List(string search)
         {
             ViewData["search"] = search;
-            var data =  _cityServices.Query();
+            var data = await _cityServices.QueryAsync();
             if (!string.IsNullOrEmpty(search))
             {
                 data = data.Where(p =>

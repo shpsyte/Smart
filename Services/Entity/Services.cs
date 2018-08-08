@@ -2,7 +2,6 @@
 using Core.Domain.PersonAndData;
 using Data.Repository;
 using Data.Context;
-using Data.Repository;
 using Microsoft.Extensions.Logging;
 using Services.Interfaces;
 using System;
@@ -82,7 +81,7 @@ namespace Services.Entity
         public virtual async Task<T> UpdateAsync(T entity, bool save = true) => await _repository.UpdateAsync(InjectBusinessEntity(entity), save);
 
 
-        
+
         public virtual void Save() => _repository.Save();
         public virtual async Task<int> SaveAsync() => await _repository.SaveAsync();
         public virtual void Dispose() => _repository.Dispose();
@@ -104,7 +103,7 @@ namespace Services.Entity
         public virtual async Task<T> FindAsync(params object[] key) => CheckTOnBusinessEntity(await _repository.FindAsync(key));
         public virtual IQueryable<T> FindBy(Expression<Func<T, bool>> where) => _repository.FindBy(InjectBusinessEntity(where));
         public virtual async Task<ICollection<T>> FindByAsync(Expression<Func<T, bool>> where) => await _repository.FindByAsync(InjectBusinessEntity(where));
-        
+
         public virtual IEnumerable<T> GetAll() => _repository.GetAll(InjectBusinessEntity());
         public virtual IEnumerable<T> GetAll(Expression<Func<T, bool>> where) => _repository.GetAll(InjectBusinessEntity(where));
         public virtual async Task<IEnumerable<T>> GetAllAsync() => await _repository.GetAllAsync(InjectBusinessEntity());
@@ -112,8 +111,24 @@ namespace Services.Entity
         public virtual IQueryable<T> Query() => _repository.Query(InjectBusinessEntity());
         public virtual IQueryable<T> Query(Expression<Func<T, bool>> where) => _repository.Query(InjectBusinessEntity()).Where(where);
 
-        public virtual async Task<IQueryable<T>> QueryAsync() => _repository.Query(InjectBusinessEntity());
-        public virtual async Task<IQueryable<T>> QueryAsync(Expression<Func<T, bool>> where) =>  _repository.Query(InjectBusinessEntity(where));
+        public virtual async Task<IQueryable<T>> QueryAsync() 
+        {
+            return await Task.Run(() =>
+            {
+               return  _repository.Query(InjectBusinessEntity());
+            });
+
+ 
+
+        }
+        public virtual async Task<IQueryable<T>> QueryAsync(Expression<Func<T, bool>> where)
+        {
+            return await Task.Run(() =>
+            {
+                return _repository.Query(InjectBusinessEntity(where));
+            });
+
+        }
 
     }
 }

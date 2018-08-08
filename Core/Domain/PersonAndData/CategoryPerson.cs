@@ -14,8 +14,9 @@ namespace Core.Domain.PersonAndData
             this.CreateDate = DateTime.UtcNow;
         }
 
-        [Key]
+         
         public int CategoryId { get; set; }
+
         [Required]
         public string Name { get; set; }
         public DateTime CreateDate { get; set; }

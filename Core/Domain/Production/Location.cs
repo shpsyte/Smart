@@ -16,7 +16,7 @@ namespace Core.Domain.Production
             this.DefaultLocation = false;
         }
 
-        public int WarehouseId { get; set; }
+        public int WarehouseId { get; private set; }
         [Required]
         public string Name { get; set; }
         public bool DefaultLocation { get; set; }

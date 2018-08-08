@@ -14,7 +14,7 @@ namespace Core.Domain.Region
             Address = new HashSet<Address>();
             this.IsOnlyStateProvinceFlag = false;
         }
-        public int StateProvinceId { get; set; }
+        public int StateProvinceId { get; private set; }
         [Required]
         public string StateProvinceCode { get; set; }
         public bool IsOnlyStateProvinceFlag { get; set; }

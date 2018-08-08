@@ -35,7 +35,7 @@ namespace Smart.Controllers
         public async Task<IActionResult> List(string search)
         {
             ViewData["search"] = search;
-            var data =   _countryServices.Query();
+            var data = await _countryServices.QueryAsync();
             if (!string.IsNullOrEmpty(search)) 
             {
                data = data.Where(p =>  

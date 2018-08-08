@@ -12,7 +12,7 @@ namespace Core.Domain.Region
             StateProvince = new HashSet<StateProvince>();
         }
 
-        public int CountryId { get; set; }
+        public int CountryId { get; private set; }
         [Required]
         public string Name { get; set; }
         public string MiddleName { get; set; }

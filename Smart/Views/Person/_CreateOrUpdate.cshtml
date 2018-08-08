@@ -9,6 +9,8 @@
 @Html.HiddenFor(a => a.Image)
 @Html.HiddenFor(a => a.avatarImage)
 @Html.HiddenFor(a => a.PersonCode)
+@Html.HiddenFor(a => a.StateProvinceName)
+
 <div class="controls">
     <div class="form-row">
         <div class="form-group col-md-4">
@@ -68,7 +70,7 @@
     <br />
     <p>
         <a class="btn btn-outline-info" data-toggle="collapse" href="#multiCollapseAddress" role="button"
-           aria-expanded="false" aria-controls="multiCollapseExample1"> @Localizer["Endereço"]</a>
+           aria-expanded="false" aria-controls="multiCollapseExample1">@Localizer["Endereço"]</a>
     </p>
     <div class="collapse multi-collapse collapse" id="multiCollapseAddress">
         <div class="form-row">
@@ -138,7 +140,7 @@
     <br />
     <p>
         <a class="btn btn-outline-info" data-toggle="collapse" href="#multiCollapseExample1" role="button"
-           aria-expanded="false" aria-controls="multiCollapseExample1"> @Localizer["Foto/Obs"]</a>
+           aria-expanded="false" aria-controls="multiCollapseExample1">@Localizer["Foto/Obs"]</a>
     </p>
     <div class="collapse multi-collapse" id="multiCollapseExample1">
         <div class="form-row">

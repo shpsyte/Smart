@@ -154,7 +154,7 @@ namespace Smart.Data
                     .HasColumnType("datetime")
                     .HasDefaultValueSql("(getdate())");
 
-                entity.Property(e => e.EmailCreate)
+                entity.Property(e => e.Email)
                     .IsRequired()
                     .HasMaxLength(255)
                     .IsUnicode(false);

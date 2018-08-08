@@ -1,25 +1,26 @@
 ﻿
-function limpa_formulário_cep() {
+function limpa_formulario_cep() {
     //Limpa valores do formulário de cep.
     document.getElementById('StreetAddress').value = ("");
     document.getElementById('District').value = ("");
     document.getElementById('CityName').value = ("");
-   // document.getElementById('uf').value = ("");
+    document.getElementById('StateProvinceName').value = ("");
     document.getElementById('CityCode').value = ("");
 }
 
 function meu_callback(conteudo) {
     if (!("erro" in conteudo)) {
         //Atualiza os campos com os valores.
+         
         document.getElementById('StreetAddress').value = (conteudo.logradouro);
         document.getElementById('District').value = (conteudo.bairro);
         document.getElementById('CityName').value = (conteudo.localidade);
-       // document.getElementById('uf').value = (conteudo.uf);
+        document.getElementById('StateProvinceName').value = (conteudo.uf);
         document.getElementById('CityCode').value = (conteudo.ibge);
     } //end if.
     else {
         //CEP não Encontrado.
-        limpa_formulário_cep();
+        limpa_formulario_cep();
         alert("CEP não encontrado.");
     }
 }
@@ -42,7 +43,7 @@ function pesquisacep(valor) {
             document.getElementById('StreetAddress').value = "...";
             document.getElementById('District').value = "...";
             document.getElementById('CityName').value = "...";
-            //document.getElementById('uf').value = "...";
+            document.getElementById('StateProvinceName').value = "...";
             document.getElementById('CityCode').value = "...";
 
             //Cria um elemento javascript.
@@ -57,12 +58,12 @@ function pesquisacep(valor) {
         } //end if.
         else {
             //cep é inválido.
-            limpa_formulário_cep();
+            limpa_formulario_cep();
             alert("Formato de CEP inválido.");
         }
     } //end if.
     else {
         //cep sem valor, limpa formulário.
-        limpa_formulário_cep();
+        limpa_formulario_cep();
     }
 };

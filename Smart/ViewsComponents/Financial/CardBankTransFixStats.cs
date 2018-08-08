@@ -24,7 +24,7 @@ namespace Smart.ViewsComponents.Financial
 
         public async Task<IViewComponentResult> InvokeAsync(int time, int? BankId, DateTime? refDate, string model, string title, string cssCard)
         {
-            var banktrans =   _bankTransServices.Query (a => a.DueDate.HasValue == true);
+            var banktrans = await _bankTransServices.QueryAsync(a => a.DueDate.HasValue == true);
             if (BankId.HasValue)
                 banktrans = banktrans.Where(a => a.BankId == BankId.Value);
 

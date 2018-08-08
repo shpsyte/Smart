@@ -17,24 +17,25 @@ namespace Core.Domain.PersonAndData
             PersonAddress = new HashSet<PersonAddress>();
         }
 
-        public int AddressId { get; set; }
+        public int AddressId { get; private set; }
        
+        [Required]
         public string PostalCode { get; set; }
-       
+        [Required]
         public string StreetAddress { get; set; }
         public string Number { get; set; }
         public string StreetAddressLine2 { get; set; }
         public string StreetAddressLine3 { get; set; }
         public string District { get; set; }
-        public int? StateProvinceId { get; set; }
         public string StateProvinceName { get; set; }
 
+        public int? StateProvinceId { get; set; }
         public int? CityId { get; set; }
         public string CityName { get; set; }
         public string CityCode { get; set; }
 
         public string SpatialLocation { get; set; }
-        public bool? Deleted { get; set; }
+        public bool Deleted { get; set; }
         
 
         public City City { get; set; }

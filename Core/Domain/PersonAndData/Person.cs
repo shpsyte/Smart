@@ -28,8 +28,6 @@ namespace Core.Domain.PersonAndData
             VRevenueTrans = new HashSet<VRevenueTrans>();
             VExpenseTrans = new HashSet<VExpenseTrans>();
 
-
-
             VRevenue = new HashSet<VRevenue>();
             VExpense = new HashSet<VExpense>();
             this.Active = true;
@@ -37,7 +35,7 @@ namespace Core.Domain.PersonAndData
             this.ModifiedDate = DateTime.UtcNow;
         }
 
-        public int PersonId { get; set; }
+        public int PersonId { get; private set; }
         public int PersonCode { get; set; }
         [Required]
         public string FirstName { get; set; }
@@ -45,7 +43,7 @@ namespace Core.Domain.PersonAndData
         public string RegistrationCode { get; set; }
         public string RegistrationState { get; set; }
         public int Type { get; set; }
-        public int PersonType { get; set; }
+        public int? PersonType { get; set; }
         public int? CategoryId { get; set; }
         public string Email { get; set; }
         public string Phone { get; set; }
@@ -55,6 +53,7 @@ namespace Core.Domain.PersonAndData
         public DateTime ModifiedDate { get; set; }
         public bool Active { get; set; }
         public bool Deleted { get; set; }
+
         [NotMapped]
         public IFormFile avatarImage { get; set; }
 

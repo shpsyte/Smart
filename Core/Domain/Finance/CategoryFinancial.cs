@@ -18,11 +18,11 @@ namespace Core.Domain.Finance
         }
 
 
+        public int ChartAccountId { get; private set; }
 
-        public int ChartAccountId { get; set; }
         [Required]
         public string Name { get; set; }
-        [Required]
+
         public int Type { get; set; }
        
         public bool Active { get; set; }
