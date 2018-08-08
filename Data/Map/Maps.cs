@@ -17,7 +17,7 @@ namespace Data.Map
     {
         public void Map(EntityTypeBuilder<BusinessEntity> entity)
         {
-            entity.ToTable("BusinessEntity", Shema.shemaBusiness);
+            entity.ToTable("BusinessEntity");
             entity.HasKey(e => e.BusinessEntityId);
             entity.OwnsOne(p => p.Email).Property(p => p.Email).HasColumnName("Email");
             entity.OwnsOne(p => p.Name).Property(p => p.Name).HasColumnName("Name");
@@ -28,7 +28,7 @@ namespace Data.Map
     {
         public void Map(EntityTypeBuilder<CategoryPerson> entity)
         {
-            entity.ToTable("CategoryPerson", Shema.shemaPerson);
+            entity.ToTable("CategoryPerson");
             entity.HasKey(e => e.CategoryId);
         }
     }
@@ -36,7 +36,7 @@ namespace Data.Map
     {
         public void Map(EntityTypeBuilder<TaxGroup> entity)
         {
-            entity.ToTable("TaxGroup", Shema.shemaAccounting);
+            entity.ToTable("TaxGroup");
             entity.HasKey(e => e.TaxGroupId);
         }
     }
@@ -44,7 +44,7 @@ namespace Data.Map
     {
         public void Map(EntityTypeBuilder<TaxOperation> entity)
         {
-            entity.ToTable("TaxOperation", Shema.shemaAccounting);
+            entity.ToTable("TaxOperation");
             entity.HasKey(P => P.TaxOperationId);
         }
     }
@@ -52,7 +52,7 @@ namespace Data.Map
     {
         public void Map(EntityTypeBuilder<CategoryFinancial> entity)
         {
-            entity.ToTable("CategoryFinancial", Shema.shemaFinancial);
+            entity.ToTable("CategoryFinancial");
             entity.HasKey(e => e.ChartAccountId);
         }
     }
@@ -60,7 +60,7 @@ namespace Data.Map
     {
         public void Map(EntityTypeBuilder<CostCenter> entity)
         {
-            entity.ToTable("CostCenter", Shema.shemaFinancial);
+            entity.ToTable("CostCenter");
             entity.HasKey(e => e.CostCenterId);
         }
     }
@@ -68,7 +68,7 @@ namespace Data.Map
     {
         public void Map(EntityTypeBuilder<Bank> entity)
         {
-            entity.ToTable("AccountBank", Shema.shemaFinancial);
+            entity.ToTable("AccountBank");
             entity.HasKey(e => e.AccountBankId);
             
 
@@ -78,7 +78,7 @@ namespace Data.Map
     {
         public void Map(EntityTypeBuilder<Country> entity)
         {
-            entity.ToTable("Country", Shema.shemaPerson);
+            entity.ToTable("Country");
             entity.HasKey(e => e.CountryId);
         }
     }
@@ -86,7 +86,7 @@ namespace Data.Map
     {
         public void Map(EntityTypeBuilder<StateProvince> entity)
         {
-            entity.ToTable("StateProvince", Shema.shemaPerson);
+            entity.ToTable("StateProvince");
             entity.HasKey(e => e.StateProvinceId);
 
             entity.HasOne(d => d.Country)
@@ -99,7 +99,7 @@ namespace Data.Map
     {
         public void Map(EntityTypeBuilder<City> entity)
         {
-            entity.ToTable("City", Shema.shemaPerson);
+            entity.ToTable("City");
             entity.HasKey(e => e.CityId);
 
             entity.HasOne(d => d.StateProvince)
@@ -111,7 +111,7 @@ namespace Data.Map
     {
         public void Map(EntityTypeBuilder<CategoryProduct> entity)
         {
-            entity.ToTable("CategoryProduct", Shema.shemaProduction);
+            entity.ToTable("CategoryProduct");
             entity.HasKey(e => e.CategoryId);
         }
     }
@@ -119,7 +119,7 @@ namespace Data.Map
     {
         public void Map(EntityTypeBuilder<ClassProduct> entity)
         {
-            entity.ToTable("ProductClass", Shema.shemaProduction);
+            entity.ToTable("ProductClass");
             entity.HasKey(e => e.ClassId);
         }
     }
@@ -128,14 +128,14 @@ namespace Data.Map
         public void Map(EntityTypeBuilder<Location> entity)
         {
             entity.HasKey(a => a.WarehouseId);
-            entity.ToTable("Location", Shema.shemaProduction);
+            entity.ToTable("Location");
         }
     }
     public class ConditionMap : IMapConfiguration<Condition>
     {
         public void Map(EntityTypeBuilder<Condition> entity)
         {
-            entity.ToTable("PaymentCondition", Shema.shemaSales);
+            entity.ToTable("PaymentCondition");
             entity.HasKey(e => e.ConditionId);
         }
     }
@@ -143,7 +143,7 @@ namespace Data.Map
     {
         public void Map(EntityTypeBuilder<Person> entity)
         {
-            entity.ToTable("Person", Shema.shemaPerson);
+            entity.ToTable("Person");
             entity.HasKey(p => p.PersonId);
 
 
@@ -159,7 +159,7 @@ namespace Data.Map
         public void Map(EntityTypeBuilder<Address> entity)
         {
             entity.HasKey(e => e.AddressId);
-            entity.ToTable("Address", Shema.shemaPerson);
+            entity.ToTable("Address");
 
 
             entity.HasOne(d => d.City)
@@ -178,7 +178,7 @@ namespace Data.Map
     {
         public void Map(EntityTypeBuilder<PersonAddress> entity)
         {
-            entity.ToTable("PersonAddress", Shema.shemaPerson);
+            entity.ToTable("PersonAddress");
             entity.HasOne(d => d.Address)
                 .WithMany(p => p.PersonAddress)
                 .HasForeignKey(d => d.AddressId)
@@ -190,6 +190,66 @@ namespace Data.Map
                 .OnDelete(DeleteBehavior.ClientSetNull);
         }
     }
+    public class ProductInventoryMap : IMapConfiguration<ProductInventory>
+    {
+        public void Map(EntityTypeBuilder<ProductInventory> entity)
+        {
+            entity.ToTable("ProductInventory");
+            entity.HasKey(e => e.Id);
+             
+            entity.HasOne(d => d.Location)
+                .WithMany(p => p.ProductInventory)
+                .HasForeignKey(d => d.LocationId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_ProductInventory_Location");
+
+            entity.HasOne(d => d.Product)
+                .WithMany(p => p.ProductInventory)
+                .HasForeignKey(d => d.ProductId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_ProductInventory_Product");
+
+        }
+    }
+
+
+    public class ProductMap : IMapConfiguration<Product>
+    {
+        public void Map(EntityTypeBuilder<Product> entity)
+        {
+            entity.ToTable("Product");
+            entity.HasKey(p => p.ProductId);
+             
+            entity.HasOne(d => d.Category)
+                .WithMany(p => p.Product)
+                .HasForeignKey(d => d.CategoryId)
+                .OnDelete(DeleteBehavior.SetNull);
+
+            entity.HasOne(d => d.Class)
+                .WithMany(p => p.Product)
+                .HasForeignKey(d => d.ClassId)
+                .OnDelete(DeleteBehavior.SetNull);
+                
+
+            entity.HasOne(d => d.TaxGroup)
+                .WithMany(p => p.Product)
+                .HasForeignKey(d => d.TaxGroupId)
+                .OnDelete(DeleteBehavior.SetNull);
+        }
+    }
+
+    public class VProductMap : IMapConfiguration<VProduct>
+    {
+        public void Map(EntityTypeBuilder<VProduct> entity)
+        {
+            entity.ToTable("WiewInventoryProduct");
+            entity.HasKey(e => new { e.ProductId });
+            entity.HasOne(d => d.Product)
+                 .WithOne(p => p.VProduct)
+                 .HasForeignKey<VProduct>(b => b.ProductId);
+
+        }
+    }
 
 
 
@@ -199,10 +259,7 @@ namespace Data.Map
 
 
 
-
-
-   
-        public class VRevenueMap : IMapConfiguration<VRevenue>
+    public class VRevenueMap : IMapConfiguration<VRevenue>
         {
             public void Map(EntityTypeBuilder<VRevenue> entity)
             {
@@ -765,148 +822,11 @@ namespace Data.Map
         }
     }
 
-    public class VProductMap : IMapConfiguration<VProduct>
-    {
-        public void Map(EntityTypeBuilder<VProduct> entity)
-        {
-            entity.ToTable("VProduct", "Production");
-            entity.HasKey(e => new { e.ProductId });
-            entity.HasOne(d => d.Product)
-                 .WithOne(p => p.VProduct)
-                 .HasForeignKey<VProduct>(b => b.ProductId);
+  
 
-        }
-    }
+    
 
 
-    public class ProductInventoryMap : IMapConfiguration<ProductInventory>
-    {
-        public void Map(EntityTypeBuilder<ProductInventory> entity)
-        {
-            entity.ToTable("ProductInventory", "Production");
-            entity.HasKey(e => e.Id);
-
-            entity.Property(e => e.CreateDate)
-                .HasColumnType("date")
-                .HasDefaultValueSql("(getdate())");
-
-            entity.Property(e => e.Description)
-                .HasColumnType("varchar(150)")
-                .HasMaxLength(150)
-                .IsUnicode(false);
-
-            entity.Property(e => e.NumberDoc)
-             .HasColumnType("varchar(150)")
-             .HasMaxLength(150)
-             .IsUnicode(false);
-
-            entity.Property(e => e.Shelf)
-         .HasColumnType("varchar(50)")
-         .HasMaxLength(50)
-         .IsUnicode(false);
-
-            entity.Property(e => e.Quantity)
-                .HasColumnType("numeric(12, 4)")
-                .HasDefaultValueSql("((0))");
-
-            entity.HasOne(d => d.Location)
-                .WithMany(p => p.ProductInventory)
-                .HasForeignKey(d => d.LocationId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_ProductInventory_Location");
-
-            entity.HasOne(d => d.Product)
-                .WithMany(p => p.ProductInventory)
-                .HasForeignKey(d => d.ProductId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_ProductInventory_Product");
-
-        }
-    }
-
-
-
-    public class ProductMap : IMapConfiguration<Product>
-    {
-        public void Map(EntityTypeBuilder<Product> entity)
-        {
-            entity.ToTable("Product", "Production");
-            entity.Property(e => e.Active).HasDefaultValueSql("((1))");
-            entity.Property(e => e.BusinessEntityId).HasColumnName("BusinessEntityID");
-            entity.Property(e => e.CategoryId).HasColumnName("CategoryID");
-            entity.Property(e => e.ClassId).HasColumnName("ClassID");
-            entity.Property(e => e.Ean)
-                .HasMaxLength(100)
-                .IsUnicode(false);
-            entity.Property(e => e.FinishedGoodsFlag).HasDefaultValueSql("((1))");
-            entity.Property(e => e.Height).HasColumnType("numeric(10, 3)");
-            entity.Property(e => e.HsCode)
-                .HasMaxLength(30)
-                .IsUnicode(false);
-            entity.Property(e => e.HsCodeTax)
-                .HasMaxLength(30)
-                .IsUnicode(false);
-            entity.Property(e => e.Length).HasColumnType("numeric(10, 3)");
-            entity.Property(e => e.ListPrice)
-                .HasColumnType("numeric(12, 4)")
-                .HasDefaultValueSql("((0))");
-            entity.Property(e => e.Location)
-                .HasMaxLength(50)
-                .IsUnicode(false);
-            entity.Property(e => e.Manufacturer)
-                .HasMaxLength(100)
-                .IsUnicode(false);
-            entity.Property(e => e.MaximumStocklevel).HasColumnType("numeric(12, 4)");
-            entity.Property(e => e.ModifiedDate)
-                .HasColumnType("datetime")
-                .HasDefaultValueSql("(getdate())");
-            entity.Property(e => e.Name)
-                .IsRequired()
-                .HasMaxLength(120)
-                .IsUnicode(false);
-            entity.Property(e => e.ProductAttribute).HasColumnType("xml");
-            entity.Property(e => e.ProductNumber)
-                .IsRequired()
-                .HasMaxLength(30)
-                .IsUnicode(false);
-            entity.Property(e => e.ProductSourceId).HasColumnName("ProductSourceID");
-            entity.Property(e => e.ReorderPoint)
-                .HasColumnType("numeric(12, 4)")
-                .HasDefaultValueSql("((0))");
-            entity.Property(e => e.SafetyStockLevel).HasColumnType("numeric(12, 4)");
-            entity.Property(e => e.SellEndDate).HasColumnType("datetime");
-            entity.Property(e => e.SellStartDate)
-                .HasColumnType("datetime")
-                .HasDefaultValueSql("(getdate())");
-            entity.Property(e => e.CreateDate)
-                .HasColumnType("datetime")
-                .HasDefaultValueSql("(getdate())");
-            entity.Property(e => e.SizeUnitMeasureCode).HasColumnType("char(3)");
-            entity.Property(e => e.StandardCost)
-                .HasColumnType("numeric(12, 4)")
-                .HasDefaultValueSql("((0))");
-            entity.Property(e => e.TaxImport).HasColumnType("numeric(5, 2)");
-            entity.Property(e => e.TaxIva).HasColumnType("numeric(5, 2)");
-            entity.Property(e => e.TaxProduction).HasColumnType("numeric(5, 2)");
-            entity.Property(e => e.TaxSale).HasColumnType("numeric(5, 2)");
-            entity.Property(e => e.Weight).HasColumnType("numeric(12, 4)");
-            entity.Property(e => e.WeightTotal).HasColumnType("numeric(12, 4)");
-            entity.Property(e => e.Width).HasColumnType("numeric(10, 3)");
-
-            entity.HasOne(d => d.Category)
-                .WithMany(p => p.Product)
-                .HasForeignKey(d => d.CategoryId)
-                .HasConstraintName("FK_Product_ProductCategory");
-            entity.HasOne(d => d.Class)
-                .WithMany(p => p.Product)
-                .HasForeignKey(d => d.ClassId)
-                .HasConstraintName("FK_Product_ProductClass");
-            entity.HasOne(d => d.TaxGroup)
-                .WithMany(p => p.Product)
-                .HasForeignKey(d => d.TaxGroupId)
-                .HasConstraintName("FK_Product_ProductTax");
-        }
-    }
     public class ProductImageMap : IMapConfiguration<ProductImage>
     {
         public void Map(EntityTypeBuilder<ProductImage> entity)

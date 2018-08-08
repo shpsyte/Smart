@@ -56,6 +56,7 @@
                             <th class=""> @SharedLocalizer["Razão Social"]</th>
                             <th class="" width="140px"> @SharedLocalizer["Cnpj"]</th>
                             <th class="" width="140px"> @SharedLocalizer["Telefone"]</th>
+                            <th class="" width="140px"> @SharedLocalizer["Tipo"]</th>
                             <th class="" width="40px"> @SharedLocalizer["Active"]</th>
                             @*<th class="no-order" width="40px"> @SharedLocalizer["Action"]</th>*@
                         </tr>
@@ -63,24 +64,27 @@
                     <tbody>
                         @foreach (var item in Model)
                         {
-                            <tr class="table-row-body">
-                                <td class="table-item-body">
-                                    @Html.DisplayFor(modelItem => item.PersonCode)
-                                </td>
-                                <td class="table-item-body clickable-row" data-toggle="tooltip" data-placement="top" title="@item.FirstName" data-href="@Url.Action("Edit", "Person",   new { id = item.PersonId })">
-                                    @Html.Truncate(item.FirstName, 40) 
-                                </td>
-                                <td class="table-item-body clickable-row" data-href="@Url.Action("Edit", "Person",   new { id = item.PersonId })">
-                                    @item.RegistrationCode.FormatDocumentBR()
-                                </td>
-                                <td class="table-item-body clickable-row" data-href="@Url.Action("Edit", "Person",   new { id = item.PersonId })">
-                                    @Html.DisplayFor(modelItem => item.Phone)
-                                </td>
-                                <td class="table-item-body clickable-row" data-href="@Url.Action("Edit", "Person",   new { id = item.PersonId })">
-                                    @Html.DisplayFor(modelItem => item.Active)
-                                </td>
+                        <tr class="table-row-body">
+                            <td class="table-item-body">
+                                @Html.DisplayFor(modelItem => item.PersonCode)
+                            </td>
+                            <td class="table-item-body clickable-row" data-toggle="tooltip" data-placement="top" title="@item.FirstName" data-href="@Url.Action("Edit", "Person",   new { id = item.PersonId })">
+                                @Html.Truncate(item.FirstName, 40)
+                            </td>
+                            <td class="table-item-body clickable-row" data-href="@Url.Action("Edit", "Person",   new { id = item.PersonId })">
+                                @item.RegistrationCode.FormatDocumentBR()
+                            </td>
+                            <td class="table-item-body clickable-row" data-href="@Url.Action("Edit", "Person",   new { id = item.PersonId })">
+                                @Html.DisplayFor(modelItem => item.Phone)
+                            </td>
+                            <td class="table-item-body clickable-row" data-href="@Url.Action("Edit", "Person",   new { id = item.PersonId })">
+                                @Enum.GetName(typeof(Core.Fake.TypePersonEnum), item.Type)
+                            </td>
+                            <td class="table-item-body clickable-row" data-href="@Url.Action("Edit", "Person",   new { id = item.PersonId })">
+                                @Html.DisplayFor(modelItem => item.Active)
+                            </td>
 
-                            </tr>
+                        </tr>
                         }
                     </tbody>
                 </table>

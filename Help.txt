@@ -5,6 +5,14 @@ Install-Package Microsoft.AspNetCore.Identity -Version 2.0.1
 Install-Package Microsoft.AspNetCore.OWIN -Version 2.0.1
 Install-Package Pomelo.EntityFrameworkCore.MySql -Version 2.0.1
 
+--- bkp mysql
+"C:\Program Files\MariaDB 10.3\bin\mysqldump.exe" --host="localhost" --user=root --password=Jymkatana_6985 --single-transaction Smart > dbSmart.sql
+
+
+--- restore 
+"C:\Program Files\MariaDB 10.3\bin\mysql.exe" --host="localhost" --user=root --password=Jymkatana_6985 Test < dbSmart.sql
+
+
 
 
 Create By : José luiz

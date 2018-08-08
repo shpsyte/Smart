@@ -359,14 +359,23 @@ namespace Smart.Helpers
             if (string.IsNullOrEmpty(s))
                 return s;
 
-            if (s.Length < 14)
+            try
             {
-                return Convert.ToUInt64(s).ToString(@"000\.000\.000\-00");
-            }else
-            {
-                return Convert.ToUInt64(s).ToString(@"00\.000\.000\/0000\-00");
+
+                if (s.Length < 14)
+                {
+                    return Convert.ToUInt64(s).ToString(@"000\.000\.000\-00");
+                }
+                else
+                {
+                    return Convert.ToUInt64(s).ToString(@"00\.000\.000\/0000\-00");
+                }
+
             }
-             
+            catch (Exception)
+            {
+                return s;
+            }
         }
     }
 }

@@ -15,6 +15,7 @@ using Smart.Models.PersonModel;
 using AutoMapper;
 using Core.Domain.Region;
 using Data.Repository;
+using System.Text.RegularExpressions;
 
 namespace Smart.Controllers
 {
@@ -93,6 +94,7 @@ namespace Smart.Controllers
         {
             var address = Mapper.Map<PersonModel, Address>(data);
             var person = Mapper.Map<PersonModel, Person>(data);
+            person.RegistrationCode = Regex.Match(person.RegistrationCode, @"\d+").Value;
             var addressperson = new PersonAddress() { Address = address, Person = person };
             if (ModelState.IsValid)
             {
