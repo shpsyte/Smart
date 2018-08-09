@@ -10,7 +10,7 @@ namespace Core.Domain.Production
 {
     public partial class VProduct : BaseEntity
     {
-        public int ProductId { get; set; }
+        public int ProductId { get; private set; }
 
         public string Name { get; set; }
 

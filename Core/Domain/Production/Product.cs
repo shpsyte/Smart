@@ -29,7 +29,7 @@ namespace Core.Domain.Production
 
         }
 
-        public int ProductId { get; private set; }
+        public int ProductId { get; set; }
         [Required]
         [StringLength(120)]
         public string Name { get; set; }

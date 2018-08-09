@@ -94,7 +94,7 @@
                                 @( item.ListPrice.HasValue ? item.ListPrice.Value.ToString("c") : "0" )
                             </td>
 
-                            <td class="table-item-body clickable-row" data-href="@Url.Action("Edit", "Product", new { id = item.ProductId })">
+                            <td class="table-item-body">
                                 <div class="btn-group btn-group-sm" role="group" aria-label="Button group with nested dropdown">
                                     <a asp-action="Edit" asp-route-id="@item.ProductId" class="btn btn-secondary btn-sm"> @SharedLocalizer["Editar"]</a>
                                     

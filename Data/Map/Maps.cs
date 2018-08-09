@@ -250,8 +250,35 @@ namespace Data.Map
 
         }
     }
+    public class ImageMap : IMapConfiguration<Image>
+    {
+        public void Map(EntityTypeBuilder<Image> entity)
+        {
+            entity.ToTable("Image");
+            entity.HasKey(p => p.ImageId);
+        }
+    }
 
 
+    public class ProductImageMap : IMapConfiguration<ProductImage>
+    {
+        public void Map(EntityTypeBuilder<ProductImage> entity)
+        {
+            entity.ToTable("ProductImage");
+            entity.HasKey(p => p.Id);
+
+            entity.HasOne(d => d.Image)
+                .WithMany(p => p.ProductImage)
+                .HasForeignKey(d => d.ImageId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            entity.HasOne(d => d.Product)
+                .WithMany(p => p.ProductImage)
+                .HasForeignKey(d => d.ProductId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+        }
+    }
 
 
 
@@ -607,24 +634,6 @@ namespace Data.Map
 
         }
     }
-    public class ImageMap : IMapConfiguration<Image>
-    {
-        public void Map(EntityTypeBuilder<Image> entity)
-        {
-            entity.ToTable("Image", "Production");
-            entity.Property(e => e.Active).HasDefaultValueSql("((1))");
-            entity.Property(e => e.BusinessEntityId).HasColumnName("BusinessEntityID");
-            entity.Property(e => e.Comments).IsUnicode(false);
-            entity.Property(e => e.CreateDate)
-                .HasColumnType("datetime")
-                .HasDefaultValueSql("(getdate())");
-            entity.Property(e => e.LargeImageFileName).HasMaxLength(50).IsUnicode(false);
-            entity.Property(e => e.ModifiedDate)
-                .HasColumnType("datetime")
-                .HasDefaultValueSql("(getdate())");
-
-        }
-    }
     public class InvoiceMap : IMapConfiguration<Invoice>
     {
         public void Map(EntityTypeBuilder<Invoice> entity)
@@ -827,30 +836,6 @@ namespace Data.Map
     
 
 
-    public class ProductImageMap : IMapConfiguration<ProductImage>
-    {
-        public void Map(EntityTypeBuilder<ProductImage> entity)
-        {
-            entity.ToTable("ProductImage", "Production");
-            entity.HasIndex(e => new { e.ImageId, e.ProductId, e.IsPrimary })
-                .HasName("IX_ProductImage");
-            entity.Property(e => e.Id).HasColumnName("Id");
-            entity.Property(e => e.CreateDate)
-                .HasColumnType("datetime")
-                .HasDefaultValueSql("(getdate())");
-            entity.HasOne(d => d.Image)
-                .WithMany(p => p.ProductImage)
-                .HasForeignKey(d => d.ImageId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_ProductImage_Image");
-            entity.HasOne(d => d.Product)
-                .WithMany(p => p.ProductImage)
-                .HasForeignKey(d => d.ProductId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_ProductImage_Product");
-
-        }
-    }
 
     public class TaxMap : IMapConfiguration<Tax>
     {
