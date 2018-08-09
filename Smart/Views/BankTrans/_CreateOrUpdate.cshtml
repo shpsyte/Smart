@@ -40,9 +40,9 @@
             <span asp-validation-for="Description" class="text-danger"></span>
         </div>
         <div class="form-group col-md-3">
-            <label asp-for="BankId">@Localizer["Caixa/Banco"]</label>
-            <select asp-for="BankId" class="form-control" asp-items="ViewBag.BankId"></select>
-            <span asp-validation-for="BankId" class="text-danger"></span>
+            <label asp-for="AccountBankId">@Localizer["Caixa/Banco"]</label>
+            <select asp-for="AccountBankId" class="form-control" asp-items="ViewBag.AccountBankId"></select>
+            <span asp-validation-for="AccountBankId" class="text-danger"></span>
         </div>
         <div class="form-group col-md-3">
             <label asp-for="DueDate">@Localizer["Data de Compensação"]</label>

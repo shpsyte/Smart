@@ -6,7 +6,7 @@ namespace Core.Domain.PersonAndData
 {
     public partial class PersonPhone : BaseEntity
     {
-        public int Id { get; set; }
+        public int PersonPhoneId { get; set; }
         public int PhoneId { get; set; }
         public int PersonId { get; set; }
 

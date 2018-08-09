@@ -18,7 +18,7 @@ namespace Core.Domain.Finance
             this.DueDate = System.DateTime.Now.AddDays(7);
         }
 
-        public int ExpenseId { get; set; }
+        public int ExpenseId { get; private set; }
         public string ExpenseNumber { get; set; }
 
         public int? ExpenseSeq { get; set; }
@@ -28,7 +28,7 @@ namespace Core.Domain.Finance
         public int? PersonId { get; set; }
         public int? CategoryId { get; set; }
         public int? CostCenterId { get; set; }
-        public int? PaymentConditionId { get; set; }
+        public int? ConditionId { get; set; }
         public decimal Total { get; set; }
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? CreateDate { get; set; }

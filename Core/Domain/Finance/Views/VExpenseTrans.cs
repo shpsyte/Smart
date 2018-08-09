@@ -9,7 +9,7 @@ namespace Core.Domain.Finance.Views
 {
     public class VExpenseTrans : BaseEntity
     {
-        public int Id { get; set; }
+        public int ExpenseTransId { get; set; }
         public int ExpenseId { get; set; }
         public int ExpenseSeq { get; set; }
         public int ExpenseTotalSeq { get; set; }

@@ -12,7 +12,7 @@ namespace Core.Domain.Finance
             this.DueDate = System.DateTime.UtcNow;
             this.Deleted = false;
         }
-        public int Id { get; private set; }
+        public int BankTransId { get; private set; }
         public int BankId { get; set; }
         public string Description { get; set; }
 
@@ -29,7 +29,7 @@ namespace Core.Domain.Finance
         public int Signal { get; set; }
 
         public bool? Deleted { get; set; }
-        public Bank Bank { get; set; }
+        public AccountBank Bank { get; set; }
         public CategoryFinancial CategoryFinancial { get; set; }
         public RevenueTrans RevenueTrans { get; set; }
         public ExpenseTrans ExpenseTrans { get; set; }

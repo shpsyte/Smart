@@ -46,7 +46,7 @@ namespace Smart.Data
 
             modelBuilder.Entity<RevenueTrans>(entity =>
             {
-                entity.HasKey(e => e.Id);
+                entity.HasKey(e => e.RevenueTransId);
                 entity.ToTable("RevenueTrans", "Financial");
 
             });
@@ -79,7 +79,7 @@ namespace Smart.Data
 
             modelBuilder.Entity<ExpenseTrans>(entity =>
                 {
-                    entity.HasKey(e => e.Id);
+                    entity.HasKey(e => e.ExpenseTransId);
                     entity.ToTable("ExpenseTrans", "Financial");
 
                 });
@@ -317,14 +317,14 @@ namespace Smart.Data
 
                 entity.HasIndex(e => e.BusinessEntityId);
 
-                entity.HasIndex(e => e.Email1)
+                entity.HasIndex(e => e.Address)
                     .HasName("IX_Email");
 
                 entity.Property(e => e.EmailId).HasColumnName("EmailID");
 
                 entity.Property(e => e.BusinessEntityId).HasColumnName("BusinessEntityID");
 
-                entity.Property(e => e.Email1)
+                entity.Property(e => e.Address)
                     .IsRequired()
                     .HasColumnName("Email")
                     .HasMaxLength(250)
@@ -400,7 +400,7 @@ namespace Smart.Data
                 entity.HasKey(e => e.HsCodeId);
                 entity.ToTable("HsCode", "Production");
 
-                entity.HasIndex(e => e.HsCode1)
+                entity.HasIndex(e => e.Code)
                     .HasName("IX_Ncm");
 
                 entity.Property(e => e.BusinessEntityId).HasColumnName("BusinessEntityID");
@@ -409,7 +409,7 @@ namespace Smart.Data
                     .HasColumnType("numeric(5, 2)")
                     .HasDefaultValueSql("((0))");
 
-                entity.Property(e => e.HsCode1)
+                entity.Property(e => e.Code)
                     .IsRequired()
                     .HasColumnName("HsCode")
                     .HasColumnType("char(20)");
@@ -732,7 +732,7 @@ namespace Smart.Data
 
             modelBuilder.Entity<PersonEmail>(entity =>
             {
-                entity.HasKey(e => e.Id);
+                entity.HasKey(e => e.PersonEmailId);
                 entity.ToTable("PersonEmail", "Person");
 
                 entity.HasIndex(e => e.EmailId);
@@ -758,7 +758,7 @@ namespace Smart.Data
 
             modelBuilder.Entity<PersonPhone>(entity =>
             {
-                entity.HasKey(e => e.Id);
+                
                 entity.ToTable("PersonPhone", "Person");
 
                 entity.HasIndex(e => e.PhoneId);
@@ -978,7 +978,7 @@ namespace Smart.Data
 
                 entity.HasIndex(e => e.CostCenterId);
 
-                entity.HasIndex(e => e.PaymentConditionId);
+                entity.HasIndex(e => e.ConditionId);
 
                 entity.HasIndex(e => e.PersonId);
 
@@ -1025,7 +1025,7 @@ namespace Smart.Data
 
                 entity.HasOne(d => d.PaymentCondition)
                     .WithMany(p => p.Revenue)
-                    .HasForeignKey(d => d.PaymentConditionId)
+                    .HasForeignKey(d => d.ConditionId)
                     .HasConstraintName("FK_Revenue_PaymentCondition");
 
                 entity.HasOne(d => d.Person)
@@ -1200,7 +1200,7 @@ namespace Smart.Data
 
 
 
-        public DbSet<Core.Domain.Finance.Bank> Bank { get; set; }
+        public DbSet<Core.Domain.Finance.AccountBank> Bank { get; set; }
 
 
 

@@ -18,8 +18,9 @@ namespace Core.Domain.Finance
             this.RevenueTotalSeq = 1;
             this.DueDate = System.DateTime.Now.AddDays(7);
             this.RevenueTrans = new HashSet<RevenueTrans>();
+            this.CreateDate = DateTime.Now;
         }
-        public int RevenueId { get; set; }
+        public int RevenueId { get; private set; }
         public string RevenueNumber { get; set; }
 
         public int? RevenueSeq { get; set; }
@@ -29,7 +30,7 @@ namespace Core.Domain.Finance
         public int? PersonId { get; set; }
         public int? CategoryId { get; set; }
         public int? CostCenterId { get; set; }
-        public int? PaymentConditionId { get; set; }
+        public int? ConditionId { get; set; }
 
         [Required]
         public decimal Total { get; set; }

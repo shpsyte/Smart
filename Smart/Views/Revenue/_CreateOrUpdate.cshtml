@@ -69,11 +69,11 @@
                 <span asp-validation-for="RevenueNumber" class="text-danger"></span>
             </div>
             <div class="form-group col-md-4">
-                <label asp-for="PaymentConditionId">@Localizer["Forma de Pagamento"]</label>
-                <select asp-for="PaymentConditionId" class="form-control " asp-items="ViewBag.PaymentConditionId">
+                <label asp-for="ConditionId">@Localizer["Forma de Pagamento"]</label>
+                <select asp-for="ConditionId" class="form-control " asp-items="ViewBag.ConditionId">
                     <option></option>
                 </select>
-                <span asp-validation-for="PaymentConditionId" class="text-danger"></span>
+                <span asp-validation-for="ConditionId" class="text-danger"></span>
             </div>
         </div>
         @if (!isedit)

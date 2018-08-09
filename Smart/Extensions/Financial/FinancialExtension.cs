@@ -64,7 +64,7 @@ namespace Smart.Extensions.Financial
             return new ExpenseTrans()
             {
                 BusinessEntityId = businessId,
-                PaymentConditionId = expense.PaymentConditionId,
+                ConditionId = expense.ConditionId,
                 Description = expense.Name,
                 CreateDate = expense.CreateDate.HasValue ? expense.CreateDate.Value : System.DateTime.UtcNow,
                 Midledesc = "INC",
@@ -83,7 +83,7 @@ namespace Smart.Extensions.Financial
                 CreateDate = data.DueDate,
                 Description = data.Comment,
                 Midledesc = midleDesc,
-                PaymentConditionId = data.PaymentConditionId,
+                ConditionId = data.ConditionId,
                 ExpenseId = data.ExpenseId,
                 Signal = signal,
                 Total = data.Payment.Value
@@ -108,7 +108,7 @@ namespace Smart.Extensions.Financial
                 Deleted = expense.Deleted,
                 DuePayment = expense.DuePayment,
                 ModifiedDate = expense.ModifiedDate,
-                PaymentConditionId = expense.PaymentConditionId,
+                ConditionId = expense.ConditionId,
                 PersonId = expense.PersonId,
                 ExpenseNumber = expense.ExpenseNumber,
                 ExpenseTotalSeq = expense.ExpenseTotalSeq
@@ -159,7 +159,7 @@ namespace Smart.Extensions.Financial
             return new RevenueTrans()
             {
                 BusinessEntityId = businessId,
-                PaymentConditionId = revenue.PaymentConditionId,
+                ConditionId = revenue.ConditionId,
                 Description = revenue.Name,
                 CreateDate = revenue.CreateDate.HasValue ? revenue.CreateDate.Value : System.DateTime.UtcNow,
                 Midledesc = "INC",
@@ -179,7 +179,7 @@ namespace Smart.Extensions.Financial
                 CreateDate = data.DueDate,
                 Description = data.Comment,
                 Midledesc = midleDesc,
-                PaymentConditionId = data.PaymentConditionId,
+                ConditionId = data.ConditionId,
                 RevenueId = data.RevenueId,
                 Signal = signal,
                 Total = data.Payment.Value
@@ -203,7 +203,7 @@ namespace Smart.Extensions.Financial
                 Deleted = revenue.Deleted,
                 DuePayment = revenue.DuePayment,
                 ModifiedDate = revenue.ModifiedDate,
-                PaymentConditionId = revenue.PaymentConditionId,
+                ConditionId = revenue.ConditionId,
                 PersonId = revenue.PersonId,
                 RevenueNumber = revenue.RevenueNumber,
                 RevenueTotalSeq = revenue.RevenueTotalSeq

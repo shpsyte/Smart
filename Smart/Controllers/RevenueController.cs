@@ -32,7 +32,7 @@ namespace Smart.Controllers
         private readonly IServices<CostCenter> _costCenterServices;
         private readonly IServices<Condition> _conditionServices;
         private readonly IServices<Person> _personServices;
-        private readonly IServices<Bank> _bankServices;
+        private readonly IServices<AccountBank> _bankServices;
         private readonly IServices<TempFinancialSplit> _tempFinancialSplit;
         private readonly IServices<RevenueTrans> _revenueTransServices;
         private readonly IServices<VRevenue> _vrevenueServices;
@@ -50,7 +50,7 @@ namespace Smart.Controllers
                                 FinancialExtension financialEtension,
                                 IServices<RevenueTrans> revenueTrans,
                                 IServices<BankTrans> bankTransServices,
-                                IServices<Bank> bankServices,
+                                IServices<AccountBank> bankServices,
                                 IServices<VRevenue> vrevenueServices,
                                 IUser currentUser,
                                 IEmailSender emailSender,
@@ -76,9 +76,9 @@ namespace Smart.Controllers
         {
             ViewData["CategoryId"] = new SelectList(_categoryFinancialServices.GetAll(a => a.Type == 2 && a.Active == true), "ChartAccountId", "Name");
             ViewData["CostCenterId"] = new SelectList(_costCenterServices.GetAll(a => a.Active == true), "CostCenterId", "Name");
-            ViewData["PaymentConditionId"] = new SelectList(_conditionServices.GetAll(a => a.PaymentUse == 2 || a.PaymentUse == 3), "ConditionId", "Name");
+            ViewData["ConditionId"] = new SelectList(_conditionServices.GetAll(a => a.PaymentUse == 2 || a.PaymentUse == 3), "ConditionId", "Name");
             ViewData["PersonId"] = new SelectList(_personServices.GetAll(), "PersonId", "FirstName");
-            ViewData["BankId"] = new SelectList(_bankServices.GetAll(), "BankId", "Name");
+            ViewData["AccountBankId"] = new SelectList(_bankServices.GetAll(), "AccountBankId", "Name");
         }
         #endregion
         #region methods
@@ -89,7 +89,7 @@ namespace Smart.Controllers
             return Json(split);
         }
         [HttpPost, ValidateAntiForgeryToken]
-        public async Task<IActionResult> PayAccount([Bind("RevenueId,DueDate,BankId,PaymentConditionId,Payment,Tax,Discont,Comment,Active,Image,Id")] PayAccount data, bool Active, List<IFormFile> Image)
+        public async Task<IActionResult> PayAccount([Bind("RevenueId,DueDate,BankId,ConditionId,Payment,Tax,Discont,Comment,Active,Image,Id")] PayAccount data, bool Active, List<IFormFile> Image)
         {
             Revenue revenue = await _revenueServices.SingleOrDefaultAsync(a => a.RevenueId == data.RevenueId);
             if (data.Payment.HasValue)
@@ -135,7 +135,7 @@ namespace Smart.Controllers
                         || p.Comment.Contains(search)
                         || p.Person.FirstName.Contains(search)
                         || p.Person.LastName.Contains(search)
-                        || p.Total.ToString().Contains(search)
+                        
                      );
                 }
             }
@@ -159,7 +159,7 @@ namespace Smart.Controllers
         // POST: Revenue/Add
         [HttpPost, ValidateAntiForgeryToken]
         [Route("revenue-management/revenue-add")]
-        public async Task<IActionResult> Add([Bind("RevenueId,RevenueNumber,RevenueSeq,RevenueTotalSeq,Name,PersonId,CategoryId,CostCenterId,PaymentConditionId,Total,CreateDate,DueDate,DuePayment,Comment,ModifiedDate,Deleted,BusinessEntityId,Id,Seq,Session,Total,Id")]Revenue revenue, bool continueAdd, IEnumerable<TempFinancialSplit> parcelas)
+        public async Task<IActionResult> Add([Bind("RevenueId,RevenueNumber,RevenueSeq,RevenueTotalSeq,Name,PersonId,CategoryId,CostCenterId,ConditionId,Total,CreateDate,DueDate,DuePayment,Comment,ModifiedDate,Deleted,BusinessEntityId,Id,Seq,Session,Total,Id")]Revenue revenue, bool continueAdd, IEnumerable<TempFinancialSplit> parcelas)
         {
             if (ModelState.IsValid)
             {
@@ -225,12 +225,11 @@ namespace Smart.Controllers
         // POST: Revenue/Edit/5
         [HttpPost, ValidateAntiForgeryToken]
         [Route("revenue-management/revenue-edit/{id?}")]
-        public async Task<IActionResult> Edit(int id, [Bind("RevenueId,RevenueNumber,Name,Total,PersonId,CategoryId,CostCenterId,PaymentConditionId,CreateDate,DueDate,DuePayment,Comment,ModifiedDate,Deleted,BusinessEntityId,RevenueSeq,RevenueTotalSeq,_Total,addTrash,Id")] Revenue revenue, bool continueAdd, bool addTrash)
+        public async Task<IActionResult> Edit(int id, [Bind("RevenueId,RevenueNumber,Name,Total,PersonId,CategoryId,CostCenterId,ConditionId,CreateDate,DueDate,DuePayment,Comment,ModifiedDate,Deleted,BusinessEntityId,RevenueSeq,RevenueTotalSeq,_Total,addTrash,Id")] Revenue revenue, bool continueAdd, bool addTrash)
         {
-            if (id != revenue.RevenueId)
-            {
-                return NotFound();
-            }
+
+           
+           
             typeof(Revenue).GetProperty("Deleted").SetValue(revenue, addTrash);
             Revenue originalValue = await _revenueServices.SingleOrDefaultAsync(a => a.RevenueId == id);
             LoadViewData();

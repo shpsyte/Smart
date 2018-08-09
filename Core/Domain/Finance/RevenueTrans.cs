@@ -15,19 +15,19 @@ namespace Core.Domain.Finance
             this.BankTrans = new HashSet<BankTrans>();
         }
         
-        public int Id { get; set; }
+        public int RevenueTransId { get; private set; }
         public int RevenueId { get; set; }
 
         public DateTime CreateDate { get; set; }
         public string Midledesc { get; set; }
-        public int? PaymentConditionId { get; set; }
+        public int? ConditionId { get; set; }
         public int? BankId { get; set; }
         public string Description { get; set; }
         public decimal Total { get; set; }
         public int Signal { get; set; }
       
         public Revenue Revenue { get; set; }
-        public Bank Bank { get; set; }
+        public AccountBank Bank { get; set; }
         public Condition Condition { get; set; }
         public ICollection<BankTrans> BankTrans { get; set; }
 

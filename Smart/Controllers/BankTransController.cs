@@ -21,7 +21,7 @@ namespace Smart.Controllers
     {
         #region vars
         private readonly IServices<BankTrans> _bankTransServices;
-        private readonly IServices<Bank> _bankServices;
+        private readonly IServices<AccountBank> _bankServices;
         private readonly IServices<ExpenseTrans> _expenseTransServices;
         private readonly IServices<RevenueTrans> _revenueTransServices;
         private readonly IServices<Expense> _expenseServices;
@@ -30,7 +30,7 @@ namespace Smart.Controllers
         #endregion
         #region ctor
         public BankTransController(
-                                IServices<Bank> bankServices,
+                                IServices<AccountBank> bankServices,
                                 IServices<ExpenseTrans> expenseTransServices,
                                 IServices<RevenueTrans> revenueTransServices,
                                 IServices<BankTrans> bankTransServices,
@@ -55,7 +55,7 @@ namespace Smart.Controllers
         #region private
         private void LoadDataView()
         {
-            ViewData["BankId"] = new SelectList(_bankServices.GetAll(), "BankId", "Name");
+            ViewData["AccountBankId"] = new SelectList(_bankServices.GetAll(), "AccountBankId", "Name");
             ViewData["CategoryId"] = new SelectList(_categoryFinancialServices.GetAll(a => a.Active == true), "ChartAccountId", "Name");
         }
         #endregion
@@ -64,7 +64,7 @@ namespace Smart.Controllers
         [Route("banktrans-management/banktrans-list")]
         public async Task<IActionResult> List(string search, string start, string end, int? bankId)
         {
-            ViewData["BankId"] = new SelectList(_bankServices.GetAll(), "BankId", "Name", bankId);
+            ViewData["AccountBankId"] = new SelectList(_bankServices.GetAll(), "AccountBankId", "Name", bankId);
             ViewData["search"] = search;
             DateTime ini = !string.IsNullOrEmpty(start) ? start.IsDateTime() ? Convert.ToDateTime(start) : System.DateTime.Now.AddDays(-7) : System.DateTime.Now.AddDays(-7);
             DateTime fim = !string.IsNullOrEmpty(end) ? end.IsDateTime() ? Convert.ToDateTime(end) : System.DateTime.Now : System.DateTime.Now;
@@ -138,7 +138,7 @@ namespace Smart.Controllers
             {
                 return RedirectToAction("AccessDenied", "Account");
             }
-            var bankTrans = await _bankTransServices.SingleOrDefaultAsync(m => m.Id == id);
+            var bankTrans = await _bankTransServices.SingleOrDefaultAsync(m => m.BankTransId == id);
             if (bankTrans == null)
             {
                 return RedirectToAction("AccessDenied", "Account");
@@ -151,12 +151,12 @@ namespace Smart.Controllers
         [Route("banktrans-management/banktrans-edit/{id?}")]
         public async Task<IActionResult> Edit(int id, [Bind("Id,BankId,Description,CreateDate,DueDate,MidleDesc,ExpenseTransId,RevenueTransId,Total,Signal,BusinessEntityId,CategoryId")] BankTrans bankTrans, bool continueAdd, bool addTrash)
         {
-            if (id != bankTrans.Id)
+            if (id != bankTrans.BankTransId)
             {
                 return NotFound();
             }
             typeof(BankTrans).GetProperty("Deleted").SetValue(bankTrans, addTrash);
-            BankTrans originalValue = await _bankTransServices.SingleOrDefaultAsync(a => a.Id == id);
+            BankTrans originalValue = await _bankTransServices.SingleOrDefaultAsync(a => a.BankTransId == id);
 
             LoadDataView();
 
@@ -178,14 +178,14 @@ namespace Smart.Controllers
                         DueDate = bankTrans.DueDate,
                         ExcludeId = id,
                         Total = bankTrans.Total,
-                        MidleDesc = "EST:" + bankTrans.Id.ToString(),
+                        MidleDesc = "EST:" + bankTrans.BankTransId.ToString(),
                         Signal = bankTrans.Signal == 1 ? 2 : 1
                     };
                         
 
                     if (bankTrans.RevenueTransId.HasValue)
                     {
-                        var revenueTransLanc = await _revenueTransServices.SingleOrDefaultAsync(a => a.Id == bankTrans.RevenueTransId);
+                        var revenueTransLanc = await _revenueTransServices.SingleOrDefaultAsync(a => a.RevenueTransId == bankTrans.RevenueTransId);
                         var revenue = await _revenueServices.SingleOrDefaultAsync(a => a.RevenueId == revenueTransLanc.RevenueId);
                         reversal.MidleDesc = "EST:" + revenue.RevenueNumber + "/" + revenue.RevenueSeq.ToString();
                         RevenueTrans reversalrevenueTrans = new RevenueTrans()
@@ -195,7 +195,7 @@ namespace Smart.Controllers
                             CreateDate = revenueTransLanc.CreateDate,
                             Description = revenueTransLanc.Description,
                             Midledesc = "EST:" + revenue.RevenueNumber + "/" + revenue.RevenueSeq.ToString(),
-                            PaymentConditionId = revenueTransLanc.PaymentConditionId,
+                            ConditionId = revenueTransLanc.ConditionId,
                             RevenueId = revenueTransLanc.RevenueId,
                             Signal = revenueTransLanc.Signal == 3 ? 3 : revenueTransLanc.Signal == 1 ? 2 : 1,
                             Total = revenueTransLanc.Total
@@ -213,7 +213,7 @@ namespace Smart.Controllers
 
                     if (bankTrans.ExpenseTransId.HasValue)
                     {
-                        var expenseTransLanc = await _expenseTransServices.SingleOrDefaultAsync(a => a.Id == bankTrans.ExpenseTransId);
+                        var expenseTransLanc = await _expenseTransServices.SingleOrDefaultAsync(a => a.ExpenseTransId == bankTrans.ExpenseTransId);
                         var expense = await _expenseServices.SingleOrDefaultAsync(a => a.ExpenseId == expenseTransLanc.ExpenseId);
                         reversal.MidleDesc = "EST:" + expense.ExpenseNumber + "/" + expense.ExpenseSeq.ToString();
                         ExpenseTrans reversalexpenseTransLanc = new ExpenseTrans()
@@ -223,7 +223,7 @@ namespace Smart.Controllers
                             CreateDate = expenseTransLanc.CreateDate,
                             Description = expenseTransLanc.Description,
                             Midledesc = "EST:" + expense.ExpenseNumber + "/" + expense.ExpenseSeq.ToString(),
-                            PaymentConditionId = expenseTransLanc.PaymentConditionId,
+                            ConditionId = expenseTransLanc.ConditionId,
                             ExpenseId = expenseTransLanc.ExpenseId,
                             Signal = expenseTransLanc.Signal == 3 ? 3 : expenseTransLanc.Signal == 1 ? 2 : 1,
                             Total = expenseTransLanc.Total
@@ -248,7 +248,7 @@ namespace Smart.Controllers
                 {
                     throw;
                 }
-                return continueAdd ? RedirectToAction(nameof(Edit), new { id = bankTrans.Id }) : RedirectToAction(nameof(List));
+                return continueAdd ? RedirectToAction(nameof(Edit), new { id = bankTrans.BankTransId }) : RedirectToAction(nameof(List));
 
             }
             return View(bankTrans);
@@ -260,7 +260,7 @@ namespace Smart.Controllers
             {
                 return NotFound();
             }
-            var bankTrans = await _bankTransServices.SingleOrDefaultAsync(m => m.Id == id);
+            var bankTrans = await _bankTransServices.SingleOrDefaultAsync(m => m.BankTransId == id);
             if (bankTrans == null)
             {
                 return NotFound();

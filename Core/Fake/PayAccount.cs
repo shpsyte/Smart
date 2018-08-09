@@ -11,7 +11,7 @@ namespace Core.Fake
         public int ExpenseId { get; set; }
         public DateTime DueDate { get; set; }
         public int? BankId { get; set; }
-        public int? PaymentConditionId { get; set; }
+        public int? ConditionId { get; set; }
         public decimal? Payment { get; set; }
         public decimal? Tax { get; set; }
         public decimal? Discont { get; set; }

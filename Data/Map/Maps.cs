@@ -12,7 +12,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 namespace Data.Map
 {
 
-    
+
+
+    #region Person
     public class BusinessEntityMap : IMapConfiguration<BusinessEntity>
     {
         public void Map(EntityTypeBuilder<BusinessEntity> entity)
@@ -21,7 +23,7 @@ namespace Data.Map
             entity.HasKey(e => e.BusinessEntityId);
             entity.OwnsOne(p => p.Email).Property(p => p.Email).HasColumnName("Email");
             entity.OwnsOne(p => p.Name).Property(p => p.Name).HasColumnName("Name");
-            
+
         }
     }
     public class CategoryPersonMap : IMapConfiguration<CategoryPerson>
@@ -30,113 +32,6 @@ namespace Data.Map
         {
             entity.ToTable("CategoryPerson");
             entity.HasKey(e => e.CategoryId);
-        }
-    }
-    public class TaxGroupMap : IMapConfiguration<TaxGroup>
-    {
-        public void Map(EntityTypeBuilder<TaxGroup> entity)
-        {
-            entity.ToTable("TaxGroup");
-            entity.HasKey(e => e.TaxGroupId);
-        }
-    }
-    public class TaxOperationMap : IMapConfiguration<TaxOperation>
-    {
-        public void Map(EntityTypeBuilder<TaxOperation> entity)
-        {
-            entity.ToTable("TaxOperation");
-            entity.HasKey(P => P.TaxOperationId);
-        }
-    }
-    public class CategoryFinancialMap : IMapConfiguration<CategoryFinancial>
-    {
-        public void Map(EntityTypeBuilder<CategoryFinancial> entity)
-        {
-            entity.ToTable("CategoryFinancial");
-            entity.HasKey(e => e.ChartAccountId);
-        }
-    }
-    public class CostCenterMap : IMapConfiguration<CostCenter>
-    {
-        public void Map(EntityTypeBuilder<CostCenter> entity)
-        {
-            entity.ToTable("CostCenter");
-            entity.HasKey(e => e.CostCenterId);
-        }
-    }
-    public class BankMap : IMapConfiguration<Bank>
-    {
-        public void Map(EntityTypeBuilder<Bank> entity)
-        {
-            entity.ToTable("AccountBank");
-            entity.HasKey(e => e.AccountBankId);
-            
-
-        }
-    }
-    public class CountryMap : IMapConfiguration<Country>
-    {
-        public void Map(EntityTypeBuilder<Country> entity)
-        {
-            entity.ToTable("Country");
-            entity.HasKey(e => e.CountryId);
-        }
-    }
-    public class StateProvinceMap : IMapConfiguration<StateProvince>
-    {
-        public void Map(EntityTypeBuilder<StateProvince> entity)
-        {
-            entity.ToTable("StateProvince");
-            entity.HasKey(e => e.StateProvinceId);
-
-            entity.HasOne(d => d.Country)
-                .WithMany(p => p.StateProvince)
-                .HasForeignKey(d => d.CountryID)
-                .OnDelete(DeleteBehavior.Cascade);
-        }
-    }
-    public class CityMap : IMapConfiguration<City>
-    {
-        public void Map(EntityTypeBuilder<City> entity)
-        {
-            entity.ToTable("City");
-            entity.HasKey(e => e.CityId);
-
-            entity.HasOne(d => d.StateProvince)
-                .WithMany(p => p.City)
-                .HasForeignKey(d => d.StateProvinceId);
-        }
-    }
-    public class CategoryProductMap : IMapConfiguration<CategoryProduct>
-    {
-        public void Map(EntityTypeBuilder<CategoryProduct> entity)
-        {
-            entity.ToTable("CategoryProduct");
-            entity.HasKey(e => e.CategoryId);
-        }
-    }
-    public class ClassProductMap : IMapConfiguration<ClassProduct>
-    {
-        public void Map(EntityTypeBuilder<ClassProduct> entity)
-        {
-            entity.ToTable("ProductClass");
-            entity.HasKey(e => e.ClassId);
-        }
-    }
-    public class Warehousemap : IMapConfiguration<Location>
-    {
-        public void Map(EntityTypeBuilder<Location> entity)
-        {
-            entity.HasKey(a => a.WarehouseId);
-            entity.ToTable("Location");
-        }
-    }
-    public class ConditionMap : IMapConfiguration<Condition>
-    {
-        public void Map(EntityTypeBuilder<Condition> entity)
-        {
-            entity.ToTable("PaymentCondition");
-            entity.HasKey(e => e.ConditionId);
         }
     }
     public class PersonMap : IMapConfiguration<Person>
@@ -152,7 +47,6 @@ namespace Data.Map
                 .HasForeignKey(d => d.CategoryId);
         }
     }
-
     public class AddressMap : IMapConfiguration<Address>
     {
 
@@ -190,13 +84,154 @@ namespace Data.Map
                 .OnDelete(DeleteBehavior.ClientSetNull);
         }
     }
+    public class EmailMap : IMapConfiguration<Email>
+    {
+        public void Map(EntityTypeBuilder<Email> entity)
+        {
+            entity.ToTable("Email");
+            entity.HasKey(e => e.EmailId);
+
+        }
+    }
+
+    public class PhoneMap : IMapConfiguration<Phone>
+    {
+        public void Map(EntityTypeBuilder<Phone> entity)
+        {
+            entity.ToTable("Phone");
+            entity.HasKey(e => e.PhoneId);
+
+        }
+    }
+
+
+    public class PersonEmailMap : IMapConfiguration<PersonEmail>
+    {
+        public void Map(EntityTypeBuilder<PersonEmail> entity)
+        {
+            entity.ToTable("PersonEmail");
+            entity.HasKey(e => e.PersonEmailId);
+
+            entity.HasOne(d => d.Email)
+                .WithMany(p => p.PersonEmail)
+                .HasForeignKey(d => d.EmailId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            entity.HasOne(d => d.Person)
+                .WithMany(p => p.PersonEmail)
+                .HasForeignKey(d => d.PersonId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+        }
+    }
+    public class PersonPhoneMap : IMapConfiguration<PersonPhone>
+    {
+        public void Map(EntityTypeBuilder<PersonPhone> entity)
+        {
+            entity.ToTable("PersonPhone");
+            entity.HasKey(e => e.PersonPhoneId);
+
+            entity.HasOne(d => d.Person)
+                .WithMany(p => p.PersonPhone)
+                .HasForeignKey(d => d.PersonId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            entity.HasOne(d => d.Phone)
+                .WithMany(p => p.PersonPhone)
+                .HasForeignKey(d => d.PhoneId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+        }
+    }
+
+
+
+
+    #endregion
+    #region Tax
+    public class TaxGroupMap : IMapConfiguration<TaxGroup>
+    {
+        public void Map(EntityTypeBuilder<TaxGroup> entity)
+        {
+            entity.ToTable("TaxGroup");
+            entity.HasKey(e => e.TaxGroupId);
+        }
+    }
+    public class TaxOperationMap : IMapConfiguration<TaxOperation>
+    {
+        public void Map(EntityTypeBuilder<TaxOperation> entity)
+        {
+            entity.ToTable("TaxOperation");
+            entity.HasKey(P => P.TaxOperationId);
+        }
+    }
+
+    public class TaxMap : IMapConfiguration<Tax>
+    {
+        public void Map(EntityTypeBuilder<Tax> entity)
+        {
+            entity.ToTable("Tax");
+            entity.HasKey(p => p.TaxId);
+
+        }
+    }
+
+    public class UserSettingMap : IMapConfiguration<UserSetting>
+    {
+        public void Map(EntityTypeBuilder<UserSetting> entity)
+        {
+            entity.ToTable("UserSetting");
+            entity.HasKey(e => e.UserSettingId);
+
+        }
+    }
+
+    #endregion
+    #region Location
+    public class CountryMap : IMapConfiguration<Country>
+    {
+        public void Map(EntityTypeBuilder<Country> entity)
+        {
+            entity.ToTable("Country");
+            entity.HasKey(e => e.CountryId);
+        }
+    }
+    public class StateProvinceMap : IMapConfiguration<StateProvince>
+    {
+        public void Map(EntityTypeBuilder<StateProvince> entity)
+        {
+            entity.ToTable("StateProvince");
+            entity.HasKey(e => e.StateProvinceId);
+
+            entity.HasOne(d => d.Country)
+                .WithMany(p => p.StateProvince)
+                .HasForeignKey(d => d.CountryID)
+                .OnDelete(DeleteBehavior.Cascade);
+        }
+    }
+    public class CityMap : IMapConfiguration<City>
+    {
+        public void Map(EntityTypeBuilder<City> entity)
+        {
+            entity.ToTable("City");
+            entity.HasKey(e => e.CityId);
+
+            entity.HasOne(d => d.StateProvince)
+                .WithMany(p => p.City)
+                .HasForeignKey(d => d.StateProvinceId);
+        }
+    }
+
+    #endregion
+    #region production
+
     public class ProductInventoryMap : IMapConfiguration<ProductInventory>
     {
         public void Map(EntityTypeBuilder<ProductInventory> entity)
         {
             entity.ToTable("ProductInventory");
             entity.HasKey(e => e.Id);
-             
+
             entity.HasOne(d => d.Location)
                 .WithMany(p => p.ProductInventory)
                 .HasForeignKey(d => d.LocationId)
@@ -211,7 +246,30 @@ namespace Data.Map
 
         }
     }
-
+    public class CategoryProductMap : IMapConfiguration<CategoryProduct>
+    {
+        public void Map(EntityTypeBuilder<CategoryProduct> entity)
+        {
+            entity.ToTable("CategoryProduct");
+            entity.HasKey(e => e.CategoryId);
+        }
+    }
+    public class ClassProductMap : IMapConfiguration<ClassProduct>
+    {
+        public void Map(EntityTypeBuilder<ClassProduct> entity)
+        {
+            entity.ToTable("ProductClass");
+            entity.HasKey(e => e.ClassId);
+        }
+    }
+    public class Warehousemap : IMapConfiguration<Location>
+    {
+        public void Map(EntityTypeBuilder<Location> entity)
+        {
+            entity.HasKey(a => a.WarehouseId);
+            entity.ToTable("Location");
+        }
+    }
 
     public class ProductMap : IMapConfiguration<Product>
     {
@@ -219,7 +277,7 @@ namespace Data.Map
         {
             entity.ToTable("Product");
             entity.HasKey(p => p.ProductId);
-             
+
             entity.HasOne(d => d.Category)
                 .WithMany(p => p.Product)
                 .HasForeignKey(d => d.CategoryId)
@@ -229,7 +287,7 @@ namespace Data.Map
                 .WithMany(p => p.Product)
                 .HasForeignKey(d => d.ClassId)
                 .OnDelete(DeleteBehavior.SetNull);
-                
+
 
             entity.HasOne(d => d.TaxGroup)
                 .WithMany(p => p.Product)
@@ -258,8 +316,6 @@ namespace Data.Map
             entity.HasKey(p => p.ImageId);
         }
     }
-
-
     public class ProductImageMap : IMapConfiguration<ProductImage>
     {
         public void Map(EntityTypeBuilder<ProductImage> entity)
@@ -281,359 +337,286 @@ namespace Data.Map
     }
 
 
-
-
-
-
-
-    public class VRevenueMap : IMapConfiguration<VRevenue>
-        {
-            public void Map(EntityTypeBuilder<VRevenue> entity)
-            {
-
-                entity.ToTable("VRevenue", "Financial");
-                entity.HasKey(e => new { e.RevenueId });
-                // entity.Property(e => e.Id).ValueGeneratedNever();
-                entity.HasOne(d => d.Person)
-                   .WithMany(p => p.VRevenue)
-                   .HasForeignKey(d => d.PersonId);
-                entity.HasOne(d => d.Revenue)
-                .WithOne(p => p.VRevenue)
-                .HasForeignKey<VRevenue>(b => b.RevenueId);
-
-
-            }
-        }
-
-
-        public class VRevenueTransMap : IMapConfiguration<VRevenueTrans>
-        {
-            public void Map(EntityTypeBuilder<VRevenueTrans> entity)
-            {
-                entity.ToTable("VRevenueTrans", "Financial");
-                entity.HasKey(e => new { e.Id });
-                // entity.Property(e => e.Id).ValueGeneratedNever();
-                entity.HasOne(d => d.VRevenue)
-                   .WithMany(p => p.VRevenueTrans)
-                   .HasForeignKey(d => d.RevenueId);
-
-                entity.HasOne(d => d.Person)
-                  .WithMany(p => p.VRevenueTrans)
-                  .HasForeignKey(d => d.PersonId);
-
-            }
-        }
-        public class VExpenseTransMap : IMapConfiguration<VExpenseTrans>
-        {
-            public void Map(EntityTypeBuilder<VExpenseTrans> entity)
-            {
-                entity.ToTable("VExpenseTrans", "Financial");
-                entity.HasKey(e => new { e.Id });
-                // entity.Property(e => e.Id).ValueGeneratedNever();
-                entity.HasOne(d => d.VExpense)
-                   .WithMany(p => p.VExpenseTrans)
-                   .HasForeignKey(d => d.ExpenseId);
-
-                entity.HasOne(d => d.Person)
-                  .WithMany(p => p.VExpenseTrans)
-                  .HasForeignKey(d => d.PersonId);
-
-            }
-        }
-
-        public class VExpenseMap : IMapConfiguration<VExpense>
-        {
-            public void Map(EntityTypeBuilder<VExpense> entity)
-            {
-                entity.HasKey(e => new { e.ExpenseId });
-                entity.ToTable("VExpense", "Financial");
-                // entity.Property(e => e.Id).ValueGeneratedNever();
-                entity.HasOne(d => d.Person)
-                   .WithMany(p => p.VExpense)
-                   .HasForeignKey(d => d.PersonId);
-
-                entity.HasOne(d => d.Expense)
-                    .WithOne(p => p.VExpense)
-                    .HasForeignKey<VExpense>(b => b.ExpenseId);
-
-            }
-        }
-
-
-        public class VCashFlowMap : IMapConfiguration<VCashFlow>
-        {
-            public void Map(EntityTypeBuilder<VCashFlow> entity)
-            {
-                entity.HasKey(e => new { e.Id });
-                entity.ToTable("VCashFlow", "Financial");
-                // entity.Property(e => e.Id).ValueGeneratedNever();
-                entity.HasOne(d => d.Person)
-                   .WithMany(p => p.VCashFlow)
-                   .HasForeignKey(d => d.PersonId);
-
-            }
-        }
-
-        public class RevenueTransMap : IMapConfiguration<RevenueTrans>
-        {
-            public void Map(EntityTypeBuilder<RevenueTrans> entity)
-            {
-                entity.ToTable("RevenueTrans", "Financial");
-                entity.HasKey(e => new { e.Id });
-
-                entity.Property(e => e.Description).HasColumnType("varchar(150)").IsUnicode(false);
-                entity.Property(e => e.Total).HasColumnType("numeric(12, 4)");
-                entity.Property(e => e.Signal).IsRequired();
-                entity.HasOne(d => d.Revenue)
-                      .WithMany(p => p.RevenueTrans)
-                      .HasForeignKey(d => d.RevenueId);
-
-
-
-                entity.Property(e => e.CreateDate)
-                    .HasColumnType("datetime")
-                    .HasDefaultValueSql("(getdate())");
-
-                entity.HasOne(d => d.Bank)
-                      .WithMany(p => p.RevenueTrans)
-                      .HasForeignKey(d => d.BankId);
-
-
-                entity.HasOne(d => d.Condition)
-                     .WithMany(p => p.RevenueTrans)
-                     .HasForeignKey(d => d.BankId);
-            }
-        }
-
-        public class ExpenseTransMap : IMapConfiguration<ExpenseTrans>
-        {
-            public void Map(EntityTypeBuilder<ExpenseTrans> entity)
-            {
-                entity.ToTable("ExpenseTrans", "Financial");
-                entity.HasKey(e => new { e.Id });
-                entity.Property(e => e.Description).HasColumnType("varchar(150)").IsUnicode(false);
-                entity.Property(e => e.Total).HasColumnType("numeric(12, 4)");
-                entity.Property(e => e.Signal).IsRequired();
-
-                entity.Property(e => e.CreateDate)
-                    .HasColumnType("datetime")
-                    .HasDefaultValueSql("(getdate())");
-
-
-                entity.HasOne(d => d.Expense)
-                      .WithMany(p => p.ExpenseTrans)
-                      .HasForeignKey(d => d.ExpenseId);
-
-                entity.HasOne(d => d.Bank)
-                      .WithMany(p => p.ExpenseTrans)
-                      .HasForeignKey(d => d.BankId);
-
-
-                entity.HasOne(d => d.Condition)
-                     .WithMany(p => p.ExpenseTrans)
-                     .HasForeignKey(d => d.BankId);
-            }
-        }
-
-
-
-        public class BankTransMap : IMapConfiguration<BankTrans>
-        {
-            public void Map(EntityTypeBuilder<BankTrans> entity)
-            {
-                entity.ToTable("BankTrans", "Financial");
-                entity.HasKey(e => e.Id);
-
-                entity.Property(e => e.Description)
-                                .HasMaxLength(150)
-                                .IsUnicode(false);
-
-                entity.Property(e => e.Total).HasColumnType("numeric(12, 4)");
-
-                entity.HasOne(d => d.Bank)
-                                .WithMany(p => p.BankTrans)
-                                .HasForeignKey(d => d.BankId)
-                                .OnDelete(DeleteBehavior.ClientSetNull)
-                                .HasConstraintName("FK_BankTrans_Bank");
-
-                entity.HasOne(d => d.ExpenseTrans)
-                              .WithMany(p => p.BankTrans)
-                              .HasForeignKey(d => d.ExpenseTransId)
-                              .OnDelete(DeleteBehavior.ClientSetNull);
-
-                entity.HasOne(d => d.RevenueTrans)
-                              .WithMany(p => p.BankTrans)
-                              .HasForeignKey(d => d.RevenueTransId)
-                              .OnDelete(DeleteBehavior.ClientSetNull);
-
-                entity.HasOne(d => d.CategoryFinancial)
-                             .WithMany(p => p.BankTrans)
-                             .HasForeignKey(d => d.CategoryId)
-                             .OnDelete(DeleteBehavior.ClientSetNull);
-            }
-        }
-
-
-
-        public class RevenueMap : IMapConfiguration<Revenue>
-        {
-            public void Map(EntityTypeBuilder<Revenue> entity)
-            {
-                entity.ToTable("Revenue", "Financial");
-                entity.HasKey(e => new { e.RevenueId });
-                entity.Property(e => e.RevenueNumber)
-                    .HasMaxLength(30)
-                    .IsUnicode(false);
-                entity.Property(e => e.RevenueSeq).IsRequired();
-                entity.Property(e => e.RevenueTotalSeq).IsRequired();
-                entity.Property(e => e.Name)
-                    .IsRequired()
-                    .HasMaxLength(80)
-                    .IsUnicode(false);
-                entity.Property(e => e.CreateDate)
-                    .HasColumnType("datetime")
-                    .HasDefaultValueSql("(getdate())");
-                entity.Property(e => e.DueDate).HasColumnType("date");
-                entity.Property(e => e.DuePayment).HasColumnType("date");
-                entity.Property(e => e.ModifiedDate)
-                    .HasColumnType("datetime")
-                    .HasDefaultValueSql("(getdate())");
-                entity.Property(e => e.Comment)
-                    .HasMaxLength(250)
-                    .IsUnicode(false);
-                entity.Property(e => e.Total).HasColumnType("numeric(12, 4)");
-                entity.HasOne(d => d.CategoryFinancial)
-                    .WithMany(p => p.Revenue)
-                    .HasForeignKey(d => d.CategoryId)
-                    .HasConstraintName("FK_Revenue_FinancialCategory");
-                entity.HasOne(d => d.CostCenter)
-                    .WithMany(p => p.Revenue)
-                    .HasForeignKey(d => d.CostCenterId)
-                    .HasConstraintName("FK_Revenue_FinancialCostCenter");
-                entity.HasOne(d => d.PaymentCondition)
-                    .WithMany(p => p.Revenue)
-                    .HasForeignKey(d => d.PaymentConditionId)
-                    .HasConstraintName("FK_Revenue_PaymentCondition");
-                entity.HasOne(d => d.Person)
-                    .WithMany(p => p.Revenue)
-                    .HasForeignKey(d => d.PersonId)
-                    .HasConstraintName("FK_Revenue_Person");
-            }
-        }
-
-
-
-
-
-
-
-
-        public class TempFinancialSplitMap : IMapConfiguration<TempFinancialSplit>
-        {
-            public void Map(EntityTypeBuilder<TempFinancialSplit> entity)
-            {
-                entity.ToTable("TempFinancialSplit", "Financial");
-                entity.HasKey(e => new { e.Id })
-                  .HasName("PK_TempFinancialSplit");
-                //entity.Property(e => e.Id). .ValueGeneratedNever();
-
-            }
-        }
-
-
-
-
-
-
-    public class EmailMap : IMapConfiguration<Email>
-    {
-        public void Map(EntityTypeBuilder<Email> entity)
-        {
-            entity.ToTable("Email", "Person");
-            entity.HasIndex(e => e.Email1)
-                .HasName("IX_Email");
-            entity.Property(e => e.EmailId).HasColumnName("EmailID");
-            entity.Property(e => e.BusinessEntityId).HasColumnName("BusinessEntityID");
-            entity.Property(e => e.Email1)
-                .IsRequired()
-                .HasColumnName("Email")
-                .HasMaxLength(250)
-                .IsUnicode(false);
-            entity.Property(e => e.Type)
-                .IsRequired()
-                .HasDefaultValueSql("(3)");
-
-        }
-    }
-    public class ExpenseMap : IMapConfiguration<Expense>
-    {
-        public void Map(EntityTypeBuilder<Expense> entity)
-        {
-            entity.ToTable("Expense", "Financial");
-            entity.Property(e => e.BusinessEntityId).HasColumnName("BusinessEntityID");
-            entity.Property(e => e.Comment)
-                .HasMaxLength(250)
-                .IsUnicode(false);
-            entity.Property(e => e.CreateDate)
-                .HasColumnType("datetime")
-                .HasDefaultValueSql("(getdate())");
-            entity.Property(e => e.DueDate).HasColumnType("date");
-            entity.Property(e => e.DuePayment).HasColumnType("date");
-            entity.Property(e => e.ExpenseNumber)
-                .HasMaxLength(30)
-                .IsUnicode(false);
-            entity.Property(e => e.ModifiedDate)
-                .HasColumnType("datetime")
-                .HasDefaultValueSql("(getdate())");
-            entity.Property(e => e.Name)
-                .IsRequired()
-                .HasMaxLength(80)
-                .IsUnicode(false);
-            entity.Property(e => e.Total).HasColumnType("numeric(12, 4)");
-
-            entity.HasOne(d => d.CategoryFinancial)
-                .WithMany(p => p.Expense)
-                .HasForeignKey(d => d.CategoryId)
-                .HasConstraintName("FK_Expense_ChartAccount");
-            entity.HasOne(d => d.CostCenter)
-                .WithMany(p => p.Expense)
-                .HasForeignKey(d => d.CostCenterId)
-                .HasConstraintName("FK_Expense_CostCenter");
-            entity.HasOne(d => d.Person)
-                .WithMany(p => p.Expense)
-                .HasForeignKey(d => d.PersonId)
-                .HasConstraintName("FK_Expense_Person");
-        }
-    }
     public class HsCodeMap : IMapConfiguration<HsCode>
     {
         public void Map(EntityTypeBuilder<HsCode> entity)
         {
-            entity.ToTable("HsCode", "Production");
-            entity.HasIndex(e => e.HsCode1)
-                .HasName("IX_Ncm");
-            entity.Property(e => e.CityTaxes)
-                .HasColumnType("numeric(5, 2)")
-                .HasDefaultValueSql("((0))");
-            entity.Property(e => e.HsCode1)
-                .IsRequired()
-                .HasColumnName("HsCode")
-                .HasColumnType("char(20)");
-            entity.Property(e => e.ImportFederalTaxes)
-                .HasColumnType("numeric(5, 2)")
-                .HasDefaultValueSql("((0))");
-            entity.Property(e => e.Name)
-                .IsRequired()
-                .HasMaxLength(100)
-                .IsUnicode(false);
-            entity.Property(e => e.NationalFederalTaxes)
-                .HasColumnType("numeric(5, 2)")
-                .HasDefaultValueSql("((0))");
-            entity.Property(e => e.StateTaxes)
-                .HasColumnType("numeric(5, 2)");
+            entity.ToTable("HsCode");
+            entity.HasKey(p => p.Code);
 
         }
     }
+
+    #endregion
+    #region Sales
+
+    public class ConditionMap : IMapConfiguration<Condition>
+    {
+        public void Map(EntityTypeBuilder<Condition> entity)
+        {
+            entity.ToTable("PaymentCondition");
+            entity.HasKey(e => e.ConditionId);
+        }
+    }
+
+    #endregion
+    #region Financial
+
+    public class CategoryFinancialMap : IMapConfiguration<CategoryFinancial>
+    {
+        public void Map(EntityTypeBuilder<CategoryFinancial> entity)
+        {
+            entity.ToTable("CategoryFinancial");
+            entity.HasKey(e => e.ChartAccountId);
+        }
+    }
+    public class CostCenterMap : IMapConfiguration<CostCenter>
+    {
+        public void Map(EntityTypeBuilder<CostCenter> entity)
+        {
+            entity.ToTable("CostCenter");
+            entity.HasKey(e => e.CostCenterId);
+        }
+    }
+    public class AccountBankMap : IMapConfiguration<AccountBank>
+    {
+        public void Map(EntityTypeBuilder<AccountBank> entity)
+        {
+            entity.ToTable("AccountBank");
+            entity.HasKey(e => e.AccountBankId);
+
+
+        }
+    }
+
+    public class ExpenseMap : IMapConfiguration<Expense>
+    {
+        public void Map(EntityTypeBuilder<Expense> entity)
+        {
+            entity.ToTable("Expense");
+            entity.HasKey(p => p.ExpenseId);
+
+            entity.HasOne(d => d.CategoryFinancial)
+                .WithMany(p => p.Expense)
+                .HasForeignKey(d => d.CategoryId)
+                .OnDelete(DeleteBehavior.SetNull);
+
+            entity.HasOne(d => d.CostCenter)
+                .WithMany(p => p.Expense)
+                .HasForeignKey(d => d.CostCenterId)
+                .OnDelete(DeleteBehavior.SetNull);
+
+            entity.HasOne(d => d.Person)
+                .WithMany(p => p.Expense)
+                .HasForeignKey(d => d.PersonId)
+                .OnDelete(DeleteBehavior.SetNull);
+        }
+    }
+    public class ExpenseTransMap : IMapConfiguration<ExpenseTrans>
+    {
+        public void Map(EntityTypeBuilder<ExpenseTrans> entity)
+        {
+            entity.ToTable("ExpenseTrans");
+            entity.HasKey(e => new { e.ExpenseTransId });
+
+            entity.HasOne(d => d.Expense)
+                  .WithMany(p => p.ExpenseTrans)
+                  .HasForeignKey(d => d.ExpenseId);
+
+            entity.HasOne(d => d.Bank)
+                  .WithMany(p => p.ExpenseTrans)
+                  .HasForeignKey(d => d.BankId);
+
+
+            entity.HasOne(d => d.Condition)
+                 .WithMany(p => p.ExpenseTrans)
+                 .HasForeignKey(d => d.BankId);
+        }
+    }
+    public class RevenueMap : IMapConfiguration<Revenue>
+    {
+        public void Map(EntityTypeBuilder<Revenue> entity)
+        {
+            entity.ToTable("Revenue");
+            entity.HasKey(e => new { e.RevenueId }); 
+
+            entity.HasOne(d => d.CategoryFinancial)
+                .WithMany(p => p.Revenue)
+                .HasForeignKey(d => d.CategoryId)
+                .OnDelete(DeleteBehavior.SetNull);
+            entity.HasOne(d => d.CostCenter)
+                .WithMany(p => p.Revenue)
+                .HasForeignKey(d => d.CostCenterId)
+                .OnDelete(DeleteBehavior.SetNull);
+
+            entity.HasOne(d => d.PaymentCondition)
+                .WithMany(p => p.Revenue)
+                .HasForeignKey(d => d.ConditionId)
+                .OnDelete(DeleteBehavior.SetNull);
+
+            entity.HasOne(d => d.Person)
+                .WithMany(p => p.Revenue)
+                .HasForeignKey(d => d.PersonId)
+                .OnDelete(DeleteBehavior.SetNull);
+        }
+    }
+
+    public class RevenueTransMap : IMapConfiguration<RevenueTrans>
+    {
+        public void Map(EntityTypeBuilder<RevenueTrans> entity)
+        {
+            entity.ToTable("RevenueTrans");
+            entity.HasKey(e => new { e.RevenueTransId });
+
+             
+
+            entity.HasOne(d => d.Bank)
+                  .WithMany(p => p.RevenueTrans)
+                  .HasForeignKey(d => d.BankId)
+                  .OnDelete(DeleteBehavior.SetNull);
+
+
+            entity.HasOne(d => d.Condition)
+                 .WithMany(p => p.RevenueTrans)
+                  .OnDelete(DeleteBehavior.SetNull);
+
+
+
+        }
+    }
+    public class BankTransMap : IMapConfiguration<BankTrans>
+    {
+        public void Map(EntityTypeBuilder<BankTrans> entity)
+        {
+            entity.ToTable("BankTrans");
+            entity.HasKey(e => e.BankTransId);
+
+            entity.HasOne(d => d.Bank)
+                            .WithMany(p => p.BankTrans)
+                            .HasForeignKey(d => d.BankId)
+                            .OnDelete(DeleteBehavior.Cascade);
+
+            entity.HasOne(d => d.ExpenseTrans)
+                          .WithMany(p => p.BankTrans)
+                          .HasForeignKey(d => d.ExpenseTransId)
+                          .OnDelete(DeleteBehavior.ClientSetNull);
+
+            entity.HasOne(d => d.RevenueTrans)
+                          .WithMany(p => p.BankTrans)
+                          .HasForeignKey(d => d.RevenueTransId)
+                          .OnDelete(DeleteBehavior.ClientSetNull);
+
+            entity.HasOne(d => d.CategoryFinancial)
+                         .WithMany(p => p.BankTrans)
+                         .HasForeignKey(d => d.CategoryId)
+                         .OnDelete(DeleteBehavior.ClientSetNull);
+        }
+    }
+    public class TempFinancialSplitMap : IMapConfiguration<TempFinancialSplit>
+    {
+        public void Map(EntityTypeBuilder<TempFinancialSplit> entity)
+        {
+            entity.ToTable("TempFinancialSplit");
+            entity.HasKey(e => new { e.Id });
+        }
+    }
+
+    public class VCashFlowMap : IMapConfiguration<VCashFlow>
+    {
+        public void Map(EntityTypeBuilder<VCashFlow> entity)
+        {
+            entity.HasKey(e => new { e.Id });
+            entity.ToTable("WiewCashFlow");
+
+            entity.HasOne(d => d.Person)
+               .WithMany(p => p.VCashFlow)
+               .HasForeignKey(d => d.PersonId);
+
+        }
+    }
+
+    public class VExpenseMap : IMapConfiguration<VExpense>
+    {
+        public void Map(EntityTypeBuilder<VExpense> entity)
+        {
+            entity.ToTable("WiewExpense");
+            entity.HasKey(e => new { e.ExpenseId });
+
+            entity.HasOne(d => d.Person)
+               .WithMany(p => p.VExpense)
+               .HasForeignKey(d => d.PersonId);
+
+            entity.HasOne(d => d.Expense)
+                .WithOne(p => p.VExpense)
+                .HasForeignKey<VExpense>(b => b.ExpenseId);
+
+        }
+    }
+
+    public class VExpenseTransMap : IMapConfiguration<VExpenseTrans>
+    {
+        public void Map(EntityTypeBuilder<VExpenseTrans> entity)
+        {
+            entity.ToTable("WiewExpenseTrans");
+            entity.HasKey(e => new { e.ExpenseTransId });
+
+            entity.HasOne(d => d.VExpense)
+               .WithMany(p => p.VExpenseTrans)
+               .HasForeignKey(d => d.ExpenseId);
+
+            entity.HasOne(d => d.Person)
+              .WithMany(p => p.VExpenseTrans)
+              .HasForeignKey(d => d.PersonId);
+
+        }
+    }
+
+     
+    public class VRevenueMap : IMapConfiguration<VRevenue>
+    {
+        public void Map(EntityTypeBuilder<VRevenue> entity)
+        {
+
+            entity.ToTable("WiewRevenue");
+            entity.HasKey(e => new { e.RevenueId });
+
+            entity.HasOne(d => d.Person)
+                   .WithMany(p => p.VRevenue)
+                   .HasForeignKey(d => d.PersonId);
+            entity.HasOne(d => d.Revenue)
+            .WithOne(p => p.VRevenue)
+            .HasForeignKey<VRevenue>(b => b.RevenueId);
+
+
+        }
+    }
+
+
+    public class VRevenueTransMap : IMapConfiguration<VRevenueTrans>
+    {
+        public void Map(EntityTypeBuilder<VRevenueTrans> entity)
+        {
+            entity.ToTable("ViewRevenueTrans");
+            entity.HasKey(e => new { e.RevenueTransId });
+            
+
+            entity.HasOne(d => d.VRevenue)
+               .WithMany(p => p.VRevenueTrans)
+               .HasForeignKey(d => d.RevenueId);
+
+            entity.HasOne(d => d.Person)
+              .WithMany(p => p.VRevenueTrans)
+              .HasForeignKey(d => d.PersonId);
+
+        }
+    }
+
+
+
+    #endregion
+
+
+
     public class InvoiceMap : IMapConfiguration<Invoice>
     {
         public void Map(EntityTypeBuilder<Invoice> entity)
@@ -770,99 +753,6 @@ namespace Data.Map
                 .HasConstraintName("FK_OrderDetail_Warehouse");
         }
     }
-   
-    public class PersonEmailMap : IMapConfiguration<PersonEmail>
-    {
-        public void Map(EntityTypeBuilder<PersonEmail> entity)
-        {
-            entity.ToTable("PersonEmail", "Person");
-            entity.HasIndex(e => new { e.PersonId, e.EmailId })
-                .HasName("IX_PersonEmail");
-            entity.HasOne(d => d.Email)
-                .WithMany(p => p.PersonEmail)
-                .HasForeignKey(d => d.EmailId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_PersonEmail_Email");
-            entity.HasOne(d => d.Person)
-                .WithMany(p => p.PersonEmail)
-                .HasForeignKey(d => d.PersonId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_PersonEmail_Person");
-
-        }
-    }
-    public class PersonPhoneMap : IMapConfiguration<PersonPhone>
-    {
-        public void Map(EntityTypeBuilder<PersonPhone> entity)
-        {
-            entity.ToTable("PersonPhone", "Person");
-            entity.HasIndex(e => new { e.PersonId, e.PhoneId })
-                .HasName("IX_PersonPhone");
-            entity.HasOne(d => d.Person)
-                .WithMany(p => p.PersonPhone)
-                .HasForeignKey(d => d.PersonId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_PersonPhone_Person");
-            entity.HasOne(d => d.Phone)
-                .WithMany(p => p.PersonPhone)
-                .HasForeignKey(d => d.PhoneId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_PersonPhone_Phone");
-
-        }
-    }
-    public class PhoneMap : IMapConfiguration<Phone>
-    {
-        public void Map(EntityTypeBuilder<Phone> entity)
-        {
-            entity.ToTable("Phone", "Person");
-            entity.Property(e => e.PhoneId).ValueGeneratedNever();
-            entity.Property(e => e.BusinessEntityId).HasColumnName("BusinessEntityID");
-            entity.Property(e => e.Phone1)
-                .IsRequired()
-                .HasColumnName("Phone")
-                .HasMaxLength(50)
-                .IsUnicode(false);
-            entity.Property(e => e.Type)
-                .IsRequired()
-                .HasColumnType("char(2)")
-                .HasDefaultValueSql("('CN')");
-
-        }
-    }
-
   
 
-    
-
-
-
-    public class TaxMap : IMapConfiguration<Tax>
-    {
-        public void Map(EntityTypeBuilder<Tax> entity)
-        {
-            entity.ToTable("Tax", "Accounting");
-            entity.Property(e => e.TaxId).ValueGeneratedNever();
-            entity.Property(e => e.BusinessEntityId).HasColumnName("BusinessEntityID");
-            entity.Property(e => e.TaxGroupId)
-                .IsRequired()
-                .HasColumnType("char(2)")
-                .HasDefaultValueSql("('SL')");
-
-        }
-    }
-    
-   
-    public class UserSettingMap : IMapConfiguration<UserSetting>
-    {
-        public void Map(EntityTypeBuilder<UserSetting> entity)
-        {
-            entity.ToTable("UserSetting", "Security");
-            entity.Property(e => e.UserSettingId).ValueGeneratedNever();
-
-            entity.Property(e => e.BusinessEntityId).HasColumnName("BusinessEntityID");
-
-
-        }
-    }
 }

@@ -17,13 +17,13 @@ namespace Smart.Controllers
 {
     public class FinancialStats : BaseController
     {
-        private readonly IServices<Bank> _bankServices;
+        private readonly IServices<AccountBank> _bankServices;
         private readonly IServices<VExpense> _vExpenseServices;
         private readonly IServices<CategoryFinancial> _categoryFinancialServices;
         private readonly FinancialExtension _financialExtension;
 
 
-        public FinancialStats(FinancialExtension financialExtension, IServices<CategoryFinancial> categoryFinancialServices, IServices<VExpense> VExpenseServices, IServices<Bank> bankServices, IUser currentUser, IEmailSender emailSender, IHttpContextAccessor accessor) : base(currentUser, emailSender, accessor)
+        public FinancialStats(FinancialExtension financialExtension, IServices<CategoryFinancial> categoryFinancialServices, IServices<VExpense> VExpenseServices, IServices<AccountBank> bankServices, IUser currentUser, IEmailSender emailSender, IHttpContextAccessor accessor) : base(currentUser, emailSender, accessor)
         {
             this._bankServices = bankServices;
             this._vExpenseServices = VExpenseServices;
@@ -35,7 +35,7 @@ namespace Smart.Controllers
         private void LoadViewData()
         {
             ViewData["CategoryId"] = new SelectList(_categoryFinancialServices.GetAll(a => a.Type == 1 && a.Active == true), "ChartAccountId", "Name");
-            ViewData["BankId"] = new SelectList(_bankServices.GetAll(), "BankId", "Name");
+            ViewData["AccountBankId"] = new SelectList(_bankServices.GetAll(), "AccountBankId", "Name");
         }
 
         [Route("financial-management/cash-flow")]

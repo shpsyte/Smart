@@ -13,6 +13,42 @@ Install-Package Pomelo.EntityFrameworkCore.MySql -Version 2.0.1
 "C:\Program Files\MariaDB 10.3\bin\mysql.exe" --host="localhost" --user=root --password=Jymkatana_6985 Test < dbSmart.sql
 
 
+-- create a table on MY
+DELIMITER //
+
+
+DROP TABLE IF EXISTS ProductInventory;
+
+
+CREATE TABLE ProductInventory (
+	Id INT NOT NULL AUTO_INCREMENT COMMENT 'PRIMARY KEY FOR This table - records',
+	BusinessEntityID INT NOT NULL COMMENT 'Foreign key to BusinessEntity.BusinessEntityID, Used for Application Filter.',
+	LocationId 	int 	not null comment 'Foreign key to Production.Location.WarehouseID',
+	ProductId 	int 	not null comment 'Foreign key to Production.Product.ProductId',
+	VarId 		int null,
+	Shelf 	varchar (50) 	comment 'Storage compartment within an inventory location.',
+	Bin 	int comment 'Storage container on a shelf in an inventory location.',
+	CreateDate 	date not null DEFAULT current_timestamp,
+	Description 	varchar (150) 	,
+	NumberDoc 	varchar (150) 	,
+	Quantity 	numeric (12, 4) not null DEFAULT 0 comment 'Name of Expense',
+	`Signal` 	int not null comment '1 = SellIn; 2 = SellOut',
+	PRIMARY KEY (Id),
+ 	CONSTRAINT FK_BusinessEntity_ProductInventory
+		FOREIGN KEY (BusinessEntityID) REFERENCES BusinessEntity (BusinessEntityID)
+		 ON DELETE CASCADE ON UPDATE RESTRICT,
+ 	CONSTRAINT FK_Location
+		FOREIGN KEY (LocationId) REFERENCES Location (WarehouseId)
+		 ON DELETE CASCADE ON UPDATE RESTRICT,
+ 	CONSTRAINT FK_Product
+		FOREIGN KEY (ProductId) REFERENCES Product (ProductId)
+		 ON DELETE CASCADE ON UPDATE RESTRICT,
+	FULLTEXT INDEX ProductInventory (Shelf, Description, NumberDoc )
+) COMMENT='Inventory fro Products on stock.';
+
+
+//
+
 
 
 Create By : José luiz

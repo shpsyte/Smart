@@ -13,7 +13,7 @@ namespace Core.Domain.PersonAndData
         }
 
         public int EmailId { get; set; }
-        public string Email1 { get; set; }
+        public string Address { get; set; }
         public int Type { get; set; }
 
         

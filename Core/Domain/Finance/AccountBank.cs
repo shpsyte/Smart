@@ -6,9 +6,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Core.Domain.Finance
 {
-    public partial class Bank : BaseEntity
+    public partial class AccountBank : BaseEntity
     {
-        public Bank()
+        public AccountBank()
         {
             this.BankTrans = new HashSet<BankTrans>();
             this.RevenueTrans = new HashSet<RevenueTrans>();
@@ -16,7 +16,7 @@ namespace Core.Domain.Finance
 
             this.Active = true;
         }
-
+        [Key]
         public int AccountBankId { get; private set; }
 
         [Required]

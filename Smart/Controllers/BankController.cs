@@ -14,11 +14,11 @@ namespace Smart.Controllers
     public class BankController : BaseController
     {
         #region vars
-        private readonly  IServices<Bank> _bankServices;
+        private readonly  IServices<AccountBank> _bankServices;
         #endregion
         #region ctor
             public BankController(
-                                    IServices<Bank> bankServices, 
+                                    IServices<AccountBank> bankServices, 
                                     IUser currentUser, 
                                     IEmailSender emailSender, 
                                     IHttpContextAccessor accessor
@@ -46,13 +46,13 @@ namespace Smart.Controllers
         [Route("bank-management/bank-add")]
         public IActionResult Add()
         {
-          var data = new Bank();
+          var data = new AccountBank();
           return View(data);
         }
         // POST: Bank/Add
         [HttpPost, ValidateAntiForgeryToken]
         [Route("bank-management/bank-add")]
-        public async Task<IActionResult> Add([Bind("AccountBankId,Name,Active,BusinessEntityId,Code,Agency,DigitAgency,Account,DigitAccount")] Bank bank, bool continueAdd)
+        public async Task<IActionResult> Add([Bind("AccountBankId,Name,Active,BusinessEntityId,Code,Agency,DigitAgency,Account,DigitAccount")] AccountBank bank, bool continueAdd)
         {
             if (ModelState.IsValid)
             {
@@ -79,7 +79,7 @@ namespace Smart.Controllers
         // POST: Bank/Edit/5
         [HttpPost, ValidateAntiForgeryToken]
         [Route("bank-management/bank-edit/{id?}")]
-        public async Task<IActionResult> Edit(int id, [Bind("AccountBankId,Name,Active,BusinessEntityId,Code,Agency,DigitAgency,Account,DigitAccount")] Bank bank, bool continueAdd, bool addTrash)
+        public async Task<IActionResult> Edit(int id, [Bind("AccountBank.Id,Name,Active,BusinessEntityId,Code,Agency,DigitAgency,Account,DigitAccount")] AccountBank bank, bool continueAdd, bool addTrash)
         {
             if (id != bank.AccountBankId)
             {
@@ -115,7 +115,7 @@ namespace Smart.Controllers
          }  
          [HttpPost, ValidateAntiForgeryToken]
          [Route("bank-management/bank-delete/{id?}")]
-         public async Task<IActionResult> Delete (Bank bank)
+         public async Task<IActionResult> Delete (AccountBank bank)
          {
              await _bankServices.DeleteAsync(bank);
              return RedirectToAction(nameof(List));

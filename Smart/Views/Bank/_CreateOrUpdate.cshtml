@@ -1,4 +1,4 @@
-@model Core.Domain.Finance.Bank
+﻿@model Core.Domain.Finance.AccountBank
 @{ Layout = null; }
 @Html.HiddenFor(a => a.AccountBankId)
 @Html.HiddenFor(a => a.BusinessEntityId)
@@ -14,18 +14,18 @@
     </div>
     <div class="form-row">
         <div class="form-group col-md-3">
-            <label asp-for="Code">@Localizer["Code"]</label>
-            <input asp-for="Code" placeholder="@Localizer["Code"]" class="form-control" />
+            <label asp-for="Code">@Localizer["Código"]</label>
+            <input asp-for="Code" placeholder="@Localizer["Código"]" class="form-control" />
             <span asp-validation-for="Code" class="text-danger"></span>
         </div>
         <div class="form-group col-md-4">
-            <label asp-for="Agency">@Localizer["Agency"]</label>
-            <input asp-for="Agency" placeholder="@Localizer["Agency"]" class="form-control" />
+            <label asp-for="Agency">@Localizer["Agência"]</label>
+            <input asp-for="Agency" placeholder="@Localizer["Agência"]" class="form-control" />
             <span asp-validation-for="Agency" class="text-danger"></span>
         </div>
         <div class="form-group col-md-4">
-            <label asp-for="DigitAgency">@Localizer["DigitAgency"]</label>
-            <input asp-for="DigitAgency" placeholder="@Localizer["DigitAgency"]" class="form-control" />
+            <label asp-for="DigitAgency">@Localizer["Digito Agência"]</label>
+            <input asp-for="DigitAgency" placeholder="@Localizer["Digito Agência"]" class="form-control" />
             <span asp-validation-for="DigitAgency" class="text-danger"></span>
         </div>
 
@@ -35,13 +35,13 @@
     <div class="form-row">
        
         <div class="form-group col-md-4">
-            <label asp-for="Account">@Localizer["Account"]</label>
-            <input asp-for="Account" placeholder="@Localizer["Account"]" class="form-control" />
+            <label asp-for="Account">@Localizer["Conta Bancária"]</label>
+            <input asp-for="Account" placeholder="@Localizer["Conta Bancária"]" class="form-control" />
             <span asp-validation-for="Account" class="text-danger"></span>
         </div>
         <div class="form-group col-md-4">
-            <label asp-for="DigitAccount">@Localizer["DigitAgency"]</label>
-            <input asp-for="DigitAccount" placeholder="@Localizer["DigitAccount"]" class="form-control" />
+            <label asp-for="DigitAccount">@Localizer["Digito Conta"]</label>
+            <input asp-for="DigitAccount" placeholder="@Localizer["Digito Conta"]" class="form-control" />
             <span asp-validation-for="DigitAccount" class="text-danger"></span>
         </div>
 

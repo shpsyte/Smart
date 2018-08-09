@@ -1,4 +1,4 @@
-@model IEnumerable<Core.Domain.Finance.Bank>
+@model IEnumerable<Core.Domain.Finance.AccountBank>
 @{ ViewData["Title"] = ViewsLocalizer["Conta Caixa"]; ViewBag.PageClass = "container"; }
 @{ ViewData.AddActivePageApp(ActivePagesApp.RegBank); }
 @section topright{
@@ -65,20 +65,20 @@
                     <tbody>
                         @foreach (var item in Model)
                         {
-                            <tr class="table-row-body">
-                                <td class="table-item-body clickable-row" data-href="@Url.Action("Edit", "Bank", new { id = item.AccountBankId })">
-                                    @Html.DisplayFor(modelItem => item.Name)
-                                </td>
-                                <td class="table-item-body clickable-row" data-href="@Url.Action("Edit", "Bank", new { id = item.AccountBankId })">
-                                    @Html.DisplayFor(modelItem => item.Account)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Active)
-                                </td>
-                                <td>
-                                    <a asp-action="Edit" asp-route-id="@item.AccountBankId" class="btn btn-light btn-bdr"> @SharedLocalizer["Editar"] </a>
-                                </td>
-                            </tr>
+                        <tr class="table-row-body">
+                            <td class="table-item-body clickable-row" data-href="@Url.Action("Edit", "Bank", new { id = item.AccountBankId })">
+                                @Html.DisplayFor(modelItem => item.Name)
+                            </td>
+                            <td class="table-item-body clickable-row" data-href="@Url.Action("Edit", "Bank", new { id = item.AccountBankId })">
+                                @Html.DisplayFor(modelItem => item.Account)
+                            </td>
+                            <td class="table-item-body clickable-row" data-href="@Url.Action("Edit", "Bank", new { id = item.AccountBankId })">
+                                @Html.DisplayFor(modelItem => item.Active)
+                            </td>
+                            <td>
+                                <a asp-action="Edit" asp-route-id="@item.AccountBankId" class="btn btn-light btn-bdr"> @SharedLocalizer["Editar"] </a>
+                            </td>
+                        </tr>
                         }
                     </tbody>
                 </table>

@@ -10,6 +10,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace Services.Entity
 {
@@ -55,19 +56,7 @@ namespace Services.Entity
 
         private Expression<Func<T, bool>> InjectBusinessEntity(Expression<Func<T, bool>> and = null)
         {
-            Expression<Func<T, bool>> expr1 = p => (p.BusinessEntityId == _businessEntityId);
-
-            if (and != null)
-            {
-                Expression<Func<T, bool>> expr2 = and;
-
-                var body = Expression.AndAlso(expr1.Body, expr2.Body);
-                var lambda = Expression.Lambda<Func<T, bool>>(body, expr1.Parameters[0]);
-
-                return lambda;
-            }
-            else
-                return expr1;
+            return p => (p.BusinessEntityId == _businessEntityId);
 
         }
         #endregion
@@ -109,7 +98,10 @@ namespace Services.Entity
         public virtual async Task<IEnumerable<T>> GetAllAsync() => await _repository.GetAllAsync(InjectBusinessEntity());
         public virtual async Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>> where) => await _repository.GetAllAsync(InjectBusinessEntity(where));
         public virtual IQueryable<T> Query() => _repository.Query(InjectBusinessEntity());
-        public virtual IQueryable<T> Query(Expression<Func<T, bool>> where) => _repository.Query(InjectBusinessEntity()).Where(where);
+        public virtual IQueryable<T> Query(Expression<Func<T, bool>> where)
+        {
+           return _repository.Query(InjectBusinessEntity()).Where(where);
+        }
 
         public virtual async Task<IQueryable<T>> QueryAsync() 
         {
@@ -123,9 +115,10 @@ namespace Services.Entity
         }
         public virtual async Task<IQueryable<T>> QueryAsync(Expression<Func<T, bool>> where)
         {
+
             return await Task.Run(() =>
             {
-                return _repository.Query(InjectBusinessEntity(where));
+                return _repository.Query(InjectBusinessEntity()).Where(where);
             });
 
         }

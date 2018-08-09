@@ -9,7 +9,7 @@ namespace Core.Domain.Finance.Views
 {
     public class VRevenueTrans : BaseEntity
     {
-        public int Id { get; set; }
+        public int RevenueTransId { get; set; }
         public int RevenueId { get; set; }
         public int RevenueSeq { get; set; }
         public int RevenueTotalSeq { get; set; }

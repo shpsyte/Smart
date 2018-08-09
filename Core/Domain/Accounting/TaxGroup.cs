@@ -14,11 +14,10 @@ namespace Core.Domain.Accounting
         }
 
         [Key]
-        public int TaxGroupId { get; private set; }
+        public int TaxGroupId { get; set; }
         [Required]
+        [StringLength(50)]
         public string Name { get; set; }
-
-        
         public ICollection<Product> Product { get; set; }
     }
 }
