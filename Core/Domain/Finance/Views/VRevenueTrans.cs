@@ -6,8 +6,9 @@ using System.ComponentModel.DataAnnotations;
 using System.Text;
 namespace Core.Domain.Finance.Views
 {
-    public abstract class VRevenueTrans : BaseEntity, IView
+    public class VRevenueTrans : BaseEntity, IView
     {
+       
         public int RevenueTransId { get; set; }
         public int RevenueId { get; set; }
         public int RevenueSeq { get; set; }

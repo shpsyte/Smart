@@ -8,9 +8,9 @@ using System.Text;
 
 namespace Core.Domain.Finance.Views
 {
-    public abstract class VExpense : BaseEntity, IView
+    public class VExpense : BaseEntity, IView
     {
-        
+       
         public int ExpenseId { get; set; }
         public int ExpenseSeq { get; set; }
         public int ExpenseTotalSeq { get; set; }

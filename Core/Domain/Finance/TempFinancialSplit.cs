@@ -5,8 +5,11 @@ namespace Core.Domain.Finance
 {
     public class TempFinancialSplit : BaseEntity
     {
-       
-        public TempFinancialSplit(int seq, string session, DateTime dueDate, decimal? total)
+        public TempFinancialSplit()
+        {
+
+        }
+        public TempFinancialSplit(int seq, string session, DateTime dueDate, decimal? total) : this()
         {
             Seq = seq;
             Session = session;

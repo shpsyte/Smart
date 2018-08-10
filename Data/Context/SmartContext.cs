@@ -108,24 +108,24 @@ namespace Data.Context
 
         private void TrackChanges()
         {
-            foreach (var entry in this.ChangeTracker.Entries().Where(e => e.State == EntityState.Added || e.State == EntityState.Modified))
-            {
-                if (entry.Entity is BaseEntity)
-                {
-                    var auditable = entry.Entity as BaseEntity;
-                    if (entry.State == EntityState.Added)
-                    {
-                        var a  = UserProvider;//  
-                        var b = TimestampProvider();
-                        //auditable.UpdatedOn = TimestampProvider();
-                    }
-                    //else
-                    //{
-                    //    auditable.UpdatedBy = UserProvider;
-                    //    auditable.UpdatedOn = TimestampProvider();
-                    //}
-                }
-            }
+            //foreach (var entry in this.ChangeTracker.Entries().Where(e => e.State == EntityState.Added || e.State == EntityState.Modified))
+            //{
+            //    if (entry.Entity is BaseEntity)
+            //    {
+            //        var auditable = entry.Entity as IAuditable;
+            //        if (entry.State == EntityState.Added)
+            //        {
+            //            var a  = UserProvider;//  
+            //            var b = TimestampProvider();
+            //            //auditable.UpdatedOn = TimestampProvider();
+            //        }
+            //        //else
+            //        //{
+            //        //    auditable.UpdatedBy = UserProvider;
+            //        //    auditable.UpdatedOn = TimestampProvider();
+            //        //}
+            //    }
+            //}
         }
     }
 }

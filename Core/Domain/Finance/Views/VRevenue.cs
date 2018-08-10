@@ -7,10 +7,10 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 namespace Core.Domain.Finance.Views
 {
-    public abstract class VRevenue : BaseEntity, IView
+    public  class VRevenue : BaseEntity, IView
     {
-        
 
+      
         public int RevenueId { get; set; }
         public int RevenueSeq { get; set; }
         public int RevenueTotalSeq { get; set; }

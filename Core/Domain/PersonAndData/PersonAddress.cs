@@ -4,11 +4,16 @@ namespace Core.Domain.PersonAndData
 {
     public partial class PersonAddress : BaseEntity
     {
-        public PersonAddress( int addressId, int personId)
+        public PersonAddress()
+        {
+
+        }
+        public PersonAddress( int addressId, int personId) : this()
         {
             AddressId = addressId;
             PersonId = personId;
         }
+
 
         #region property
 

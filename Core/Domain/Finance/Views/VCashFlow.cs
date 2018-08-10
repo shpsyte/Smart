@@ -8,7 +8,7 @@ using System.Text;
 
 namespace Core.Domain.Finance.Views
 {
-    public abstract class VCashFlow : BaseEntity, IView
+    public class VCashFlow : BaseEntity, IView
     {
         
         public int Id { get; set; }

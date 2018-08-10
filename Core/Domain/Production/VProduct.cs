@@ -8,9 +8,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Core.Domain.Production
 {
-    public abstract partial class VProduct : BaseEntity, IView
+    public partial class VProduct : BaseEntity, IView
     {
-
+       
         public int ProductId { get; private set; }
         public string Name { get; set; }
         public string ProductNumber { get; set; }

@@ -37,8 +37,8 @@ namespace Core.Domain.Finance
         public string DigitAgency { get; set; }
         [StringLength(50)]
         public string Account { get; set; }
-        public string DigitAccount { get; set; }
         [StringLength(5)]
+        public string DigitAccount { get; set; }
         public bool Active { get; set; }
         #endregion
 

@@ -79,7 +79,7 @@ namespace Smart.Controllers
         // POST: Bank/Edit/5
         [HttpPost, ValidateAntiForgeryToken]
         [Route("bank-management/bank-edit/{id?}")]
-        public async Task<IActionResult> Edit(int id, [Bind("AccountBank.Id,Name,Active,BusinessEntityId,Code,Agency,DigitAgency,Account,DigitAccount")] AccountBank bank, bool continueAdd, bool addTrash)
+        public async Task<IActionResult> Edit(int id, [Bind("AccountBankId,Name,Active,BusinessEntityId,Code,Agency,DigitAgency,Account,DigitAccount")] AccountBank bank, bool continueAdd, bool addTrash)
         {
             if (id != bank.AccountBankId)
             {
