@@ -47,7 +47,7 @@ namespace Smart.Controllers
             if (!string.IsNullOrEmpty(search))
             {
                 data = data.Where(p =>
-                            p.Name.Contains(search)
+                       p.Name.Contains(search)
                     || p.MiddleName.Contains(search)
                     || p.SpecialCodeRegion.Contains(search)
                     || p.StateProvince.Name.Contains(search)

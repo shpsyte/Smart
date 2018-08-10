@@ -8,13 +8,9 @@ using System.Text;
 
 namespace Core.Domain.Finance.Views
 {
-    public class VExpense : BaseEntity
+    public abstract class VExpense : BaseEntity, IView
     {
-
-        public VExpense()
-        {
-            VExpenseTrans = new HashSet<VExpenseTrans>();
-        }
+        
         public int ExpenseId { get; set; }
         public int ExpenseSeq { get; set; }
         public int ExpenseTotalSeq { get; set; }
@@ -34,15 +30,10 @@ namespace Core.Domain.Finance.Views
         public decimal Credit { get; set; }
         public decimal Debit { get; set; }
 
+       
 
-        [NotMapped]
-        public string FullNumber {
-            get {
-                return string.Concat(this.ExpenseNumber, "-", this.ExpenseSeq);
-            }
-        }
 
-        
+        public override string ToString() =>  string.Concat(this.ExpenseNumber, "-", this.ExpenseSeq);
 
         public Person Person { get; set; }
         public Expense Expense { get; set; }

@@ -1,8 +1,6 @@
 ﻿using Core.Domain.Base;
-using Core.Domain.Business;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-
 namespace Core.Domain.Production
 {
     public partial class ClassProduct : BaseEntity
@@ -11,13 +9,22 @@ namespace Core.Domain.Production
         {
             Product = new HashSet<Product>();
         }
+        public ClassProduct(string name)
+        {
+            this.Name = name;
+        }
 
-        public int ClassId { get; private set; }
+        #region property
+
+        public int ClassId { get; set; }
         
         [Required]
+        [StringLength(120)]
         public string Name { get; set; }
 
-        
+        #endregion
+
+
         public ICollection<Product> Product { get; set; }
     }
 }

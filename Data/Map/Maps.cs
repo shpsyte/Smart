@@ -229,7 +229,7 @@ namespace Data.Map
     {
         public void Map(EntityTypeBuilder<ProductInventory> entity)
         {
-            entity.ToTable("ProductInventory");
+            entity.ToTable("Inventory");
             entity.HasKey(e => e.Id);
 
             entity.HasOne(d => d.Location)
@@ -250,7 +250,7 @@ namespace Data.Map
     {
         public void Map(EntityTypeBuilder<CategoryProduct> entity)
         {
-            entity.ToTable("CategoryProduct");
+            entity.ToTable("ProductCategory");
             entity.HasKey(e => e.CategoryId);
         }
     }

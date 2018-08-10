@@ -1,11 +1,9 @@
 ﻿using Core.Domain.Accounting;
 using Core.Domain.Base;
-using Core.Domain.Business;
 using Core.Domain.Sale;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-
 namespace Core.Domain.Production
 {
     public partial class Product : BaseEntity
@@ -21,6 +19,9 @@ namespace Core.Domain.Production
             this.ModifiedDate = System.DateTime.Now.Date;
             this.Active = true;
             this.Deleted = false;
+            this.MakeFlag = false;
+            this.VariableFlag = false;
+            this.FinishedGoodsFlag = true;
         }
         public Product(string name, string productnumber) : base ()
         {
@@ -28,7 +29,7 @@ namespace Core.Domain.Production
             this.ProductNumber = productnumber;
 
         }
-
+        #region property
         public int ProductId { get; set; }
         [Required]
         [StringLength(120)]
@@ -36,10 +37,15 @@ namespace Core.Domain.Production
         [Required]
         [StringLength(30)]
         public string ProductNumber { get; set; }
+        [StringLength(100)]
         public string Manufacturer { get; set; }
+        [StringLength(100)]
         public string Ean { get; set; }
+        [StringLength(30)]
         public string HsCode { get; set; }
+        [StringLength(30)]
         public string HsCodeTax { get; set; }
+        [StringLength(50)]
         public string Location { get; set; }
         public bool MakeFlag { get; set; }
         public bool VariableFlag { get; set; }
@@ -50,6 +56,7 @@ namespace Core.Domain.Production
         public decimal? ReorderPoint { get; set; }
         public decimal? StandardCost { get; set; }
         public decimal? ListPrice { get; set; }
+        [StringLength(3)]
         public string SizeUnitMeasureCode { get; set; }
         public decimal? Weight { get; set; }
         public decimal? WeightTotal { get; set; }
@@ -77,7 +84,7 @@ namespace Core.Domain.Production
         
         public bool Active { get; set; }
         public bool Deleted { get; set; }
-
+        #endregion
 
         public CategoryProduct Category { get; set; }
         public VProduct VProduct { get; set; }

@@ -8,8 +8,9 @@ using System.Text;
 
 namespace Core.Domain.Finance.Views
 {
-    public class VCashFlow : BaseEntity
+    public abstract class VCashFlow : BaseEntity, IView
     {
+        
         public int Id { get; set; }
         public string Tp { get; set; }
         public int CashFlowSeq { get; set; }
@@ -26,20 +27,11 @@ namespace Core.Domain.Finance.Views
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
 
         public DateTime? CreateDate { get; set; }
-
-
         public decimal Total { get; set; }
         public decimal Saldo { get; set; }
-
         public Person Person { get; set; }
 
-        [NotMapped]
-        public string FullNumber
-        {
-            get
-            {
-                return string.Concat(this.CashFlowNumber, "-", this.CashFlowSeq);
-            }
-        }
+        
+        public override string ToString() => string.Concat(this.CashFlowNumber, "-", this.CashFlowSeq);
     }
 }

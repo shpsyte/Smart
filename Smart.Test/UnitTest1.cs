@@ -2,6 +2,7 @@ using Core.Domain.Region;
 using Data.Context;
 using Data.Repository;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Services.Entity;
 using Services.Interfaces;
@@ -20,6 +21,10 @@ namespace Smart.Test
         [Fact]
         public void Test1()
         {
+              
+
+          
+
             var Cidade = new City()
             {
                 BusinessEntityId = 1,
@@ -29,10 +34,15 @@ namespace Smart.Test
                 StateProvinceId = 0
             };
 
-         
+           
+
+
+
 
 
 
     }
+
+       
     }
 }

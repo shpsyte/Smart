@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Core.Fake
 {
-    public class PayAccount
+    public abstract class PayAccount
     {
         public int RevenueId { get; set; }
         public int ExpenseId { get; set; }

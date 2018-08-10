@@ -8,16 +8,21 @@ namespace Core.Domain.Accounting
 {
     public partial class TaxGroup : BaseEntity
     {
-        public TaxGroup()
+        
+        public TaxGroup() => Product = new HashSet<Product>();
+        public TaxGroup(string name) : this() 
         {
-            Product = new HashSet<Product>();
+            this.Name = name;
         }
 
+       
+        #region property
         [Key]
         public int TaxGroupId { get; set; }
         [Required]
         [StringLength(50)]
         public string Name { get; set; }
+        #endregion
         public ICollection<Product> Product { get; set; }
     }
 }

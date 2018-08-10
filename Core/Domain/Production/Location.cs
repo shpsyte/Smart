@@ -1,9 +1,7 @@
 ﻿using Core.Domain.Base;
 using Core.Domain.Sale;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-
 namespace Core.Domain.Production
 {
     public partial class Location : BaseEntity
@@ -16,10 +14,19 @@ namespace Core.Domain.Production
             this.DefaultLocation = false;
         }
 
-        public int WarehouseId { get; private set; }
+        public Location(string name, bool defaultLocation) : this()
+        {
+            Name = name;
+            DefaultLocation = defaultLocation;
+        }
+
+        #region property
+        public int WarehouseId { get; set; }
         [Required]
+        [StringLength(120)]
         public string Name { get; set; }
         public bool DefaultLocation { get; set; }
+        #endregion
 
 
         public ICollection<Invoice> Invoice { get; set; }

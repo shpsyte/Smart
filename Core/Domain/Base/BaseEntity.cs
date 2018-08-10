@@ -6,7 +6,7 @@ namespace Core.Domain.Base
     public abstract partial class BaseEntity
     {
         /// <summary>
-        /// Gets or sets the entity identifier
+        /// Gets or sets the entity identifier s
         /// </summary>
         public int BusinessEntityId { get; set; }
 
