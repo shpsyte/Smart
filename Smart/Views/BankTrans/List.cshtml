@@ -167,36 +167,36 @@
                     <tbody>
                         @foreach (var item in Model.bankTrans)
                         {
-                            <tr class="table-row-body ">
-                                <td class="table-item-body">
-                                    @Html.DisplayFor(modelItem => item.Id)
-                                </td>
-                                <td class="table-item-body">
-                                    @Html.DisplayFor(modelItem => item.DueDate)
-                                </td>
-                                <td class="table-item-body" data-toggle="tooltip" data-placement="top" title="@item.Description">
-                                    @{ string desc = item.Description;}
-                                    @desc.Truncate(30, true)
+                        <tr class="table-row-body">
+                            <td class="table-item-body clickable-row" data-href="@Url.Action("Edit", "banktrans", new { id = item.BankTransId })">
+                                @Html.DisplayFor(modelItem => item.BankTransId)
+                            </td>
+                            <td class="table-item-body clickable-row" data-href="@Url.Action("Edit", "banktrans", new { id = item.BankTransId })">
+                                @Html.DisplayFor(modelItem => item.DueDate)
+                            </td>
+                            <td class="table-item-body clickable-row" data-href="@Url.Action("Edit", "banktrans", new { id = item.BankTransId })" data-toggle="tooltip" data-placement="top" title="@item.Description">
+                                @{ string desc = item.Description;}
+                                @desc.Truncate(30, true)
 
 
-                                    <small class="text-info">@Html.DisplayFor(modelItem => item.MidleDesc)</small>
-                                </td>
-                                <td class="table-item-body">
-                                    @Html.DisplayFor(modelItem => item.CategoryFinancial.Name)
-                                </td>
-                                <td class="table-item-body text-@(item.Signal == 1 ? "success" : "danger")">
-                                    @{ string saldo = item.Total.ToString("c"); }
-                                    @saldo
-                                </td>
-                                <td class="table-item-body">
-                                    @Enum.GetName(typeof(Core.Fake.DebitAndCredit), item.Signal)
-                                </td>
-                                <td class="table-item-body">
-                                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-light btn-bdr btn-sm"> @SharedLocalizer["Editar"] </a>
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
+                                <small class="text-info">@Html.DisplayFor(modelItem => item.MidleDesc)</small>
+                            </td>
+                            <td class="table-item-body clickable-row" data-href="@Url.Action("Edit", "banktrans", new { id = item.BankTransId })">
+                                @Html.DisplayFor(modelItem => item.CategoryFinancial.Name)
+                            </td>
+                            <td class="table-item-body text-@(item.Signal == 1 ? "success" : "danger") clickable-row" data-href="@Url.Action("Edit", "banktrans", new { id = item.BankTransId })">
+                                @{ string saldo = item.Total.ToString("c"); }
+                                @saldo
+                            </td>
+                            <td class="table-item-body clickable-row" data-href="@Url.Action("Edit", "banktrans", new { id = item.BankTransId })" data-toggle="tooltip" data-placement="top" title="@item.Description">
+                                @Enum.GetName(typeof(Core.Fake.DebitAndCredit), item.Signal)
+                            </td>
+                            <td class="table-item-body clickable-row" data-href="@Url.Action("Edit", "banktrans", new { id = item.BankTransId })" data-toggle="tooltip" data-placement="top" title="@item.Description">
+                                <a asp-action="Edit" asp-route-id="@item.AccountBankId" class="btn btn-light btn-bdr btn-sm"> @SharedLocalizer["Editar"] </a>
+                            </td>
+                        </tr>
+                            }
+                        </tbody>
                 </table>
             }
         </div>

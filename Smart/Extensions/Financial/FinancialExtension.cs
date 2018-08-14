@@ -78,7 +78,7 @@ namespace Smart.Extensions.Financial
         {
             return new ExpenseTrans()
             {
-                BankId = data.BankId,
+                AccountBankId = data.AccountBankId,
                 BusinessEntityId = businessId,
                 CreateDate = data.DueDate,
                 Description = data.Comment,
@@ -101,7 +101,7 @@ namespace Smart.Extensions.Financial
                 Total = (decimal)item.Total,
                 DueDate = item.DueDate,
                 ExpenseSeq = item.Seq,
-                CategoryId = expense.CategoryId,
+                ChartAccountId = expense.ChartAccountId,
                 Comment = expense.Comment,
                 CostCenterId = expense.CostCenterId,
                 CreateDate = expense.CreateDate,
@@ -120,13 +120,13 @@ namespace Smart.Extensions.Financial
             return new BankTrans()
             {
                 Bank = expense.Bank,
-                BankId = expense.BankId.Value,
+                AccountBankId = expense.AccountBankId.Value,
                 CreateDate = System.DateTime.UtcNow,
                 DueDate = data.DueDate,
                 BusinessEntityId = businessId,
                 Description = data.Comment,
                 MidleDesc = expense.Midledesc,
-                CategoryId = categorId,
+                ChartAccountId = categorId,
                 Signal = 2,
                 Total = expense.Total,
                 Deleted = false,
@@ -139,13 +139,13 @@ namespace Smart.Extensions.Financial
             return new BankTrans()
             {
                 Bank = revenue.Bank,
-                BankId = revenue.BankId.Value,
+                AccountBankId = revenue.AccountBankId.Value,
                 CreateDate = System.DateTime.UtcNow,
                 DueDate = data.DueDate,
                 BusinessEntityId = businessId,
                 Description = data.Comment,
                 MidleDesc = revenue.Midledesc,
-                CategoryId = categoryId,
+                ChartAccountId = categoryId,
                 Signal = 1,
                 Total = revenue.Total,
                 Deleted = false,
@@ -174,7 +174,7 @@ namespace Smart.Extensions.Financial
         {
             return new RevenueTrans()
             {
-                BankId = data.BankId,
+                AccountBankId = data.AccountBankId,
                 BusinessEntityId = businessId,
                 CreateDate = data.DueDate,
                 Description = data.Comment,
@@ -196,7 +196,7 @@ namespace Smart.Extensions.Financial
                 Total = (decimal)item.Total,
                 DueDate = item.DueDate,
                 RevenueSeq = item.Seq,
-                CategoryId = revenue.CategoryId,
+                ChartAccountId = revenue.ChartAccountId,
                 Comment = revenue.Comment,
                 CostCenterId = revenue.CostCenterId,
                 CreateDate = revenue.CreateDate,
@@ -243,7 +243,7 @@ namespace Smart.Extensions.Financial
                 data = data.Where(a => a.CreateDate.Value.Date <= filter.createDateEnd.Value.Date);
 
             if ((filter.CategoryId.HasValue))
-                data = data.Where(a => a.Expense.CategoryId == filter.CategoryId);
+                data = data.Where(a => a.Expense.ChartAccountId == filter.CategoryId);
 
             if ((filter.value.HasValue))
                 data = data.Where(a => a.Total == filter.value.Value);
@@ -285,7 +285,7 @@ namespace Smart.Extensions.Financial
                 data = data.Where(a => a.CreateDate.Value.Date <= filter.createDateEnd.Value.Date);
 
             if ((filter.CategoryId.HasValue))
-                data = data.Where(a => a.Revenue.CategoryId == filter.CategoryId);
+                data = data.Where(a => a.Revenue.ChartAccountId == filter.CategoryId);
 
             if ((filter.value.HasValue))
                 data = data.Where(a => a.Total == filter.value.Value);
@@ -320,10 +320,10 @@ namespace Smart.Extensions.Financial
              
 
             if ((filter.CategoryId.HasValue))
-                data = data.Where(a => a.CategoryId == filter.CategoryId);
+                data = data.Where(a => a.ChartAccountId == filter.CategoryId);
 
-            if ((filter.BankId.HasValue))
-                data = data.Where(a => a.BankId == filter.BankId);
+            if ((filter.AccountBankId.HasValue))
+                data = data.Where(a => a.AccountBankId == filter.AccountBankId);
 
 
 

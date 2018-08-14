@@ -1,8 +1,8 @@
 ﻿<div class="row">
     <div class="col-2">
-        <vc:card-bank-trans-fix-stats bank-id="null" time="@ModelCards.BankAmountBefore"
+        <vc:card-bank-trans-fix-stats   time="@ModelCards.BankAmountBefore"
                                    title="Saldo Anterior" ref-date="null"
-                                   css-card="text-info"
+                                   css-card="text-info" account-bank-id="null"
                                    model="@ModelCards.SimpleCard">
         </vc:card-bank-trans-fix-stats>
     </div>
@@ -10,7 +10,7 @@
     <div class="col-2">
         <vc:card-bank-trans-fix-stats 
                                       time="@ModelCards.BankAmountTotal" 
-                                      bank-id="null" 
+                                      account-bank-id="null"
                                       ref-date="null"
                                       title="Saldo Final"
                                       css-card="text-success"

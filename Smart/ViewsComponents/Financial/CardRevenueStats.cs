@@ -1,6 +1,7 @@
 ﻿using Core.Domain.Finance.Views;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Services.Interfaces;
 using Smart.Helpers;
 using Smart.Models.Components;
@@ -21,10 +22,14 @@ namespace Smart.ViewsComponents.Financial
         {
             this._vrevenueServices = vrevenueServices;
         }
-
+        
         public async Task<IViewComponentResult> InvokeAsync(bool payed, DateTime? dueStartDate, DateTime? dueEndDate, string searchTerm, string model, string title, string cssCard)
         {
             var revenue = await _vrevenueServices.QueryAsync();
+            //var revenues =   _vrevenueServices.Query().Include(a => a.CategoryFinancial);
+            //IQueryable<VRevenue> revenue = _query;
+
+           
 
             if (payed)
             {
@@ -66,7 +71,7 @@ namespace Smart.ViewsComponents.Financial
             var data = new CardFinancialModel
             {
                 Qty = revenue.Count(),
-                Revenues = revenue,
+                Revenues = revenue.Include(a => a.CategoryFinancial),
                 Amount = payed ? revenue.Sum(a => a.Credit) : revenue.Sum(a => a.AmountFinal),
                 payed = payed,
                 HtmlModel = model,

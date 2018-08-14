@@ -74,7 +74,7 @@ namespace Smart.Controllers
         #region metodosInternos
         private void LoadViewData()
         {
-            ViewData["CategoryId"] = new SelectList(_categoryFinancialServices.GetAll(a => a.Type == 2 && a.Active == true), "ChartAccountId", "Name");
+            ViewData["ChartAccountId"] = new SelectList(_categoryFinancialServices.GetAll(a => a.Type == 2 && a.Active == true), "ChartAccountId", "Name");
             ViewData["CostCenterId"] = new SelectList(_costCenterServices.GetAll(a => a.Active == true), "CostCenterId", "Name");
             ViewData["ConditionId"] = new SelectList(_conditionServices.GetAll(a => a.PaymentUse == 2 || a.PaymentUse == 3), "ConditionId", "Name");
             ViewData["PersonId"] = new SelectList(_personServices.GetAll(), "PersonId", "FirstName");
@@ -89,13 +89,13 @@ namespace Smart.Controllers
             return Json(split);
         }
         [HttpPost, ValidateAntiForgeryToken]
-        public async Task<IActionResult> PayAccount([Bind("RevenueId,DueDate,BankId,ConditionId,Payment,Tax,Discont,Comment,Active,Image,Id")] PayAccount data, bool Active, List<IFormFile> Image)
+        public async Task<IActionResult> PayAccount([Bind("RevenueId,DueDate,AccountBankId,ConditionId,Payment,Tax,Discont,Comment,Active,Image,Id")] PayAccount data, bool Active, List<IFormFile> Image)
         {
             Revenue revenue = await _revenueServices.SingleOrDefaultAsync(a => a.RevenueId == data.RevenueId);
             if (data.Payment.HasValue)
             {
                 RevenueTrans revenueTrans = _financialExtension.GetRevenueTrans(data,_BusinessId,"PAG", revenue.DueDate.HasValue ? 2 : 3);
-                BankTrans bankTrans = _financialExtension.GetBankTrans(data, revenueTrans, _BusinessId, revenue.CategoryId);
+                BankTrans bankTrans = _financialExtension.GetBankTrans(data, revenueTrans, _BusinessId, revenue.ChartAccountId);
                 //await _revenueTransServices.AddAsyncNoSave(revenue);
                 await _bankTransServices.AddAsync (bankTrans, false);
             }
@@ -159,7 +159,7 @@ namespace Smart.Controllers
         // POST: Revenue/Add
         [HttpPost, ValidateAntiForgeryToken]
         [Route("revenue-management/revenue-add")]
-        public async Task<IActionResult> Add([Bind("RevenueId,RevenueNumber,RevenueSeq,RevenueTotalSeq,Name,PersonId,CategoryId,CostCenterId,ConditionId,Total,CreateDate,DueDate,DuePayment,Comment,ModifiedDate,Deleted,BusinessEntityId,Id,Seq,Session,Total,Id")]Revenue revenue, bool continueAdd, IEnumerable<TempFinancialSplit> parcelas)
+        public async Task<IActionResult> Add([Bind("RevenueId,RevenueNumber,RevenueSeq,RevenueTotalSeq,Name,PersonId,ChartAccountId,CostCenterId,ConditionId,Total,CreateDate,DueDate,DuePayment,Comment,ModifiedDate,Deleted,BusinessEntityId,Id,Seq,Session,Total,Id")]Revenue revenue, bool continueAdd, IEnumerable<TempFinancialSplit> parcelas)
         {
             if (ModelState.IsValid)
             {
@@ -225,7 +225,7 @@ namespace Smart.Controllers
         // POST: Revenue/Edit/5
         [HttpPost, ValidateAntiForgeryToken]
         [Route("revenue-management/revenue-edit/{id?}")]
-        public async Task<IActionResult> Edit(int id, [Bind("RevenueId,RevenueNumber,Name,Total,PersonId,CategoryId,CostCenterId,ConditionId,CreateDate,DueDate,DuePayment,Comment,ModifiedDate,Deleted,BusinessEntityId,RevenueSeq,RevenueTotalSeq,_Total,addTrash,Id")] Revenue revenue, bool continueAdd, bool addTrash)
+        public async Task<IActionResult> Edit(int id, [Bind("RevenueId,RevenueNumber,Name,Total,PersonId,ChartAccountId,CostCenterId,ConditionId,CreateDate,DueDate,DuePayment,Comment,ModifiedDate,Deleted,BusinessEntityId,RevenueSeq,RevenueTotalSeq,_Total,addTrash,Id")] Revenue revenue, bool continueAdd, bool addTrash)
         {
 
            

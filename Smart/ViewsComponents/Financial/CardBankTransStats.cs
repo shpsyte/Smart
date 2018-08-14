@@ -2,6 +2,7 @@
 using Core.Domain.Finance.Views;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Services.Interfaces;
 using Smart.Models.Components;
 using Smart.Views;
@@ -22,7 +23,7 @@ namespace Smart.ViewsComponents.Financial
             this._bankTransServices = bankTransServices;
         }
 
-        public async Task<IViewComponentResult> InvokeAsync(bool payed, int? signal, DateTime? dueStartDate, DateTime? dueEndDate, string searchTerm, int? BankId,  string model, string title, string cssCard)
+        public async Task<IViewComponentResult> InvokeAsync(bool payed, int? signal, DateTime? dueStartDate, DateTime? dueEndDate, string searchTerm, int? AccountBankId,  string model, string title, string cssCard)
         {
             var banktrans = await _bankTransServices.QueryAsync();
 
@@ -32,8 +33,8 @@ namespace Smart.ViewsComponents.Financial
             if (signal.HasValue)
                 banktrans = banktrans.Where(a => a.Signal == signal.Value);
 
-            if (BankId.HasValue)
-                banktrans = banktrans.Where(a => a.BankId == BankId.Value);
+            if (AccountBankId.HasValue)
+                banktrans = banktrans.Where(a => a.AccountBankId == AccountBankId.Value);
 
             if (dueStartDate.HasValue)
                 banktrans = banktrans.Where(a => a.DueDate.Value.Date >= dueStartDate.Value.Date);
@@ -63,7 +64,7 @@ namespace Smart.ViewsComponents.Financial
             {
                 Qty = bankTrans.Count(),
                 HtmlModel = model,
-                BankTrans = bankTrans,
+                BankTrans = bankTrans.Include(a => a.CategoryFinancial),
                 title = title,
                 cssCard = cssCard,
                 Amount = AmountTotal

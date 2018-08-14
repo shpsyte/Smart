@@ -41,6 +41,7 @@ namespace Smart.Controllers
         [Route("financial-management/cash-flow")]
         public IActionResult CashFlow()
         {
+            LoadViewData();
             return View();
         }
 
@@ -77,7 +78,7 @@ namespace Smart.Controllers
 
         [Route("financial-reports/revenue")]
         [HttpPost]
-        public async Task<IActionResult> Revenue(FinancialReportsModel filter, string trash)
+        public async Task<IActionResult> Revenue(FinancialReportsModel filter, string name)
         {
             LoadViewData();
             IQueryable<VRevenue> data = await _financialExtension.GetVRevenue(filter);

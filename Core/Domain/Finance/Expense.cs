@@ -15,7 +15,10 @@ namespace Core.Domain.Finance
         {
             this.ExpenseTrans = new HashSet<ExpenseTrans>();
             this.DueDate = System.DateTime.Now.AddDays(7);
+            this.CreateDate = ModelExtension.TimestampProvider();
         }
+
+       
 
         public Expense(string expenseNumber, int? expenseSeq, int? expenseTotalSeq, string name, int? personId, int? categoryId, int? costCenterId, int? conditionId, decimal total, DateTime? createDate, DateTime? dueDate, DateTime? duePayment, string comment) : this()
         {
@@ -24,7 +27,7 @@ namespace Core.Domain.Finance
             ExpenseTotalSeq = expenseTotalSeq;
             Name = name;
             PersonId = personId;
-            CategoryId = categoryId;
+            ChartAccountId = categoryId;
             CostCenterId = costCenterId;
             ConditionId = conditionId;
             Total = total;
@@ -46,7 +49,7 @@ namespace Core.Domain.Finance
         [StringLength(80)]
         public string Name { get; set; }
         public int? PersonId { get; set; }
-        public int? CategoryId { get; set; }
+        public int? ChartAccountId { get; set; }
         public int? CostCenterId { get; set; }
         public int? ConditionId { get; set; }
         public decimal Total { get; set; }

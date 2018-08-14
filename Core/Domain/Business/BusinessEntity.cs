@@ -15,8 +15,8 @@ namespace Core.Domain.Business
             this.Name = name;
             this.Email = email;
             this.ExternalCode = extenalcode;
-            this.CreateDate = DateTime.UtcNow;
-            this.Validate = DateTime.UtcNow.AddDays(7);
+            this.CreateDate = ModelExtension.TimestampProvider();
+            this.Validate = ModelExtension.TimestampProvider().AddDays(7);
             this.Active = true;
         }
 

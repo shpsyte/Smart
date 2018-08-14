@@ -1,6 +1,7 @@
 ﻿using Core.Domain.Finance.Views;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Services.Interfaces;
 using Smart.Helpers;
 using Smart.Models.Components;
@@ -55,7 +56,7 @@ namespace Smart.ViewsComponents.Financial
             {
                 Qty = cashFlow.Count(),
                 HtmlModel = model,
-                CashFlows = cashFlow,
+                CashFlows = cashFlow.Include(a => a.CategoryFinancial),
                 Amount = AmountTotal,
                 initial = initial,
                 title = title,

@@ -17,7 +17,7 @@ namespace Core.Domain.Finance
             CreateDate = createDate;
             Midledesc = midledesc;
             ConditionId = conditionId;
-            BankId = bankId;
+            AccountBankId = bankId;
             Description = description;
             Total = total;
             Signal = signal;
@@ -31,7 +31,7 @@ namespace Core.Domain.Finance
         [StringLength(100)]
         public string Midledesc { get; set; }
         public int? ConditionId { get; set; }
-        public int? BankId { get; set; }
+        public int? AccountBankId { get; set; }
         public decimal Total { get; set; }
         public int Signal { get; set; }
         public DateTime CreateDate { get; set; }

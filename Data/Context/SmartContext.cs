@@ -20,16 +20,17 @@ namespace Data.Context
     {
 
        
+        
         //public DbSet<VRevenue> VRevenue { get; set; }
 
-           
+
         public SmartContext(DbContextOptions<SmartContext> options)
             : base(options){  }
 
  
         protected override void OnModelCreating(ModelBuilder builder)
         {
-             
+            
             base.OnModelCreating(builder);
             // Customize the ASP.NET Identity model and override the defaults if needed.
             // For example, you can rename the ASP.NET Identity table names and more.
@@ -92,8 +93,7 @@ namespace Data.Context
             }
         }
 
-        public Func<DateTime> TimestampProvider { get; set; } = ()
-            => DateTime.UtcNow;
+        public Func<DateTime> TimestampProvider { get; set; } = () => DateTime.UtcNow;
         public override int SaveChanges()
         {
             TrackChanges();
@@ -112,10 +112,14 @@ namespace Data.Context
             //{
             //    if (entry.Entity is BaseEntity)
             //    {
-            //        var auditable = entry.Entity as IAuditable;
+            //        var auditable = entry.Entity as BaseEntity;
             //        if (entry.State == EntityState.Added)
             //        {
-            //            var a  = UserProvider;//  
+            //            var asfds = entry.Entity.GetType();
+                        
+            //           typeof(asfds). GetProperty("CreateDate").SetValue(entry, TimestampProvider);
+
+            //            var a = UserProvider;//  
             //            var b = TimestampProvider();
             //            //auditable.UpdatedOn = TimestampProvider();
             //        }

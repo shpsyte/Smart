@@ -70,6 +70,7 @@
                         <th class="" width="80"> @Localizer["Número"]</th>
                         <th width="80"> @Localizer["Vencimento"]</th>
                         <th> @Localizer["Lançamento"]</th>
+                        <th> @Localizer["Categoria"]</th>
                         <th width="120"> @Localizer["Valor"]</th>
                         <th width="120"> @Localizer["Saldo"]</th>
                     </tr>
@@ -85,26 +86,31 @@
                         {
                             saldo += item.Saldo;
                         }
-                        <tr class="table-row-body">
-                            <td class="table-item-body">
-                                @Html.DisplayFor(modelItem => item.Tp)
-                            </td>
-                            <td class="table-item-body">
-                                @Html.DisplayFor(modelItem => item.CashFlowNumber)/@Html.DisplayFor(modelItem => item.CashFlowSeq)
-                            </td>
-                            <td class="table-item-body">
-                                @Html.DisplayFor(modelItem => item.DueDate)
-                            </td>
-                            <td class="table-item-body" data-toggle="tooltip" data-placement="top" title="@item.Name : @item.Comment">
-                                @item.Name.Truncate(30, true)
-                            </td>
-                            <td class="table-item-body text-@( item.Tp.ToString() == "D" ? "danger" : "success" )">
-                                @item.Saldo.ToString("c")
-                            </td>
-                            <td class="table-item-body">
-                                @saldo.ToString("c")
-                            </td>
-                        </tr>
+                    <tr class="table-row-body">
+                        <td class="table-item-body">
+                            @Html.DisplayFor(modelItem => item.Tp)
+                        </td>
+                        <td class="table-item-body">
+                            @Html.DisplayFor(modelItem => item.CashFlowNumber)/@Html.DisplayFor(modelItem => item.CashFlowSeq)
+                        </td>
+                        <td class="table-item-body">
+                            @Html.DisplayFor(modelItem => item.DueDate)
+                        </td>
+                        <td class="table-item-body" data-toggle="tooltip" data-placement="top" title="@item.Name : @item.Comment">
+                            @item.Name.Truncate(30, true)
+                        </td>
+                        <td class="table-item-body">
+                            @{ string category = item.CategoryFinancial != null ? item.CategoryFinancial.Name.Truncate(30, true) : "";}
+                            @category
+
+                        </td>
+                        <td class="table-item-body text-@( item.Tp.ToString() == "D" ? "danger" : "success" )">
+                            @item.Saldo.ToString("c")
+                        </td>
+                        <td class="table-item-body">
+                            @saldo.ToString("c")
+                        </td>
+                    </tr>
                     }
                 </tbody>
             </table>

@@ -7,7 +7,7 @@ namespace Core.Domain.Production
     {
         public ProductImage()
         {
-            CreateDate = DateTime.UtcNow;
+            CreateDate = ModelExtension.TimestampProvider();
 
         }
         public ProductImage(int imageId, int productId, bool? isPrimary) : this()

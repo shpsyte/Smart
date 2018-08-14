@@ -10,7 +10,7 @@ namespace Core.Domain.Finance.Views
 {
     public class VCashFlow : BaseEntity, IView
     {
-        
+        #region properties
         public int Id { get; set; }
         public string Tp { get; set; }
         public int CashFlowSeq { get; set; }
@@ -18,6 +18,8 @@ namespace Core.Domain.Finance.Views
         public string Name { get; set; }
         public string Comment { get; set; }
         public int? PersonId { get; set; }
+        public int? ChartAccountId { get; set; }
+        
         public string CashFlowNumber { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
@@ -29,9 +31,14 @@ namespace Core.Domain.Finance.Views
         public DateTime? CreateDate { get; set; }
         public decimal Total { get; set; }
         public decimal Saldo { get; set; }
-        public Person Person { get; set; }
+        #endregion
 
+        public CategoryFinancial CategoryFinancial { get; set; }
+        public Person Person { get; set; }
         
+
+
+
         public override string ToString() => string.Concat(this.CashFlowNumber, "-", this.CashFlowSeq);
     }
 }

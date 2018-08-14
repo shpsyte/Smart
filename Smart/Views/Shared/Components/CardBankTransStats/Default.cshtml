@@ -71,7 +71,7 @@
                 {
                     <tr class="table-row-body ">
                         <td class="table-item-body">
-                            @Html.DisplayFor(modelItem => item.Id)
+                            @Html.DisplayFor(modelItem => item.BankTransId)
                         </td>
                         <td class="table-item-body">
                             @Html.DisplayFor(modelItem => item.DueDate)
@@ -84,7 +84,8 @@
                             <small class="text-info">@Html.DisplayFor(modelItem => item.MidleDesc)</small>
                         </td>
                         <td class="table-item-body">
-                            @Html.DisplayFor(modelItem => item.CategoryFinancial.Name)
+                            @{ string category = item.CategoryFinancial != null ? item.CategoryFinancial.Name.Truncate(30, true) : "";}
+                            @category
                         </td>
                         <td class="table-item-body text-@(item.Signal == 1 ? "success" : "danger")">
                             @{ string saldo = item.Total.ToString("c"); }

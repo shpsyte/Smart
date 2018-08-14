@@ -25,7 +25,7 @@ namespace Core.Domain.Finance
             RevenueTotalSeq = revenueTotalSeq;
             Name = name;
             PersonId = personId;
-            CategoryId = categoryId;
+            ChartAccountId = categoryId;
             CostCenterId = costCenterId;
             ConditionId = conditionId;
             Total = total;
@@ -45,7 +45,7 @@ namespace Core.Domain.Finance
         public int? RevenueSeq { get; set; }
         public int? RevenueTotalSeq { get; set; }
         public int? PersonId { get; set; }
-        public int? CategoryId { get; set; }
+        public int? ChartAccountId { get; set; }
         public int? CostCenterId { get; set; }
         public int? ConditionId { get; set; }
         public decimal Total { get; set; }

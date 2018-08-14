@@ -2,6 +2,7 @@
 using Core.Domain.Finance.Views;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Services.Interfaces;
 using Smart.Models.Components;
 using Smart.Views;
@@ -22,11 +23,11 @@ namespace Smart.ViewsComponents.Financial
             this._bankTransServices = bankTransServices;
         }
 
-        public async Task<IViewComponentResult> InvokeAsync(int time, int? BankId, DateTime? refDate, string model, string title, string cssCard)
+        public async Task<IViewComponentResult> InvokeAsync(int time, int? AccountBankId, DateTime? refDate, string model, string title, string cssCard)
         {
             var banktrans = await _bankTransServices.QueryAsync(a => a.DueDate.HasValue == true);
-            if (BankId.HasValue)
-                banktrans = banktrans.Where(a => a.BankId == BankId.Value);
+            if (AccountBankId.HasValue)
+                banktrans = banktrans.Where(a => a.AccountBankId == AccountBankId.Value);
 
             CardFinancialModel data = ReturnDataModel(time, model, refDate, title, cssCard, banktrans);
 
@@ -44,7 +45,7 @@ namespace Smart.ViewsComponents.Financial
                 Qty = bankTrans.Count(),
                 time = time,
                 HtmlModel = model,
-                BankTrans = bankTrans,
+                BankTrans = bankTrans.Include(a => a.CategoryFinancial),
                 title = title,
                 cssCard = cssCard
             };

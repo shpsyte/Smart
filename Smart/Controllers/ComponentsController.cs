@@ -17,27 +17,27 @@ namespace Smart.Controllers
         }
 
 
-        public IActionResult CardRevenueStats(bool payed,   DateTime? dueStartDate, DateTime? dueEndDate, int? BankId, string searchTerm, string model, string title, string cssCard)
+        public IActionResult CardRevenueStats(bool payed,   DateTime? dueStartDate, DateTime? dueEndDate, int? AccountBankId, string searchTerm, string model, string title, string cssCard)
         {
             object par = new {  payed = payed, dueStartDate = dueStartDate, dueEndDate = dueEndDate, searchTerm = searchTerm, model = model, title = title, cssCard = cssCard };
             return ViewComponent("CardRevenueStats", par);
         }
 
-        public IActionResult CardRevenueTransStats(bool payed, int? signal, DateTime? dueStartDate, DateTime? dueEndDate, int? BankId, string searchTerm, string model, string title, string cssCard)
+        public IActionResult CardRevenueTransStats(bool payed, int? signal, DateTime? dueStartDate, DateTime? dueEndDate, int? AccountBankId, string searchTerm, string model, string title, string cssCard)
         {
             object par = new { payed = payed, signal = signal, dueStartDate = dueStartDate, dueEndDate = dueEndDate, searchTerm = searchTerm, model = model, title = title, cssCard = cssCard };
             return ViewComponent("CardRevenueTransStats", par);
         }
 
 
-        public IActionResult CardExpenseStats(bool payed, DateTime? dueStartDate, DateTime? dueEndDate, int? BankId, string searchTerm, string model, string title, string cssCard)
+        public IActionResult CardExpenseStats(bool payed, DateTime? dueStartDate, DateTime? dueEndDate, int? AccountBankId, string searchTerm, string model, string title, string cssCard)
         {
             object par = new { payed = payed, dueStartDate = dueStartDate, dueEndDate = dueEndDate, searchTerm = searchTerm, model = model, title = title, cssCard = cssCard };
             return ViewComponent("CardExpenseStats", par);
         }
 
 
-        public IActionResult CardExpenseTransStats(bool payed, int? signal, DateTime? dueStartDate, DateTime? dueEndDate, int? BankId, string searchTerm, string model, string title, string cssCard)
+        public IActionResult CardExpenseTransStats(bool payed, int? signal, DateTime? dueStartDate, DateTime? dueEndDate, int? AccountBankId, string searchTerm, string model, string title, string cssCard)
         {
             object par = new { payed = payed, signal = signal, dueStartDate = dueStartDate, dueEndDate = dueEndDate, searchTerm = searchTerm, model = model, title = title, cssCard = cssCard };
             return ViewComponent("CardExpenseTransStats", par);
@@ -48,15 +48,15 @@ namespace Smart.Controllers
 
 
 
-        public IActionResult CardBankStats(bool payed, DateTime? dueStartDate, DateTime? dueEndDate, int? BankId, string searchTerm, string model, string title, string cssCard)
+        public IActionResult CardBankStats(bool payed, DateTime? dueStartDate, DateTime? dueEndDate, int? AccountBankId, string searchTerm, string model, string title, string cssCard)
         {
-            object par = new { payed = payed, dueStartDate = dueStartDate, dueEndDate = dueEndDate, searchTerm = searchTerm, BankId = BankId, model = model, title = title, cssCard = cssCard };
+            object par = new { payed = payed, dueStartDate = dueStartDate, dueEndDate = dueEndDate, searchTerm = searchTerm, AccountBankId = AccountBankId, model = model, title = title, cssCard = cssCard };
             return ViewComponent("CardBankTransStats", par);
         }
 
-        public IActionResult CardBankFixStats(int time, int? BankId, DateTime? refDate,    string model, string title, string cssCard)
+        public IActionResult CardBankFixStats(int time, int? AccountBankId, DateTime? refDate,    string model, string title, string cssCard)
         {
-            object par = new { time = time,   BankId = BankId, refDate = refDate, model = model, title = title, cssCard = cssCard };
+            object par = new { time = time,   AccountBankId = AccountBankId, refDate = refDate, model = model, title = title, cssCard = cssCard };
             return ViewComponent("CardBankTransFixStats", par);
         }
 
@@ -64,7 +64,7 @@ namespace Smart.Controllers
 
 
 
-        public IActionResult CardCashFlowStats(bool payed, DateTime? dueStartDate, DateTime? dueEndDate, int? BankId, string searchTerm, string model, string title, string cssCard, decimal? initial)
+        public IActionResult CardCashFlowStats(bool payed, DateTime? dueStartDate, DateTime? dueEndDate, int? AccountBankId, string searchTerm, string model, string title, string cssCard, decimal? initial)
         {
             object par = new { payed = payed, dueStartDate = dueStartDate, dueEndDate = dueEndDate, searchTerm = searchTerm, model = model, title = title, cssCard = cssCard , initial  = initial };
             return ViewComponent("CardCashFlow", par);

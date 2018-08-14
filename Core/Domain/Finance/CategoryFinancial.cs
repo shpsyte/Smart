@@ -1,4 +1,5 @@
 ﻿using Core.Domain.Base;
+using Core.Domain.Finance.Views;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 namespace Core.Domain.Finance
@@ -32,7 +33,14 @@ namespace Core.Domain.Finance
         #endregion
 
         public ICollection<Expense> Expense { get; set; }
+        public ICollection<VExpense> VExpense { get; set; }
+        public ICollection<VExpenseTrans> VExpenseTrans { get; set; }
+
         public ICollection<Revenue> Revenue { get; set; }
+        public ICollection<VRevenue> VRevenue { get; set; }
+        public ICollection<VRevenueTrans> VRevenueTrans { get; set; }
+        public ICollection<VCashFlow> VCashFlow { get; set; }
         public ICollection<BankTrans> BankTrans { get; set; }
+        
     }
 }

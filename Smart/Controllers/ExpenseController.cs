@@ -67,7 +67,7 @@ namespace Smart.Controllers
         #region private
         private void LoadViewData()
         {
-            ViewData["CategoryId"] = new SelectList(_categoryFinancialServices.GetAll(a => a.Type == 1 && a.Active == true), "ChartAccountId", "Name");
+            ViewData["ChartAccountId"] = new SelectList(_categoryFinancialServices.GetAll(a => a.Type == 1 && a.Active == true), "ChartAccountId", "Name");
             ViewData["CostCenterId"] = new SelectList(_costCenterServices.GetAll(a => a.Active == true), "CostCenterId", "Name");
             ViewData["ConditionId"] = new SelectList(_conditionServices.GetAll(a => a.PaymentUse == 1 || a.PaymentUse == 3), "ConditionId", "Name");
             ViewData["PersonId"] = new SelectList(_personServices.GetAll(), "PersonId", "FirstName");
@@ -82,13 +82,13 @@ namespace Smart.Controllers
             return Json(split);
         }
         [HttpPost, ValidateAntiForgeryToken]
-        public async Task<IActionResult> PayAccount([Bind("ExpenseId,DueDate,BankId,ConditionId,Payment,Tax,Discont,Comment,Active,Image")] PayAccount data, bool Active, List<IFormFile> Image)
+        public async Task<IActionResult> PayAccount([Bind("ExpenseId,DueDate,AccountBankId,ConditionId,Payment,Tax,Discont,Comment,Active,Image")] PayAccount data, bool Active, List<IFormFile> Image)
         {
             Expense expense = await _expenseServices.SingleOrDefaultAsync(a => a.ExpenseId == data.ExpenseId);
             if (data.Payment.HasValue)
             {
                 ExpenseTrans expenseTrans = _financialExtension.GetExpenseTrans(data, _BusinessId, "PAG", expense.DueDate.HasValue ? 2 : 3);
-                BankTrans bankTrans = _financialExtension.GetBankTrans(data, expenseTrans, _BusinessId, expense.CategoryId);
+                BankTrans bankTrans = _financialExtension.GetBankTrans(data, expenseTrans, _BusinessId, expense.ChartAccountId);
                 //await _expenseTransServices.AddAsyncNoSave(expense);
                 await _bankTransServices.AddAsync(bankTrans,false);
             }
@@ -151,7 +151,7 @@ namespace Smart.Controllers
         // POST: Expense/Add
         [HttpPost, ValidateAntiForgeryToken]
         [Route("expense-management/expense-add")]
-        public async Task<IActionResult> Add([Bind("ExpenseId,ExpenseNumber,ExpenseSeq,ExpenseTotalSeq,Name,PersonId,CategoryId,CostCenterId,ConditionId,Total,CreateDate,DueDate,DuePayment,Comment,ModifiedDate,Deleted,BusinessEntityId,Id,Seq,Session,Total")] Expense expense, bool continueAdd, IEnumerable<TempFinancialSplit> parcelas)
+        public async Task<IActionResult> Add([Bind("ExpenseId,ExpenseNumber,ExpenseSeq,ExpenseTotalSeq,Name,PersonId,ChartAccountId,CostCenterId,ConditionId,Total,CreateDate,DueDate,DuePayment,Comment,ModifiedDate,Deleted,BusinessEntityId,Id,Seq,Session,Total")] Expense expense, bool continueAdd, IEnumerable<TempFinancialSplit> parcelas)
         {
             if (ModelState.IsValid)
             {
@@ -217,7 +217,7 @@ namespace Smart.Controllers
         // POST: Expense/Edit/5
         [HttpPost, ValidateAntiForgeryToken]
         [Route("expense-management/expense-edit/{id?}")]
-        public async Task<IActionResult> Edit(int id, [Bind("ExpenseId,ExpenseNumber,ExpenseSeq,ExpenseTotalSeq,Name,PersonId,CategoryId,CostCenterId,ConditionId,Total,CreateDate,DueDate,DuePayment,Comment,ModifiedDate,Deleted,BusinessEntityId,_Total,addTrash")] Expense expense, bool continueAdd, bool addTrash)
+        public async Task<IActionResult> Edit(int id, [Bind("ExpenseId,ExpenseNumber,ExpenseSeq,ExpenseTotalSeq,Name,PersonId,ChartAccountId,CostCenterId,ConditionId,Total,CreateDate,DueDate,DuePayment,Comment,ModifiedDate,Deleted,BusinessEntityId,_Total,addTrash")] Expense expense, bool continueAdd, bool addTrash)
         {
             if (id != expense.ExpenseId)
             {

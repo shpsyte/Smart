@@ -29,7 +29,7 @@
     <div class="@(ViewBag.PageClass == null ? "container-fluid" : ViewBag.PageClass)">
         <main role="main" class="">
             @{ Html.RenderPartialIf("_Ribbon", SignInManager.IsSignedIn(User)); }
-            <div class="jumhead">
+            <div class="@(ViewBag.Home == null ? "jumhead" : "jumheadHome")">
                 @RenderBody()
             </div>
         </main>

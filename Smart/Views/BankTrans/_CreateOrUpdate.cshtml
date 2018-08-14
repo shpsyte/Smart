@@ -1,6 +1,6 @@
 ﻿@model Core.Domain.Finance.BankTrans
 @{ Layout = null; }
-@Html.HiddenFor(a => a.Id)
+@Html.HiddenFor(a => a.BankTransId)
 @Html.HiddenFor(a => a.CreateDate)
 @Html.HiddenFor(a => a.BusinessEntityId)
 @Html.HiddenFor(a => a.ExpenseTransId)
@@ -8,7 +8,7 @@
 @Html.HiddenFor(a => a.MidleDesc)
 @Html.HiddenFor(a => a.ExcludeId)
 @Html.HiddenFor(a => a.Deleted)
-@{ bool isedit = Model.Id > 0; }
+@{ bool isedit = Model.BankTransId > 0; }
 @if (isedit)
 {
     <input type="hidden" asp-for="Total" />
@@ -26,11 +26,11 @@
             <span asp-validation-for="Total" class="text-danger"></span>
         </div>
         <div class="form-group col-md-3">
-            <label asp-for="CategoryId">@Localizer["Categoria"]</label>
-            <select asp-for="CategoryId" asp-items="ViewBag.CategoryId" class="form-control">
+            <label asp-for="ChartAccountId">@Localizer["Categoria"]</label>
+            <select asp-for="ChartAccountId" asp-items="ViewBag.ChartAccountId" class="form-control">
                 <option></option>
             </select>
-            <span asp-validation-for="CategoryId" class="text-danger"></span>
+            <span asp-validation-for="ChartAccountId" class="text-danger"></span>
         </div>
     </div>
     <div class="form-row">

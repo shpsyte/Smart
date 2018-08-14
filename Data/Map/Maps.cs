@@ -40,6 +40,7 @@ namespace Data.Map
         {
             entity.ToTable("Person");
             entity.HasKey(p => p.PersonId);
+            entity.HasQueryFilter(a => a.Deleted == false);
 
 
             entity.HasOne(d => d.Category)
@@ -252,6 +253,7 @@ namespace Data.Map
         {
             entity.ToTable("ProductCategory");
             entity.HasKey(e => e.CategoryId);
+            
         }
     }
     public class ClassProductMap : IMapConfiguration<ClassProduct>
@@ -277,6 +279,7 @@ namespace Data.Map
         {
             entity.ToTable("Product");
             entity.HasKey(p => p.ProductId);
+            entity.HasQueryFilter(a => a.Deleted == false);
 
             entity.HasOne(d => d.Category)
                 .WithMany(p => p.Product)
@@ -300,7 +303,8 @@ namespace Data.Map
     {
         public void Map(EntityTypeBuilder<VProduct> entity)
         {
-            entity.ToTable("WiewInventoryProduct");
+           
+            entity.ToTable("ViewInventoryProduct");
             entity.HasKey(e => new { e.ProductId });
             entity.HasOne(d => d.Product)
                  .WithOne(p => p.VProduct)
@@ -366,7 +370,7 @@ namespace Data.Map
     {
         public void Map(EntityTypeBuilder<CategoryFinancial> entity)
         {
-            entity.ToTable("CategoryFinancial");
+            entity.ToTable("FinancialCategory");
             entity.HasKey(e => e.ChartAccountId);
         }
     }
@@ -398,7 +402,7 @@ namespace Data.Map
 
             entity.HasOne(d => d.CategoryFinancial)
                 .WithMany(p => p.Expense)
-                .HasForeignKey(d => d.CategoryId)
+                .HasForeignKey(d => d.ChartAccountId)
                 .OnDelete(DeleteBehavior.SetNull);
 
             entity.HasOne(d => d.CostCenter)
@@ -425,12 +429,12 @@ namespace Data.Map
 
             entity.HasOne(d => d.Bank)
                   .WithMany(p => p.ExpenseTrans)
-                  .HasForeignKey(d => d.BankId);
+                  .HasForeignKey(d => d.AccountBankId);
 
 
             entity.HasOne(d => d.Condition)
                  .WithMany(p => p.ExpenseTrans)
-                 .HasForeignKey(d => d.BankId);
+                 .HasForeignKey(d => d.AccountBankId);
         }
     }
     public class RevenueMap : IMapConfiguration<Revenue>
@@ -442,7 +446,7 @@ namespace Data.Map
 
             entity.HasOne(d => d.CategoryFinancial)
                 .WithMany(p => p.Revenue)
-                .HasForeignKey(d => d.CategoryId)
+                .HasForeignKey(d => d.ChartAccountId)
                 .OnDelete(DeleteBehavior.SetNull);
             entity.HasOne(d => d.CostCenter)
                 .WithMany(p => p.Revenue)
@@ -472,7 +476,7 @@ namespace Data.Map
 
             entity.HasOne(d => d.Bank)
                   .WithMany(p => p.RevenueTrans)
-                  .HasForeignKey(d => d.BankId)
+                  .HasForeignKey(d => d.AccountBankId)
                   .OnDelete(DeleteBehavior.SetNull);
 
 
@@ -493,7 +497,7 @@ namespace Data.Map
 
             entity.HasOne(d => d.Bank)
                             .WithMany(p => p.BankTrans)
-                            .HasForeignKey(d => d.BankId)
+                            .HasForeignKey(d => d.AccountBankId)
                             .OnDelete(DeleteBehavior.Cascade);
 
             entity.HasOne(d => d.ExpenseTrans)
@@ -508,7 +512,7 @@ namespace Data.Map
 
             entity.HasOne(d => d.CategoryFinancial)
                          .WithMany(p => p.BankTrans)
-                         .HasForeignKey(d => d.CategoryId)
+                         .HasForeignKey(d => d.ChartAccountId)
                          .OnDelete(DeleteBehavior.ClientSetNull);
         }
     }
@@ -526,11 +530,16 @@ namespace Data.Map
         public void Map(EntityTypeBuilder<VCashFlow> entity)
         {
             entity.HasKey(e => new { e.Id });
-            entity.ToTable("WiewCashFlow");
+            entity.ToTable("ViewCashFlow");
 
             entity.HasOne(d => d.Person)
                .WithMany(p => p.VCashFlow)
                .HasForeignKey(d => d.PersonId);
+
+            entity.HasOne(d => d.CategoryFinancial)
+               .WithMany(p => p.VCashFlow)
+               .HasForeignKey(d => d.ChartAccountId);
+
 
         }
     }
@@ -539,7 +548,7 @@ namespace Data.Map
     {
         public void Map(EntityTypeBuilder<VExpense> entity)
         {
-            entity.ToTable("WiewExpense");
+            entity.ToTable("ViewExpense");
             entity.HasKey(e => new { e.ExpenseId });
 
             entity.HasOne(d => d.Person)
@@ -550,6 +559,10 @@ namespace Data.Map
                 .WithOne(p => p.VExpense)
                 .HasForeignKey<VExpense>(b => b.ExpenseId);
 
+            entity.HasOne(d => d.CategoryFinancial)
+                .WithMany(p => p.VExpense)
+                .HasForeignKey(d => d.ChartAccountId);
+
         }
     }
 
@@ -557,7 +570,7 @@ namespace Data.Map
     {
         public void Map(EntityTypeBuilder<VExpenseTrans> entity)
         {
-            entity.ToTable("WiewExpenseTrans");
+            entity.ToTable("ViewExpenseTrans");
             entity.HasKey(e => new { e.ExpenseTransId });
 
             entity.HasOne(d => d.VExpense)
@@ -568,6 +581,10 @@ namespace Data.Map
               .WithMany(p => p.VExpenseTrans)
               .HasForeignKey(d => d.PersonId);
 
+            entity.HasOne(d => d.CategoryFinancial)
+               .WithMany(p => p.VExpenseTrans)
+               .HasForeignKey(d => d.ChartAccountId);
+
         }
     }
 
@@ -577,7 +594,7 @@ namespace Data.Map
         public void Map(EntityTypeBuilder<VRevenue> entity)
         {
 
-            entity.ToTable("WiewRevenue");
+            entity.ToTable("ViewRevenue");
             entity.HasKey(e => new { e.RevenueId });
 
             entity.HasOne(d => d.Person)
@@ -586,6 +603,10 @@ namespace Data.Map
             entity.HasOne(d => d.Revenue)
             .WithOne(p => p.VRevenue)
             .HasForeignKey<VRevenue>(b => b.RevenueId);
+
+            entity.HasOne(d => d.CategoryFinancial)
+                .WithMany(p => p.VRevenue)
+                .HasForeignKey(d => d.ChartAccountId);
 
 
         }
@@ -607,6 +628,10 @@ namespace Data.Map
             entity.HasOne(d => d.Person)
               .WithMany(p => p.VRevenueTrans)
               .HasForeignKey(d => d.PersonId);
+
+            entity.HasOne(d => d.CategoryFinancial)
+               .WithMany(p => p.VRevenueTrans)
+               .HasForeignKey(d => d.ChartAccountId);
 
         }
     }

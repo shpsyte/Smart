@@ -7,7 +7,7 @@ namespace Core.Domain.Finance
     {
         public BankTrans()
         {
-            this.DueDate = System.DateTime.UtcNow;
+            this.DueDate = ModelExtension.TimestampProvider();
             this.Deleted = false;
         }
         public BankTrans(string description, DateTime createDate, DateTime? dueDate, string midleDesc, int? expenseTransId, int? revenueTransId, int? categoryId, decimal total, int signal) : this()
@@ -18,13 +18,13 @@ namespace Core.Domain.Finance
             MidleDesc = midleDesc;
             ExpenseTransId = expenseTransId;
             RevenueTransId = revenueTransId;
-            CategoryId = categoryId;
+            ChartAccountId = categoryId;
             Total = total;
             Signal = signal;
         }
         #region property
         public int BankTransId { get; set; }
-        public int BankId { get; set; }
+        public int AccountBankId { get; set; }
         [StringLength(150)]
         public string Description { get; set; }
 
@@ -35,7 +35,7 @@ namespace Core.Domain.Finance
         public string MidleDesc { get; set; }
         public int? ExpenseTransId { get; set; }
         public int? RevenueTransId { get; set; }
-        public int? CategoryId { get; set; }
+        public int? ChartAccountId { get; set; }
         public int? ExcludeId { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]

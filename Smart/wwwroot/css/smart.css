@@ -90,6 +90,15 @@ h1 {
 }
 
 
+.jumheadHome {
+    margin-bottom: 2rem;
+    /*background-color: #ffffff;*/
+    /*border-bottom-left-radius: 0.3rem;
+    border-bottom-right-radius: 0.3rem;*/
+    border-radius: 0.3rem;
+}
+
+ 
 .myb-4 {
     margin-bottom: 1.5rem !important;
     margin-top: 0rem !important;

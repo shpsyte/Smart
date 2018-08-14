@@ -7,11 +7,10 @@ namespace Core.Domain.Finance
 {
     public class ExpenseTrans : BaseEntity
     {
-         
         public ExpenseTrans()
         {
             this.BankTrans = new HashSet<BankTrans>();
-            this.CreateDate = System.DateTime.UtcNow;
+            this.CreateDate = ModelExtension.TimestampProvider();
         }
 
         public ExpenseTrans(string description, string midledesc, int? conditionId, int? bankId, decimal total, int signal)
@@ -19,11 +18,10 @@ namespace Core.Domain.Finance
             this.Description = description;
             this.Midledesc = midledesc;
             this.ConditionId = conditionId;
-            this.BankId = bankId;
+            this.AccountBankId = bankId;
             this.Total = total;
             this.Signal = signal;
         }
-         
         #region property
 
         public int ExpenseTransId { get; set; }
@@ -34,7 +32,7 @@ namespace Core.Domain.Finance
         [StringLength(100)]
         public string Midledesc { get; set; }
         public int? ConditionId { get; set; }
-        public int? BankId { get; set; }
+        public int? AccountBankId { get; set; }
         public decimal Total { get; set; }
 
         public int Signal { get; set; }

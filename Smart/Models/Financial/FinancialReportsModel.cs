@@ -40,7 +40,7 @@ namespace Smart.Models.Financial
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? createDateEnd { get; set; }
         public int? CategoryId { get; set; }
-        public int? BankId { get; set; }
+        public int? AccountBankId { get; set; }
         public decimal? value { get; set; }
         public string ExpenseNumber { get; set; }
         public bool? Deleted { get; set; }

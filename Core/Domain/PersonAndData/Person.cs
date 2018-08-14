@@ -28,8 +28,8 @@ namespace Core.Domain.PersonAndData
             VRevenue = new HashSet<VRevenue>();
             VExpense = new HashSet<VExpense>();
             this.Active = true;
-            this.CreateDate = System.DateTime.UtcNow;
-            this.ModifiedDate = DateTime.UtcNow;
+            this.CreateDate = ModelExtension.TimestampProvider();
+            this.ModifiedDate = ModelExtension.TimestampProvider();
         }
         public Person(string firstName, string lastName, string registrationCode, string registrationState, int type, int? personType, int? categoryId, string email, string phone, byte[] image, string comments, DateTime createDate, DateTime modifiedDate) : this()
         {

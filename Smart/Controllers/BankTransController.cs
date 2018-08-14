@@ -56,7 +56,7 @@ namespace Smart.Controllers
         private void LoadDataView()
         {
             ViewData["AccountBankId"] = new SelectList(_bankServices.GetAll(), "AccountBankId", "Name");
-            ViewData["CategoryId"] = new SelectList(_categoryFinancialServices.GetAll(a => a.Active == true), "ChartAccountId", "Name");
+            ViewData["ChartAccountId"] = new SelectList(_categoryFinancialServices.GetAll(a => a.Active == true), "ChartAccountId", "Name");
         }
         #endregion
         #region methods
@@ -66,8 +66,12 @@ namespace Smart.Controllers
         {
             ViewData["AccountBankId"] = new SelectList(_bankServices.GetAll(), "AccountBankId", "Name", bankId);
             ViewData["search"] = search;
-            DateTime ini = !string.IsNullOrEmpty(start) ? start.IsDateTime() ? Convert.ToDateTime(start) : System.DateTime.Now.AddDays(-7) : System.DateTime.Now.AddDays(-7);
-            DateTime fim = !string.IsNullOrEmpty(end) ? end.IsDateTime() ? Convert.ToDateTime(end) : System.DateTime.Now : System.DateTime.Now;
+            var now = DateTime.Now;
+            var startMonth = new DateTime(now.Year, now.Month, 1);
+            var endMonth = startMonth.AddMonths(1).AddDays(-1);
+
+            DateTime ini = !string.IsNullOrEmpty(start) ? start.IsDateTime() ? Convert.ToDateTime(start) : startMonth : startMonth;
+            DateTime fim = !string.IsNullOrEmpty(end) ? end.IsDateTime() ? Convert.ToDateTime(end) : endMonth : endMonth;
             var data = await _bankTransServices.QueryAsync();
             data = data.Where(a => a.DueDate.HasValue == true );
             var all = data;
@@ -82,8 +86,8 @@ namespace Smart.Controllers
             }
             if (bankId.HasValue)
             { 
-                data = data.Where(a => a.BankId == bankId);
-                all = all.Where(a => a.BankId == bankId);
+                data = data.Where(a => a.AccountBankId == bankId);
+                all = all.Where(a => a.AccountBankId == bankId);
             }
 
 
@@ -120,7 +124,7 @@ namespace Smart.Controllers
         // POST: BankTrans/Add
         [HttpPost, ValidateAntiForgeryToken]
         [Route("banktrans-management/banktrans-add")]
-        public async Task<IActionResult> Add([Bind("Id,BankId,Description,CreateDate,DueDate,MidleDesc,ExpenseTransId,RevenueTransId,Total,Signal,BusinessEntityId,CategoryId")] BankTrans bankTrans, bool continueAdd)
+        public async Task<IActionResult> Add([Bind("BankTransId,AccountBankId,Description,CreateDate,DueDate,MidleDesc,ExpenseTransId,RevenueTransId,Total,Signal,BusinessEntityId,ChartAccountId")] BankTrans bankTrans, bool continueAdd)
         {
             if (ModelState.IsValid)
             {
@@ -149,7 +153,7 @@ namespace Smart.Controllers
         // POST: BankTrans/Edit/5
         [HttpPost, ValidateAntiForgeryToken]
         [Route("banktrans-management/banktrans-edit/{id?}")]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,BankId,Description,CreateDate,DueDate,MidleDesc,ExpenseTransId,RevenueTransId,Total,Signal,BusinessEntityId,CategoryId")] BankTrans bankTrans, bool continueAdd, bool addTrash)
+        public async Task<IActionResult> Edit(int id, [Bind("BankTransId,AccountBankId,Description,CreateDate,DueDate,MidleDesc,ExpenseTransId,RevenueTransId,Total,Signal,BusinessEntityId,ChartAccountId")] BankTrans bankTrans, bool continueAdd, bool addTrash)
         {
             if (id != bankTrans.BankTransId)
             {
@@ -169,9 +173,9 @@ namespace Smart.Controllers
                 {
                     BankTrans reversal = new BankTrans()
                     {
-                        BankId = bankTrans.BankId,
+                        AccountBankId = bankTrans.AccountBankId,
                         BusinessEntityId = bankTrans.BusinessEntityId,
-                        CategoryId = bankTrans.CategoryId,
+                        ChartAccountId = bankTrans.ChartAccountId,
                         CreateDate = bankTrans.CreateDate,
                         Deleted = false,
                         Description = bankTrans.Description,
@@ -190,7 +194,7 @@ namespace Smart.Controllers
                         reversal.MidleDesc = "EST:" + revenue.RevenueNumber + "/" + revenue.RevenueSeq.ToString();
                         RevenueTrans reversalrevenueTrans = new RevenueTrans()
                         {
-                            BankId = revenueTransLanc.BankId,
+                            AccountBankId = revenueTransLanc.AccountBankId,
                             BusinessEntityId = revenueTransLanc.BusinessEntityId,
                             CreateDate = revenueTransLanc.CreateDate,
                             Description = revenueTransLanc.Description,
@@ -218,7 +222,7 @@ namespace Smart.Controllers
                         reversal.MidleDesc = "EST:" + expense.ExpenseNumber + "/" + expense.ExpenseSeq.ToString();
                         ExpenseTrans reversalexpenseTransLanc = new ExpenseTrans()
                         {
-                            BankId = expenseTransLanc.BankId,
+                            AccountBankId = expenseTransLanc.AccountBankId,
                             BusinessEntityId = expenseTransLanc.BusinessEntityId,
                             CreateDate = expenseTransLanc.CreateDate,
                             Description = expenseTransLanc.Description,

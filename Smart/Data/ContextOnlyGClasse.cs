@@ -341,7 +341,7 @@ namespace Smart.Data
 
                 entity.HasIndex(e => e.BusinessEntityId);
 
-                entity.HasIndex(e => e.CategoryId)
+                entity.HasIndex(e => e.ChartAccountId)
                     .HasName("IX_Expense_ChartAccountId");
 
                 entity.HasIndex(e => e.CostCenterId);
@@ -381,7 +381,7 @@ namespace Smart.Data
 
                 entity.HasOne(d => d.CategoryFinancial)
                     .WithMany(p => p.Expense)
-                    .HasForeignKey(d => d.CategoryId)
+                    .HasForeignKey(d => d.ChartAccountId)
                     .HasConstraintName("FK_Expense_ChartAccount");
 
                 entity.HasOne(d => d.CostCenter)
@@ -973,7 +973,7 @@ namespace Smart.Data
 
                 entity.HasIndex(e => e.BusinessEntityId);
 
-                entity.HasIndex(e => e.CategoryId)
+                entity.HasIndex(e => e.ChartAccountId)
                     .HasName("IX_Revenue_ChartAccountId");
 
                 entity.HasIndex(e => e.CostCenterId);
@@ -1015,7 +1015,7 @@ namespace Smart.Data
 
                 entity.HasOne(d => d.CategoryFinancial)
                     .WithMany(p => p.Revenue)
-                    .HasForeignKey(d => d.CategoryId)
+                    .HasForeignKey(d => d.ChartAccountId)
                     .HasConstraintName("FK_Revenue_FinancialCategory");
 
                 entity.HasOne(d => d.CostCenter)

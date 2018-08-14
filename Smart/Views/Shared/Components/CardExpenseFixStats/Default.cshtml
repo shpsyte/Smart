@@ -4,9 +4,14 @@
     decimal value = Model.Amount ?? decimal.Zero;
     string GetValue()
     {
-        
+        if (Model.time != 5)
+        {
             return value.ToString("c");
-      
+        }
+        else
+        {
+            return Model.Qty.ToString();
+        }
 
     }
 } 

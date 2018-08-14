@@ -10,7 +10,7 @@ namespace Core.Domain.PersonAndData
         public CategoryPerson()
         {
             Person = new HashSet<Person>();
-            this.CreateDate = DateTime.UtcNow;
+            this.CreateDate = ModelExtension.TimestampProvider();
         }
 
         public CategoryPerson(string name): this()

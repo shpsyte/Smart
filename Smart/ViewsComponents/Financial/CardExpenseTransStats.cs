@@ -1,6 +1,7 @@
 ﻿using Core.Domain.Finance.Views;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Services.Interfaces;
 using Smart.Helpers;
 using Smart.Models.Components;
@@ -55,7 +56,7 @@ namespace Smart.ViewsComponents.Financial
             var data = new CardFinancialModel
             {
                 Qty = Expense.Count(),
-                ExpenseTrans = Expense,
+                ExpenseTrans = Expense.Include(a => a.CategoryFinancial),
                 Amount = Expense.Sum(a => a.Total),
                 payed = payed,
                 HtmlModel = model,

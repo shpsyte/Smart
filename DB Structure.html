@@ -374,7 +374,7 @@
         </thead>
         <tbody>
           <tr>
-            <th><span class="pk" title="PRIMARY KEY PK_Bank">◆</span>BankId</th>
+            <th><span class="pk" title="PRIMARY KEY PK_Bank">◆</span>AccountBankId</th>
             <td class="type">int</td>
             <td class="null">☐</td>
             <td><span class="flag">IDENTITY</span>Primary key. Unique identifier of this record. </td>
@@ -426,10 +426,10 @@
             <td><span class="flag" title="FK_BankTrans_BusinessEntity">⇨ <a href="#1358627883">Business.BusinessEntity</a>.BusinessEntityID</span>Use for filter application Data, Foreign key to Business.BusinessEntityID</td>
           </tr>
           <tr>
-            <th>BankId</th>
+            <th>AccountBankId</th>
             <td class="type">int</td>
             <td class="null">☐</td>
-            <td><span class="flag" title="FK_BankTrans_Bank">⇨ <a href="#2013250227">Financial.Bank</a>.BankId</span></td>
+            <td><span class="flag" title="FK_BankTrans_Bank">⇨ <a href="#2013250227">Financial.Bank</a>.AccountBankId</span></td>
           </tr>
           <tr>
             <th>CreateDate</th>
@@ -770,7 +770,7 @@ Categories for financial, like Type Expense or Revenue</p>
             <td>Foreign key to Sales.Condition.ConditionID</td>
           </tr>
           <tr>
-            <th>BankId</th>
+            <th>AccountBankId</th>
             <td class="type">int</td>
             <td class="null">☒</td>
             <td>
@@ -970,10 +970,10 @@ Categories for financial, like Type Expense or Revenue</p>
             <td><span class="flag" title="FK_RevenueTrans_Condition">⇨ <a href="#1008722646">Sales.Condition</a>.ConditionId</span>Foreign key to Sales.Condition.ConditionID</td>
           </tr>
           <tr>
-            <th>BankId</th>
+            <th>AccountBankId</th>
             <td class="type">int</td>
             <td class="null">☒</td>
-            <td><span class="flag" title="FK_RevenueTrans_Bank">⇨ <a href="#2013250227">Financial.Bank</a>.BankId</span></td>
+            <td><span class="flag" title="FK_RevenueTrans_Bank">⇨ <a href="#2013250227">Financial.Bank</a>.AccountBankId</span></td>
           </tr>
           <tr>
             <th>Total</th>

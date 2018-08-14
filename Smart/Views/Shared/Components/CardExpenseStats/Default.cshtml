@@ -2,6 +2,8 @@
 
 @{ decimal value = Model.Amount ?? decimal.Zero;}
 @{ string GetValue() => value.ToString("c"); }
+
+
 @if (Model.HtmlModel.Equals(ModelCards.SimpleNumber))
 {
     @GetValue()
@@ -19,7 +21,6 @@
                 </small>
             </div>
             <p class="text-center">
-
                 <b> @GetValue()</b>
             </p>
         </div>
@@ -50,6 +51,7 @@
                 <th class="" width="80"> @Localizer["Número"]</th>
                 <th width="80"> @Localizer["Vencimento"]</th>
                 <th> @Localizer["Lançamento"]</th>
+                <th> @Localizer["Categoria"]</th>
                 <th width="120"> @Localizer["Valor"]</th>
 
             </tr>
@@ -58,28 +60,33 @@
             @foreach (var item in Model.Expenses.OrderBy(a => a.DueDate.Value.Date))
             {
                 
-                <tr class="table-row-body text-@( item.DueDate < System.DateTime.Now ? "danger" : "" )">
-                    <td class="table-item-body">
-                        @Html.DisplayFor(modelItem => item.ExpenseNumber)/@Html.DisplayFor(modelItem => item.ExpenseSeq)
-                    </td>
-                    <td class="table-item-body">
-                        @Html.DisplayFor(modelItem => item.DueDate)
-                    </td>
-                    <td class="table-item-body" data-toggle="tooltip" data-placement="top" title="@item.Name : @item.Comment">
-                        @item.Name.Truncate(30, true)
-                        @if (item.ExpenseTotalSeq > 1)
-                        {
-                            <span class="badge badge-success">
-                                @Html.DisplayFor(modelItem => item.ExpenseSeq)
-                                /@Html.DisplayFor(modelItem => item.ExpenseTotalSeq)
-                            </span>
-                        }
-                    </td>
-                    <td class="table-item-body">
-                        @( Model.payed ? item.Credit.ToString("c") : item.AmountFinal.ToString("c") )
-                    </td>
+            <tr class="table-row-body text-@( item.DueDate < System.DateTime.Now ? "danger" : "" )">
+                <td class="table-item-body">
+                    @Html.DisplayFor(modelItem => item.ExpenseNumber)/@Html.DisplayFor(modelItem => item.ExpenseSeq)
+                </td>
+                <td class="table-item-body">
+                    @Html.DisplayFor(modelItem => item.DueDate)
+                </td>
+                <td class="table-item-body" data-toggle="tooltip" data-placement="top" title="@item.Name : @item.Comment">
+                    @item.Name.Truncate(30, true)
+                    @if (item.ExpenseTotalSeq > 1)
+                    {
+                        <span class="badge badge-success">
+                            @Html.DisplayFor(modelItem => item.ExpenseSeq)
+                            /@Html.DisplayFor(modelItem => item.ExpenseTotalSeq)
+                        </span>
+                    }
+                </td>
+                <td class="table-item-body">
+                    @{ string category = item.CategoryFinancial != null ? item.CategoryFinancial.Name.Truncate(30, true) : "";}
+                    @category
 
-                </tr>
+                </td>
+                <td class="table-item-body">
+                    @( Model.payed ? item.Credit.ToString("c") : item.AmountFinal.ToString("c") )
+                </td>
+
+            </tr>
             }
         </tbody>
     </table>

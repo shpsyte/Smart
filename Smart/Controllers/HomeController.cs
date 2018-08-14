@@ -32,7 +32,7 @@ namespace Smart.Controllers
         public IActionResult Index()
         {
            
-            return View();
+            return RedirectToAction("CashFlow", "FinancialStats");
         }
 
         public IActionResult Error()

@@ -17,6 +17,7 @@ namespace Core.Domain.Finance.Views
         public string Name { get; set; }
         public string Comment { get; set; }
         public int? PersonId { get; set; }
+        public int? ChartAccountId { get; set; }
         public string ExpenseNumber { get; set; }
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? CreateDate { get; set; }
@@ -36,6 +37,7 @@ namespace Core.Domain.Finance.Views
         public override string ToString() =>  string.Concat(this.ExpenseNumber, "-", this.ExpenseSeq);
 
         public Person Person { get; set; }
+        public CategoryFinancial CategoryFinancial { get; set; }
         public Expense Expense { get; set; }
         public ICollection<VExpenseTrans> VExpenseTrans { get; set; }
     }

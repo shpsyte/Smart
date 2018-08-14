@@ -15,6 +15,9 @@ namespace Smart.Models.Components
         public IQueryable<VExpenseTrans> ExpenseTrans { get; set; }
         public IQueryable<BankTrans> BankTrans { get; set; }
         public IQueryable<VCashFlow> CashFlows { get; set; }
+
+
+
         public int Qty { get; set; }
         public decimal? Amount { get; set; }
         public string HtmlModel { get; set; }
