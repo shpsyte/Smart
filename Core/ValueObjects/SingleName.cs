@@ -6,7 +6,12 @@ namespace Core.ValueObjects
 {
     public class SingleName
     {
-        public SingleName(string name)
+        public SingleName()
+        {
+            
+        }
+
+        public SingleName(string name) : this()
         {
             Name = name;
         }

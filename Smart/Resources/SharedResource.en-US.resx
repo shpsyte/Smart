@@ -144,4 +144,109 @@
   <data name="Voltar" xml:space="preserve">
     <value>Back</value>
   </data>
+  <data name="Ambiente seguro, seus dados estão protegidos" xml:space="preserve">
+    <value>Safe environment, your data is protected!</value>
+  </data>
+  <data name="2 Factor Autentication" xml:space="preserve">
+    <value>2 Factor Autentication</value>
+  </data>
+  <data name="Ajuda" xml:space="preserve">
+    <value>Help</value>
+  </data>
+  <data name="Alterar Senha" xml:space="preserve">
+    <value>Change Password</value>
+  </data>
+  <data name="Categoria Financeira" xml:space="preserve">
+    <value>Category Financial</value>
+  </data>
+  <data name="Categorias de Produtos" xml:space="preserve">
+    <value>Category Product</value>
+  </data>
+  <data name="Centro de Custo" xml:space="preserve">
+    <value>Cost Center</value>
+  </data>
+  <data name="Cidades" xml:space="preserve">
+    <value>Cities</value>
+  </data>
+  <data name="Classes de Produtos" xml:space="preserve">
+    <value>Class Product</value>
+  </data>
+  <data name="Clientes" xml:space="preserve">
+    <value>Customer's</value>
+  </data>
+  <data name="Condições de Pagamentos" xml:space="preserve">
+    <value>Payment Condition</value>
+  </data>
+  <data name="Configurações" xml:space="preserve">
+    <value>Configuration</value>
+  </data>
+  <data name="Conta Bancária" xml:space="preserve">
+    <value>Bank Account</value>
+  </data>
+  <data name="Contas a Pagar" xml:space="preserve">
+    <value>Expense</value>
+  </data>
+  <data name="Contas a Receber" xml:space="preserve">
+    <value>Revenue</value>
+  </data>
+  <data name="Contábil" xml:space="preserve">
+    <value>Accounting</value>
+  </data>
+  <data name="Depósitos" xml:space="preserve">
+    <value>Warehouse</value>
+  </data>
+  <data name="Estados" xml:space="preserve">
+    <value>States</value>
+  </data>
+  <data name="Estoque" xml:space="preserve">
+    <value>Stock</value>
+  </data>
+  <data name="Extrato Banco/Caixa" xml:space="preserve">
+    <value>Account Bank</value>
+  </data>
+  <data name="Financeiro" xml:space="preserve">
+    <value>Financial</value>
+  </data>
+  <data name="Fluxo Caixa" xml:space="preserve">
+    <value>CashFlow</value>
+  </data>
+  <data name="Grupo de Impostos" xml:space="preserve">
+    <value>Tax Group</value>
+  </data>
+  <data name="Logins Externos" xml:space="preserve">
+    <value>External Logins</value>
+  </data>
+  <data name="Minha Conta" xml:space="preserve">
+    <value>My Account</value>
+  </data>
+  <data name="Operação Fiscal" xml:space="preserve">
+    <value>Operation Accounting</value>
+  </data>
+  <data name="Países" xml:space="preserve">
+    <value>Country</value>
+  </data>
+  <data name="Pessoas" xml:space="preserve">
+    <value>Person</value>
+  </data>
+  <data name="Produtos" xml:space="preserve">
+    <value>Product</value>
+  </data>
+  <data name="Produção/Produtos" xml:space="preserve">
+    <value>Production/Product</value>
+  </data>
+  <data name="Regiões" xml:space="preserve">
+    <value>Region</value>
+  </data>
+  <data name="Relatórios" xml:space="preserve">
+    <value>Reports</value>
+  </data>
+  <data name="Sair" xml:space="preserve">
+    <value>Sign Out</value>
+  </data>
+  <data name="Vendas" xml:space="preserve">
+    <value>Sales</value>
+  </data>
+  <data name="Visão Geral" xml:space="preserve">
+    <value>Overview</value>
+  </data>
 </root>

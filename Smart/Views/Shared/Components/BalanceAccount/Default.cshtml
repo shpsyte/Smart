@@ -1,0 +1,47 @@
+﻿@model Smart.Models.Components.BalanceAccountModel
+
+
+@{
+
+    if (Model.Qty == 0)
+    {
+        <p class="card-text h5 font-weight-light">@SharedLocalizer["Acompanhe aqui o saldo de suas contas"].</p>
+        <p class="card-text text-muted font-weight-light">@SharedLocalizer["Por enquanto você ainda não criou nenhuma conta"].</p>
+    }
+    else
+    {
+        if (Model.RenderView.Equals(BalanceCards.GetValue))
+        {
+            decimal value = Model.TotalAmount ?? decimal.Zero;
+            @value.ToString("c");
+        }
+        else
+        if (Model.RenderView.Equals(BalanceCards.GetTable))
+        {
+
+            <table id="balance-account-table" class="table table-hover table-sm" cellspacing="0" cellpadding="0">
+                @*<thead>
+                        <tr>
+                            <td>@SharedLocalizer["Nome"]</td>
+                            <td>@SharedLocalizer["Saldo"]</td>
+                        </tr>
+                    </thead>*@
+                <tbody id="account-balances">
+                    @foreach (var item in Model.List)
+                    {
+                        <tr class="font-weight-light account-balance" id="@item.AccountBankId">
+                            <td>@item.Name</td>
+                            <td class="text-right @( item.Saldo < 0 ? "text-danger" : "text-success")">@item.Saldo.ToString("c")</td>
+                        </tr>
+                    }
+                    <tr class="font-weight-light @(Model.TotalAmount < 0 ? "text-danger" : "text-success")">
+                        <td>Total</td>
+                        <td class="text-right">@Model.TotalAmount.Value.ToString("c")</td>
+                    </tr>
+                </tbody>
+
+            </table>
+            <a class="btn btn-success btn-bdr" asp-action="Add" asp-controller="BankTrans">Lançar </a>
+        }
+    }
+}

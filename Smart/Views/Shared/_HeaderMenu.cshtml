@@ -5,37 +5,41 @@
         <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+        <div class="collapse navbar-collapse font-weight-light" id="navbarsExampleDefault">
             @if (SignInManager.IsSignedIn(User))
             {
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item" @ActivePagesApp.DashboardNavClass(ViewContext)>
-                        <a asp-area="" asp-controller="Home" asp-action="Index" class="nav-link">Home</a>
+                        <a asp-area="" asp-controller="Home" asp-action="Index" class="nav-link">@SharedLocalizer["Visão Geral"]</a>
                     </li>
+                    <li> <a class="nav-link @ActivePagesApp.IndexPersonNavClass(ViewContext)" asp-action="List" asp-controller="Person">@SharedLocalizer["Clientes"]</a> </li>
+                    <li> <a class="nav-link @ActivePagesApp.ProductNavClass(ViewContext)" asp-action="List" asp-controller="Product">@SharedLocalizer["Produtos"]</a>  </li>
 
-                    <li class="nav-item dropdown @ActivePagesApp.RegNavClass(ViewContext)">
-                        <a class="nav-link dropdown-toggles" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                            Cadastros
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li> <a class="dropdown-item @ActivePagesApp.IndexPersonNavClass(ViewContext)" asp-action="List" asp-controller="Person">Clientes e Fornecedores</a> </li>
-                            <li> <a class="dropdown-item @ActivePagesApp.ProductNavClass(ViewContext)" asp-action="List" asp-controller="Product">Produtos e Serviços</a>  </li>
-                            <li><div class="dropdown-divider"></div></li>
-                            <li> <a class="dropdown-item @ActivePagesApp.RegBankNavClass(ViewContext)" asp-action="List" asp-controller="Bank">Conta Bancária</a>  </li>
-                        </ul>
+                    @*<li class="nav-item dropdown @ActivePagesApp.RegNavClass(ViewContext)">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                Cadastros
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li> <a class="dropdown-item @ActivePagesApp.IndexPersonNavClass(ViewContext)" asp-action="List" asp-controller="Person">Clientes e Fornecedores</a> </li>
+                                <li> <a class="dropdown-item @ActivePagesApp.ProductNavClass(ViewContext)" asp-action="List" asp-controller="Product">Produtos e Serviços</a>  </li>
+                                <li><div class="dropdown-divider"></div></li>
+                                <li> <a class="dropdown-item @ActivePagesApp.RegBankNavClass(ViewContext)" asp-action="List" asp-controller="Bank">Conta Bancária</a>  </li>
+                            </ul>
 
-                    </li>
+                        </li>*@
+
+
                     <li class="nav-item dropdown @ActivePagesApp.FinanceNavClass(ViewContext)">
-                        <a class="nav-link dropdown-toggles" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Financeiro
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            @SharedLocalizer["Financeiro"]
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
 
-                            <li> <a class="dropdown-item @ActivePagesApp.RevenueNavClass(ViewContext)" asp-action="List" asp-controller="Revenue">Contas a Receber</a> </li>
-                            <li> <a class="dropdown-item @ActivePagesApp.ExpenseNavClass(ViewContext)" asp-action="List" asp-controller="Expense">Contas a Pagar</a> </li>
-                            <li><a class="dropdown-item @ActivePagesApp.BankTransNavClass(ViewContext)" asp-action="List" asp-controller="BankTrans">Extrato Banco/Caixa</a></li>
-                            <li> <div class="dropdown-divider"></div> </li>
-                            <li><a class="dropdown-item @ActivePagesApp.CashFlowNavClass(ViewContext)" asp-action="CashFlow" asp-controller="FinancialStats">Fluxo Caixa</a></li>
+                            <li> <a class="dropdown-item @ActivePagesApp.RevenueNavClass(ViewContext)" asp-action="List" asp-controller="Revenue">@SharedLocalizer["Contas a Receber"]</a> </li>
+                            <li> <a class="dropdown-item @ActivePagesApp.ExpenseNavClass(ViewContext)" asp-action="List" asp-controller="Expense">@SharedLocalizer["Contas a Pagar"]</a> </li>
+                            <li><a class="dropdown-item @ActivePagesApp.BankTransNavClass(ViewContext)" asp-action="List" asp-controller="BankTrans">@SharedLocalizer["Extrato Banco/Caixa"]</a></li>
+                            <li><div class="dropdown-divider"></div></li>
+                            <li><a class="dropdown-item @ActivePagesApp.CashFlowNavClass(ViewContext)" asp-action="CashFlow" asp-controller="FinancialStats">@SharedLocalizer["Fluxo Caixa"]</a></li>
                             @*<li>
                                     <a class="dropdown-item dropdown-toggle" href="#">Submenu</a>
                                     <ul class="dropdown-menu">
@@ -58,6 +62,7 @@
                                         </li>
                                     </ul>
                                 </li>*@
+                             
                         </ul>
 
                     </li>
@@ -65,24 +70,27 @@
 
 
 
+                    
                     @*<li class="nav-item dropdown @ActivePagesApp.SalesNavClass(ViewContext)">
-                        <a class="nav-link dropdown-toggles" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Vendas
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="nav-link dropdown-toggles" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Vendas
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
 
-                            <li> <a class="dropdown-item @ActivePagesApp.InvoiceNavClass(ViewContext)" asp-action="List" asp-controller="Invoice">Notas Fiscais</a> </li>
-                           
-                        </ul>
+                                <li> <a class="dropdown-item @ActivePagesApp.InvoiceNavClass(ViewContext)" asp-action="List" asp-controller="Invoice">Notas Fiscais</a> </li>
 
-                    </li>*@
+                            </ul>
+
+                        </li>*@
+                     
                     <li class="nav-item dropdown @ActivePagesApp.ReportsNavClass(ViewContext)">
                         <a class="nav-link dropdown-toggles" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Relatórios
+                            @SharedLocalizer["Relatórios"]
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            <li> <a class="dropdown-item  @ActivePagesApp.FinanceReportsNavClass(ViewContext)" asp-action="Reports" asp-controller="FinancialStats">Financeiro</a> </li>
-                            <li> <a class="dropdown-item  @ActivePagesApp.StockReportsNavClass(ViewContext)" asp-action="Reports" asp-controller="StockStats">Estoque</a> </li>
+                            <li> <a class="dropdown-item  @ActivePagesApp.FinanceReportsNavClass(ViewContext)" asp-action="Reports" asp-controller="FinancialStats">@SharedLocalizer["Financeiro"]</a> </li>
+                            <li> <a class="dropdown-item  @ActivePagesApp.StockReportsNavClass(ViewContext)" asp-action="Reports" asp-controller="StockStats">@SharedLocalizer["Estoque"]</a> </li>
+                            
                             @*<li>
                                     <a class="dropdown-item dropdown-toggle" href="#">Financeiro</a>
                                     <ul class="dropdown-menu">
@@ -105,15 +113,18 @@
                                         </li>
                                     </ul>
                                 </li>*@
+                            
                         </ul>
 
                     </li>
 
 
 
+                    
                     @*<li class="nav-item">
                             <a asp-area="" asp-controller="Home" asp-action="Contact" class="nav-link">Contact</a>
                         </li>*@
+                     
                 </ul>
             }
 

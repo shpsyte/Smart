@@ -10,13 +10,20 @@ namespace Core.Domain.Business
         {
 
         }
-        public BusinessEntity(SingleName name, EmailAddress email, string extenalcode) : this()
+
+        public BusinessEntity(SingleName name) :this()
+        {
+
+        }
+
+
+        public BusinessEntity(SingleName name, EmailAddress email, string extenalcode) : this(name)
         {
             this.Name = name;
             this.Email = email;
             this.ExternalCode = extenalcode;
             this.CreateDate = ModelExtension.TimestampProvider();
-            this.Validate = ModelExtension.TimestampProvider().AddDays(7);
+            this.Validate = ModelExtension.TimestampProvider().AddDays(20);
             this.Active = true;
         }
 

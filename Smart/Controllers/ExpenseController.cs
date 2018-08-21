@@ -49,8 +49,9 @@ namespace Smart.Controllers
                                 IServices<VExpense> vrevenueServices,
                                 IUser currentUser,
                                 IEmailSender emailSender,
-                                IHttpContextAccessor accessor
-                                ) : base(currentUser, emailSender, accessor)
+                                IHttpContextAccessor accessor,
+                                IServices<Core.Domain.Business.BusinessEntity> businessEntity
+                                ) : base(currentUser, emailSender, accessor, businessEntity)
         {
             this._expenseServices = expenseServices;
             this._categoryFinancialServices = categoryFinancialServices;

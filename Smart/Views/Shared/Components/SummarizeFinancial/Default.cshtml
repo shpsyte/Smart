@@ -1,0 +1,59 @@
+﻿@model Smart.Models.Components.SummarizeFinancialModel
+
+@{
+
+    if (!Model.HasRow)
+    {
+
+        <p class="card-text h5 font-weight-light">@SharedLocalizer["Acompanhe aqui o fluxo mensal de suas contas"].</p>
+        <p class="card-text text-muted font-weight-light">@SharedLocalizer["Por enquanto você ainda não tem fluxo de conta"].</p>
+
+    }
+    else
+    {
+        if (Model.RenderView.Equals(CashFlowCards.GetValue))
+        {
+            decimal value = Model.ExpenseTotal ?? decimal.Zero;
+            @value.ToString("c");
+
+        }
+        else
+        if (Model.RenderView.Equals(CashFlowCards.GetTable))
+        {
+            <table id="cash-balance-table" class="table table-hover table-sm" cellspacing="0" cellpadding="0">
+
+                <tbody id="resums">
+                    <tr class="font-weight-light @( Model.PreviousAmmont.Value < 0 ? "text-danger" : "text-success") ">
+                        <td> Saldo Anterior </td>
+                        <td class="text-right">
+                            @Model.PreviousAmmont.Value.ToString("c")
+                        </td>
+                    </tr>
+
+                    <tr class="font-weight-light text-success">
+                        <td> Total Previsto de Contas a Receber </td>
+                        <td class="text-right">
+                            @Model.RevenueTotal.Value.ToString("c")
+                        </td>
+                    </tr>
+                    <tr class="font-weight-light text-danger">
+                        <td> Total Previsto de Contas a Pagar </td>
+                        <td class="text-right">
+                            @Model.ExpenseTotal.Value.ToString("c")
+                        </td>
+
+                    </tr>
+                    <tr class="font-weight-light text-info">
+                        <td> Saldo Previsto </td>
+                        <td class="text-right">
+                            @Model.Expected.Value.ToString("c")
+                        </td>
+                    </tr>
+                </tbody>
+
+            </table>
+        }
+
+
+    }
+}

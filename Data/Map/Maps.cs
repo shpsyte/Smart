@@ -587,8 +587,18 @@ namespace Data.Map
 
         }
     }
+    public class VBalanceAccountMap : IMapConfiguration<VBalanceAccount>
+    {
+        public void Map(EntityTypeBuilder<VBalanceAccount> entity)
+        {
+            entity.ToTable("ViewBalanceAccount");
+            entity.HasKey(e => new { e.AccountBankId, e.BusinessEntityId });
 
-     
+
+        }
+    }
+
+
     public class VRevenueMap : IMapConfiguration<VRevenue>
     {
         public void Map(EntityTypeBuilder<VRevenue> entity)

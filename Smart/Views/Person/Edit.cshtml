@@ -9,11 +9,16 @@
             @{ await Html.RenderPartialAsync("_CreateOrUpdate"); }
             <div class="form-actions text-align-left">
                 <div class="row">
-                    <div class="col-12">
+                    <div class="col-8">
                         <button asp-route-continueAdd="false" type="submit" class="btn btn-success btn-bdr">
                             <span class="btn-label"></span>@SharedLocalizer["Salvar"]
                         </button>
                         <a asp-action="List" asp-controller="Person" class="btn btn-light btn-bdr"> <span class="btn-label"><i class="glyphicon glyphicon-chevron-left"></i></span>@SharedLocalizer["Voltar"] </a>
+                    </div>
+                    <div class="col-4">
+                        <button asp-route-addTrash="true" type="submit" class="btn btn-danger btn-bdr" onclick="return confirm('Deseja realmente exluir?')">
+                            <span class="btn-label"></span>@SharedLocalizer["Excluir"]
+                        </button>
                     </div>
                 </div>
             </div>

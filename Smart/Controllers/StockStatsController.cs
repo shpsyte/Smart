@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Core.Domain.Business;
 using Core.Domain.Production;
 using Data.Context;
 using Microsoft.AspNetCore.Http;
@@ -30,7 +31,7 @@ namespace Smart.Controllers
                                 IServices<ProductImage> productImageServices,
                                 IServices<Product> productServices,
                            IServices<Image> imageServices,
-        IServices<Location> locationServices, IUser currentUser, IEmailSender emailSender, IHttpContextAccessor accessor, SmartContext context) : base(currentUser, emailSender, accessor, context)
+        IServices<Location> locationServices, IUser currentUser, IEmailSender emailSender, IHttpContextAccessor accessor, IServices<BusinessEntity> businessEntity) : base(currentUser, emailSender, accessor, businessEntity)
         {
             this._productServices = productServices;
             this._categoryProductServices = categoryProductServices;

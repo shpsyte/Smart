@@ -5,6 +5,7 @@ using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -243,6 +244,42 @@ namespace Smart.Helpers
             return s;
         }
 
-      
+        /// <summary>
+        /// Get First or Last date of Month
+        /// </summary>
+        /// <param name="helper"></param>
+        /// <param name="what">F = First / L = Last </param>
+        /// <returns></returns>
+        public static DateTime GetFirsAndLastDateOfMonth(this IHtmlHelper helper, DateTime? date, string what)
+        {
+            DateTime currentDate = date.HasValue ? date.Value : DateTime.Now;
+
+            var firstDayOfMonth = new DateTime(currentDate.Year, currentDate.Month, 1);
+            var lastDayOfMonth = firstDayOfMonth.AddMonths(1).AddDays(-1);
+
+            if (what == "F")
+            {
+                return firstDayOfMonth;
+            }else
+            {
+                return lastDayOfMonth;
+            }
+
+
+             
+        }
+
+        public static string GetNameOfMonth(this IHtmlHelper helper, int month)
+        {
+            var monthName = new DateTime(DateTime.Now.Year, month, 1).ToString("MMMM", CultureInfo.CurrentUICulture);
+            return monthName.Titleize();
+
+
+        }
+
+     
+
+
+
     }
 }

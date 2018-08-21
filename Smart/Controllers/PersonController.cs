@@ -40,8 +40,9 @@ namespace Smart.Controllers
                                 IRepository<StateProvince> stateProvinceServices,
                                 IUser currentUser,
                                 IEmailSender emailSender,
-                                IHttpContextAccessor accessor
-                                ) : base(currentUser, emailSender, accessor)
+                                IHttpContextAccessor accessor,
+                                IServices<Core.Domain.Business.BusinessEntity> businessEntity
+                                ) : base(currentUser, emailSender, accessor, businessEntity)
         {
             this._personServices = personServices;
             this._categoryPersonServices = categoryPersonServices;
@@ -94,7 +95,10 @@ namespace Smart.Controllers
         {
             var address = Mapper.Map<PersonModel, Address>(data);
             var person = Mapper.Map<PersonModel, Person>(data);
-            person.RegistrationCode = Regex.Match(person.RegistrationCode, @"\d+").Value;
+            if (!string.IsNullOrEmpty(person.RegistrationCode))
+            { 
+              person.RegistrationCode = Regex.Match(person.RegistrationCode, @"\d+").Value;
+            }
             var addressperson = new PersonAddress() { Address = address, Person = person };
             if (ModelState.IsValid)
             {
@@ -167,6 +171,7 @@ namespace Smart.Controllers
             {
                 return NotFound();
             }
+            
             try
             {
                 using (var memoryStream = new MemoryStream())
@@ -180,6 +185,8 @@ namespace Smart.Controllers
             {
                 var address = Mapper.Map<PersonModel, Address>(data);
                 var person = Mapper.Map<PersonModel, Person>(data);
+
+                typeof(Person).GetProperty("Deleted").SetValue(person, addTrash);
                 person.BusinessEntityId = _BusinessId;
                 address.BusinessEntityId = _BusinessId;
                 person.ModifiedDate = System.DateTime.UtcNow;

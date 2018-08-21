@@ -1,64 +1,64 @@
 ﻿<header style="background-color: #000">
     <div class="container">
-        <nav class="navbar navbar-expand-lg navbar-dark" style=" background-color: #000;">
+        <nav class="navbar navbar-expand-lg navbar-dark font-weight-light" style=" background-color: #000;">
             
             <a class="navbar-brand" asp-action="List" asp-controller="CategoryPerson">
-                Configurações
+                @SharedLocalizer["Configurações"]
             </a>
             <ul class="nav navbar-nav">
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Pessoas
+                        @SharedLocalizer["Pessoas"]
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" asp-action="List" asp-controller="CategoryPerson">Categorias</a>
+                        <a class="dropdown-item" asp-action="List" asp-controller="CategoryPerson">@SharedLocalizer["Categorias"]</a>
                     </div>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Contábil
+                        @SharedLocalizer["Contábil"]
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" asp-action="List" asp-controller="TaxGroup">Grupo de Impostos</a>
-                        <a class="dropdown-item" asp-action="List" asp-controller="TaxOperation">Operação Fiscal</a>
+                        <a class="dropdown-item" asp-action="List" asp-controller="TaxGroup">@SharedLocalizer["Grupo de Impostos"]</a>
+                        <a class="dropdown-item" asp-action="List" asp-controller="TaxOperation">@SharedLocalizer["Operação Fiscal"]</a>
                     </div>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Financeiro
+                        @SharedLocalizer["Financeiro"]
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" asp-action="List" asp-controller="FinancialCategory">Categoria Financeira</a>
-                        <a class="dropdown-item" asp-action="List" asp-controller="CostCenter">Centro de Custo</a>
-                        <a class="dropdown-item" asp-action="List" asp-controller="Bank">Conta Bancária</a>
+                        <a class="dropdown-item" asp-action="List" asp-controller="FinancialCategory">@SharedLocalizer["Categoria Financeira"]</a>
+                        <a class="dropdown-item" asp-action="List" asp-controller="CostCenter">@SharedLocalizer["Centro de Custo"]</a>
+                        <a class="dropdown-item" asp-action="List" asp-controller="Bank">@SharedLocalizer["Conta Bancária"]</a>
                     </div>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Regiões
+                        @SharedLocalizer["Regiões"]
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" asp-action="List" asp-controller="Country">Países</a>
-                        <a class="dropdown-item" asp-action="List" asp-controller="StateProvince">Estados</a>
-                        <a class="dropdown-item" asp-action="List" asp-controller="City">Cidades</a>
+                        <a class="dropdown-item" asp-action="List" asp-controller="Country">@SharedLocalizer["Países"]</a>
+                        <a class="dropdown-item" asp-action="List" asp-controller="StateProvince">@SharedLocalizer["Estados"]</a>
+                        <a class="dropdown-item" asp-action="List" asp-controller="City">@SharedLocalizer["Cidades"]</a>
                     </div>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Produção/Produtos
+                        @SharedLocalizer["Produção/Produtos"]
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" asp-action="List" asp-controller="CategoryProduct">Categorias de Produtos</a>
-                        <a class="dropdown-item" asp-action="List" asp-controller="ClassProduct">Classes de Produtos</a>
-                        <a class="dropdown-item" asp-action="List" asp-controller="Warehouse">Depósitos</a>
+                        <a class="dropdown-item" asp-action="List" asp-controller="CategoryProduct">@SharedLocalizer["Categorias de Produtos"]</a>
+                        <a class="dropdown-item" asp-action="List" asp-controller="ClassProduct">@SharedLocalizer["Classes de Produtos"]</a>
+                        <a class="dropdown-item" asp-action="List" asp-controller="Warehouse">@SharedLocalizer["Depósitos"]</a>
                     </div>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Vendas
+                        @SharedLocalizer["Vendas"]
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" asp-action="List" asp-controller="Condition">Contdições de Pagamentos</a>
+                        <a class="dropdown-item" asp-action="List" asp-controller="Condition">@SharedLocalizer["Condições de Pagamentos"]</a>
                     </div>
                 </li>
             </ul>

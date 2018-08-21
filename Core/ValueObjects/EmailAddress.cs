@@ -7,7 +7,11 @@ namespace Core.ValueObjects
 {
     public partial class EmailAddress 
     {
-        public EmailAddress(string email)
+        public EmailAddress()
+        {
+
+        }
+        public EmailAddress(string email) : this()
         {
             this.Email = email;
         }

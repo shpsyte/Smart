@@ -16,4 +16,9 @@ namespace Smart
     {
 
     }
+
+    public class HomeResource
+    {
+
+    }
 }

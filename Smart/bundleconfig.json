@@ -86,5 +86,17 @@
     "inputFiles": [
       "wwwroot/js/views/invoice.js"
     ]
+  },
+  {
+    "outputFileName": "wwwroot/js/smartwidgets/JarvisWidget.min.js",
+    "inputFiles": [
+      "wwwroot/js/smartwidgets/JarvisWidget.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/js/views/home.min.js",
+    "inputFiles": [
+      "wwwroot/js/views/home.js"
+    ]
   }
 ]

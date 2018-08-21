@@ -48,8 +48,8 @@ namespace Smart.Controllers
                                 IUser currentUser,
                                 IEmailSender emailSender,
                                 IHttpContextAccessor accessor,
-                                SmartContext context
-                                ) : base(currentUser, emailSender, accessor, context)
+                                IServices<Core.Domain.Business.BusinessEntity> businessEntity
+                                ) : base(currentUser, emailSender, accessor, businessEntity)
         {
             this._invoiceServices = invoiceServices;
             this._addressServices = addressServices;

@@ -1,1 +1,68 @@
 ﻿@{ ViewData["Title"] = Localizer["Dashboard"]; ViewBag.PageClass = "container"; ViewBag.Home = "isHome"; }
+
+<input type="hidden" id="dueStartDate" value="@Html.GetFirsAndLastDateOfMonth(null,"F")" />
+<input type="hidden" id="dueEndDate" value="@Html.GetFirsAndLastDateOfMonth(null,"L")" />
+
+@if (ViewData["Message"] != null)
+{
+    <div class="alert alert-success alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        @ViewData["Message"]
+    </div>
+}
+
+<div class="row">
+    <div class="col-6 p-3">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="alert-heading text-info float-left font-weight-light"><i class="fas fa-chart-line"></i> @HomeLocalizer["Acompanhe aqui o saldo de suas contas"]</h5>
+                <button id="update-balance-btn" class="btn btn-sm btn-outline-info float-right"><i class="fas fa-sync"></i></button>
+            </div>
+            <div id="balance-account" class="card-body"></div>
+        </div>
+    </div>
+    <div class="col-6 p-3">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="alert-heading text-info float-left font-weight-light">
+                    <i class="fas fa-chart-bar"></i>@HomeLocalizer["Previsão Financeira para"] @Html.GetNameOfMonth(DateTime.Now.Month)
+                </h5>
+                <button id="update-summarize-btn" class="btn btn-sm btn-outline-info float-right"><i class="fas fa-sync"></i></button>
+            </div>
+            <div id="summarize-financial" class="card-body"></div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="row">
+    <div class="col-6 p-3">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="alert-heading text-info float-left font-weight-light">
+                    <i class="fas fa-hand-holding-usd float-left"></i>@HomeLocalizer["Top 10 Contas a Pagar de"] @Html.GetNameOfMonth(DateTime.Now.Month)
+                </h5>
+                <button id="update-expense-btn" class="btn btn-sm btn-outline-info float-right"><i class="fas fa-sync"></i></button>
+            </div>
+            <div id="update-expense" class="card-body"></div>
+        </div>
+    </div>
+    <div class="col-6 p-3">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="alert-heading text-info float-left font-weight-light">
+                    <i class="fas fa-dollar-sign"></i>@HomeLocalizer["Top 10 Contas a Receber de"] @Html.GetNameOfMonth(DateTime.Now.Month)
+                </h5>
+                <button id="update-revenue-btn" class="btn btn-sm btn-outline-info float-right"><i class="fas fa-sync"></i></button>
+            </div>
+            <div id="update-revenue" class="card-body"></div>
+        </div>
+    </div>
+
+</div>
+
+
+
+@section Scripts {
+    <script src="~/js/views/home.min.js"></script> }

@@ -1,11 +1,15 @@
 ﻿@if (ViewData["msg"] != null && SignInManager.IsSignedIn(User))
 {
+
     <div style="background-color: #ffe8a0">
         <div class="container">
             <nav class="navbar  navbar-inverse" style=" background-color: #ffe8a0">
-                <span class="navbar-text mr-auto">
-                    @ViewData["msg"]
-                    <a class="btn btn-sm btn-success">Warning</a>
+                <span class="navbar-text mr-auto font-weight-light">
+                    Seu período de avaliação termina em @ViewData["msg"] entretanto queremos que continue usando 
+                    <br />
+                    nosso software, para isso basta clicar <a asp-action="Free" asp-controller="Home" class="btn btn-sm btn-link">aqui</a>
+                    e renovaremos para mais 30 dias.
+
                 </span>
             </nav>
         </div>

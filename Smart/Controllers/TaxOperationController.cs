@@ -21,8 +21,9 @@ namespace Smart.Controllers
                                     IServices<TaxOperation> taxOperationServices, 
                                     IUser currentUser, 
                                     IEmailSender emailSender, 
-                                    IHttpContextAccessor accessor
-                                    ) : base(currentUser, emailSender, accessor)
+                                    IHttpContextAccessor accessor,
+                                    IServices<Core.Domain.Business.BusinessEntity> businessEntity
+                                    ) : base(currentUser, emailSender, accessor, businessEntity)
             {
             this._taxOperationServices = taxOperationServices;
             }

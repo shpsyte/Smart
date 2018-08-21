@@ -10,7 +10,7 @@ namespace Smart.Controllers
 {
     public class ComponentController : BaseController
     {
-        public ComponentController(IUser currentUser, IEmailSender emailSender, IHttpContextAccessor accessor) : base(currentUser, emailSender, accessor)
+        public ComponentController(IUser currentUser, IEmailSender emailSender, IHttpContextAccessor accessor, IServices<Core.Domain.Business.BusinessEntity> businessEntity) : base(currentUser, emailSender, accessor, businessEntity)
         {
         }
         [Route("easypie-charts")]

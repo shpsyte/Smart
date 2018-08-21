@@ -1,0 +1,42 @@
+﻿@model Smart.Models.Components.ExpenseAccountModel
+
+
+@if (Model.RenderView.Equals(ExpenseCards.GetValue))
+{
+    @Model.TotalAmount.Value.ToString("c")
+}
+else
+if (Model.RenderView.Equals(ExpenseCards.GetTable))
+{
+    if (Model.Qty == 0)
+    {
+        <p class="card-text text-muted font-weight-light">@SharedLocalizer["Por enquanto você ainda não criou nenhuma conta"].</p>
+    }
+    else
+    {
+
+        <table id="expense-table" class="table table-hover table-sm" cellspacing="0" cellpadding="0">
+            <thead>
+                <tr>
+                    <td></td>
+                    <td>Número</td>
+                    <td>Vencimento</td>
+                    <td class="text-right">Saldo Final</td>
+                </tr>
+            </thead>
+            <tbody id="expenses">
+                @foreach (var item in Model.List.OrderBy(a => a.DueDate))
+                {
+                    <tr class="font-weight-light">
+                        <td> <i class="text-warning fas @( item.DueDate.HasValue ? item.DueDate.Value <= System.DateTime.Now ? "fa-exclamation-triangle" : "" : "" ) "></i> </td>
+                        <td> @Html.Truncate(item.ToString(), 10)</td>
+                        <td> @( item.DueDate.HasValue ? item.DueDate.Value.ToShortDateString() : "" )</td>
+                        <td class="text-right"> @item.AmountFinal.ToString("c")</td>
+                    </tr>
+                }
+
+            </tbody>
+
+        </table>
+    }
+}

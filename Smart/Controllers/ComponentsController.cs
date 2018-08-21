@@ -11,7 +11,7 @@ namespace Smart.Controllers
 {
     public class ComponentsController : BaseController
     {
-        public ComponentsController(IUser currentUser, IEmailSender emailSender, IHttpContextAccessor accessor) : base(currentUser, emailSender, accessor)
+        public ComponentsController(IUser currentUser, IEmailSender emailSender, IHttpContextAccessor accessor, IServices<Core.Domain.Business.BusinessEntity> businessEntity) : base(currentUser, emailSender, accessor, businessEntity)
         {
 
         }
@@ -61,14 +61,39 @@ namespace Smart.Controllers
         }
 
 
-
-
-
         public IActionResult CardCashFlowStats(bool payed, DateTime? dueStartDate, DateTime? dueEndDate, int? AccountBankId, string searchTerm, string model, string title, string cssCard, decimal? initial)
         {
             object par = new { payed = payed, dueStartDate = dueStartDate, dueEndDate = dueEndDate, searchTerm = searchTerm, model = model, title = title, cssCard = cssCard , initial  = initial };
             return ViewComponent("CardCashFlow", par);
         }
+
+
+        public IActionResult BalanceAccount(int? AccountBankId, string RenderView)
+        {
+            object par = new { AccountBankId = AccountBankId, RenderView = RenderView };
+            return ViewComponent("BalanceAccount", par);
+        }
+
+        public IActionResult SummarizeFinancial(DateTime? dueStartDate, DateTime? dueEndDate, string RenderView)
+        {
+            object par = new { dueStartDate = dueStartDate, dueEndDate = dueEndDate, RenderView = RenderView };
+            return ViewComponent("SummarizeFinancial", par);
+        }
+
+
+        public IActionResult ExpenseAccount(bool payed, int? top, DateTime? dueStartDate, DateTime? dueEndDate, string RenderView)
+        {
+            object par = new { payed = payed, top = top, dueStartDate = dueStartDate, dueEndDate = dueEndDate, RenderView = RenderView };
+            return ViewComponent("ExpenseAccount", par);
+        }
+
+        public IActionResult RevenueAccount(bool payed, int? top, DateTime? dueStartDate, DateTime? dueEndDate, string RenderView)
+        {
+            object par = new { payed = payed, top = top, dueStartDate = dueStartDate, dueEndDate = dueEndDate, RenderView = RenderView };
+            return ViewComponent("RevenueAccount", par);
+        }
+
+
 
 
     }

@@ -15,6 +15,7 @@ using System.Collections.Generic;
 using System.IO;
 using Data.Context;
 using Smart.Models.Production;
+using Core.Domain.Business;
 
 namespace Smart.Controllers
 {
@@ -45,8 +46,8 @@ namespace Smart.Controllers
                                 IUser currentUser,
                                 IEmailSender emailSender,
                                 IHttpContextAccessor accessor,
-                                SmartContext context
-                                ) : base(currentUser, emailSender, accessor, context)
+                                IServices<BusinessEntity> businessEntity
+                                ) : base(currentUser, emailSender, accessor, businessEntity)
         {
             this._productServices = productServices;
             this._categoryProductServices = categoryProductServices;

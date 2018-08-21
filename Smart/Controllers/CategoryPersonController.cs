@@ -8,6 +8,8 @@ using Services.Interfaces;
 using Smart.Services;
 using Core.Domain.PersonAndData;
 using Smart.Data;
+using Core.Domain.Business;
+
 namespace Smart.Controllers
 {
     [Authorize]
@@ -21,8 +23,9 @@ namespace Smart.Controllers
                                     IServices<CategoryPerson> categoryPersonServices, 
                                     IUser currentUser, 
                                     IEmailSender emailSender, 
-                                    IHttpContextAccessor accessor
-                                    ) : base(currentUser, emailSender, accessor)
+                                    IHttpContextAccessor accessor,
+                                    IServices<BusinessEntity> businessEntity
+                                    ) : base(currentUser, emailSender, accessor, businessEntity)
             {
               this._categoryPersonServices = categoryPersonServices;
             }

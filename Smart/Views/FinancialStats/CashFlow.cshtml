@@ -1,8 +1,7 @@
 ﻿@{ ViewData["Title"] = Localizer["Fluxo de Caixa"]; ViewBag.PageClass = "container"; ViewData.AddActivePageApp(ActivePagesApp.CashFlow);}
 @{ 
-    DateTime date = DateTime.Now;
-    var firstDayOfMonth = new DateTime(date.Year, date.Month, 1);
-    var lastDayOfMonth = firstDayOfMonth.AddMonths(1).AddDays(-1);
+    var firstDayOfMonth = Html.GetFirsAndLastDateOfMonth(null, "F");
+    var lastDayOfMonth = Html.GetFirsAndLastDateOfMonth(null, "L");
 }
 <div class="row">
     <div class="col-md-6 col-sm-12">
@@ -11,9 +10,9 @@
                 <span id="spDatas" name="spDatas" class="input-group-text"> Data do Vencimento</span>
             </div>
             <input type="text" id="dueStartDate" name="dueStartDate" class="form-control datepicker" 
-                   value="@firstDayOfMonth.ToShortDateString()">
+                   value="@Html.GetFirsAndLastDateOfMonth(null, "F").ToShortDateString()">
             <input type="text" id="dueEndDate" name="dueEndDate" class="form-control datepicker" 
-                   value="@lastDayOfMonth.ToShortDateString()">
+                   value="@Html.GetFirsAndLastDateOfMonth(null, "L").ToShortDateString()">
             <div class="input-group-append">
                 <button id="refresh" class="btn btn-outline-secondary" type="button"><i class="fab fa-searchengin"></i></button>
                 <button class="btn btn-outline-secondary" type="button" data-toggle="collapse" href="#painelStats" role="button"><i class="fas fa-chart-area"></i></button>
@@ -71,8 +70,8 @@
                         <p class="card-title h3 text-success font-weight-light">@Localizer["Receitas"]</p>
                         <div id="revenueValue" class="card-text text-center h1 font-weight text-success">
                             <vc:card-revenue-stats payed="false" 
-                                                   due-end-date="@lastDayOfMonth"
-                                                   due-start-date="@firstDayOfMonth"
+                                                   due-end-date="@Html.GetFirsAndLastDateOfMonth(null, "L")"
+                                                   due-start-date="@Html.GetFirsAndLastDateOfMonth(null, "F")"
                                                    search-term=""
                                                    title=""
                                                    css-card="text-success"
@@ -96,8 +95,8 @@
                         <p class="card-title h3 text-danger font-weight-light">@Localizer["Despesas"]</p>
                         <div id="expenseValue" class="card-text text-center h1 font-weight text-danger">
                             <vc:card-expense-stats payed="false"
-                                                   due-end-date="@lastDayOfMonth"
-                                                   due-start-date="@firstDayOfMonth"
+                                                   due-end-date="@Html.GetFirsAndLastDateOfMonth(null, "L")"
+                                                   due-start-date="@Html.GetFirsAndLastDateOfMonth(null, "F")"
                                                    search-term=""
                                                    title=""
                                                    css-card="text-success"
@@ -122,8 +121,8 @@
                         <div id="BankValue" class="card-text text-center h1 font-weight text-info">
                             <vc:card-bank-trans-stats payed="true" signal="null" 
                                                       account-bank-id="null"
-                                                      due-end-date="@lastDayOfMonth"
-                                                      due-start-date="@firstDayOfMonth"
+                                                      due-end-date="@Html.GetFirsAndLastDateOfMonth(null, "L")"
+                                                      due-start-date="@Html.GetFirsAndLastDateOfMonth(null, "F")"
                                                       search-term=""
                                                       title="" 
                                                       css-card="text-success"
@@ -170,8 +169,8 @@
                     <div class="card-body">
                         <div id="ListRevenue">
                             <vc:card-revenue-stats payed="false" 
-                                                   due-end-date="@lastDayOfMonth"
-                                                   due-start-date="@firstDayOfMonth"
+                                                   due-end-date="@Html.GetFirsAndLastDateOfMonth(null, "L")"
+                                                   due-start-date="@Html.GetFirsAndLastDateOfMonth(null, "F")"
                                                    search-term=""
                                                    title=""
                                                    css-card="text-success"
@@ -184,8 +183,8 @@
                     <div class="card-body">
                         <div id="ListExpense">
                             <vc:card-expense-stats payed="false" 
-                                                   due-end-date="@lastDayOfMonth"
-                                                   due-start-date="@firstDayOfMonth"
+                                                   due-end-date="@Html.GetFirsAndLastDateOfMonth(null, "L")"
+                                                   due-start-date="@Html.GetFirsAndLastDateOfMonth(null, "F")"
                                                    search-term=""
                                                    title=""
                                                    css-card="text-success"
@@ -198,8 +197,8 @@
                     <div class="card-body">
                         <div id="ListBank">
                             <vc:card-bank-trans-stats payed="false" signal="null"
-                                                   due-end-date="@lastDayOfMonth"
-                                                   due-start-date="@firstDayOfMonth"
+                                                   due-end-date="@Html.GetFirsAndLastDateOfMonth(null, "L")"
+                                                   due-start-date="@Html.GetFirsAndLastDateOfMonth(null, "F")"
                                                       search-term="" account-bank-id="null"
                                                       title=""
                                                       css-card="text-success"
@@ -213,8 +212,8 @@
                         <div id="ListCash">
                          
                             <vc:card-cash-flow 
-                                               due-end-date="@lastDayOfMonth"
-                                               due-start-date="@firstDayOfMonth"
+                                               due-end-date="@Html.GetFirsAndLastDateOfMonth(null, "L")"
+                                               due-start-date="@Html.GetFirsAndLastDateOfMonth(null, "F")"
                                                search-term=""
                                                title="" initial="null" payed="false"
                                                css-card="text-success"

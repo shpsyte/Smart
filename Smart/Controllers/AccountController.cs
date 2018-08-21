@@ -230,12 +230,12 @@ namespace Smart.Controllers
         }
         private BusinessEntity IncludeBusinessEntity(string name, string email, string externalcode)
         {
-            var x = _businessEntityServices.AddAsync(
-                  new BusinessEntity(
-                    new SingleName(name), 
-                    new EmailAddress(email), 
-                    externalcode)
-                  );
+            var obj = new BusinessEntity(
+                    new SingleName(name),
+                    new EmailAddress(email),
+                    externalcode);
+
+            var x = _businessEntityServices.AddAsync(obj);
             return x.Result;
         }
         [HttpPost]

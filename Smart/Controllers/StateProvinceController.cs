@@ -10,6 +10,7 @@ using Core.Domain.Region;
 using Smart.Data;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Data.Repository;
+using Core.Domain.Business;
 
 namespace Smart.Controllers
 {
@@ -26,8 +27,9 @@ namespace Smart.Controllers
                                 IServices<StateProvince> stateProvinceServices,
                                 IUser currentUser,
                                 IEmailSender emailSender,
-                                IHttpContextAccessor accessor
-                                ) : base(currentUser, emailSender, accessor)
+                                IHttpContextAccessor accessor,
+                                IServices<BusinessEntity> businessEntity
+                                ) : base(currentUser, emailSender, accessor, businessEntity)
         {
             this._stateProvinceServices = stateProvinceServices;
             this._countryServices = countryServices;

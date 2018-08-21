@@ -1,7 +1,9 @@
-﻿using Core.Domain.Identity;
+﻿using Core.Domain.Business;
+using Core.Domain.Identity;
 using Data.Context;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
 using Services.Interfaces;
 using Smart.Services;
 using System;
@@ -20,20 +22,39 @@ namespace Smart.Controllers
         private IUser currentUser;
         private IEmailSender emailSender;
         private IHttpContextAccessor accessor;
-        public BaseController(IUser currentUser, IEmailSender emailSender, IHttpContextAccessor accessor) 
+        protected IServices<BusinessEntity> _businessEntity;
+        public BaseController(IUser currentUser, IEmailSender emailSender, IHttpContextAccessor accessor, IServices<BusinessEntity> businessEntity)
         {
             this._currentUser = currentUser;
             this.emailSender = emailSender;
             this.accessor = accessor;
             this._BusinessId = currentUser.BusinessEntityId();
+            this._businessEntity = businessEntity;
         }
-        public BaseController(IUser currentUser,  IEmailSender emailSender,  IHttpContextAccessor accessor, SmartContext context)
+
+        public override void OnActionExecuting(ActionExecutingContext context)
         {
-            this._currentUser = currentUser;
-            this._emailSender = emailSender;
-            this._accessor = accessor;
-            this._BusinessId = currentUser.BusinessEntityId();
-            this._context = context;
+            var entity = _businessEntity.SingleOrDefault();
+            DateTime valid = entity.Validate.Value;
+            DateTime now = DateTime.Now.Date;
+            var days = (valid - now).Days;
+
+            if (days <= 7)
+            {
+                ViewData["msg"] = $"{entity.Validate.Value.ToShortDateString()}";
+            }
+
+
+
+            base.OnActionExecuting(context);
         }
+
+        public override void OnActionExecuted(ActionExecutedContext context)
+        {
+          
+            
+            base.OnActionExecuted(context);
+        }
+
     }
 }

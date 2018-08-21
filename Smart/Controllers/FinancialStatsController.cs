@@ -23,7 +23,7 @@ namespace Smart.Controllers
         private readonly FinancialExtension _financialExtension;
 
 
-        public FinancialStats(FinancialExtension financialExtension, IServices<CategoryFinancial> categoryFinancialServices, IServices<VExpense> VExpenseServices, IServices<AccountBank> bankServices, IUser currentUser, IEmailSender emailSender, IHttpContextAccessor accessor) : base(currentUser, emailSender, accessor)
+        public FinancialStats(FinancialExtension financialExtension, IServices<CategoryFinancial> categoryFinancialServices, IServices<VExpense> VExpenseServices, IServices<AccountBank> bankServices, IUser currentUser, IEmailSender emailSender, IHttpContextAccessor accessor, IServices<Core.Domain.Business.BusinessEntity> businessEntity) : base(currentUser, emailSender, accessor, businessEntity)
         {
             this._bankServices = bankServices;
             this._vExpenseServices = VExpenseServices;

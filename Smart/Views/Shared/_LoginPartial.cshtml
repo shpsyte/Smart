@@ -1,43 +1,43 @@
 ﻿@if (SignInManager.IsSignedIn(User))
 {
     <form asp-area="" asp-controller="Account" asp-action="Logout" method="post" id="logoutForm" class="navbar-right">
-        <ul class="nav navbar-nav navbar-right">
+        <ul class="nav navbar-nav navbar-right font-weight-light">
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Minha Conta</a>
+                    @SharedLocalizer["Minha Conta"]</a>
 
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <button type="submit" class="dropdown-item">Sair</button>
+                <div class="dropdown-menu font-weight-light" aria-labelledby="navbarDropdown">
+                    <button type="submit" class="dropdown-item">@SharedLocalizer["Sair"]</button>
                     <div class="dropdown-divider"></div>
                     <a asp-area="" asp-controller="Manage" asp-action="Index" title="Manage" class="dropdown-item">
-                        Minha Conta
+                        @SharedLocalizer["Minha Conta"]
                     </a>
                     <a asp-area="" asp-controller="Manage" asp-action="ChangePassword" title="ChangePassword" class="dropdown-item">
-                        Alterar Senha
+                        @SharedLocalizer["Alterar Senha"]
                     </a>
                     <div class="dropdown-divider"></div>
                     <a asp-area="" asp-controller="Manage" asp-action="TwoFactorAuthentication" title="TwoFactorAuthentication" class="dropdown-item">
-                        2 Factor Autentication
+                        @SharedLocalizer["2 Factor Autentication"]
                     </a>
                     <a asp-area="" asp-controller="Manage" asp-action="ExternalLogins" title="ExternalLogins" class="dropdown-item">
-                        Logins Externos
+                        @SharedLocalizer["Logins Externos"]
                     </a>
                     <a asp-area="" asp-controller="CategoryPerson" asp-action="List" title="COnfigurations" class="dropdown-item">
-                        Configurações
+                        @SharedLocalizer["Configurações"]
                     </a>
 
                 </div>
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Ajuda
+                    @SharedLocalizer["Ajuda"]
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">Videos</a>
+                    @*<a class="dropdown-item" href="#">Videos</a>
                     <a class="dropdown-item" href="#">Manuais</a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">Abrir Chamado</a>
-                    <a class="dropdown-item" asp-action="List" asp-controller="CategoryPerson">Configurações</a>
+                    <a class="dropdown-item" href="#">Abrir Chamado</a>*@
+                    <a class="dropdown-item" asp-action="List" asp-controller="CategoryPerson">@SharedLocalizer["Configurações"]</a>
                 </div>
             </li>
         </ul>
@@ -46,7 +46,7 @@
 else
 {
     <ul class="nav navbar-nav navbar-right">
-        <li><a asp-area="" asp-controller="Account" asp-action="Register" class="nav-link">Register</a></li>
-        <li><a asp-area="" asp-controller="Account" asp-action="Login" class="nav-link">Log in</a></li>
-    </ul>
+        <li><a asp-area="" asp-controller="Account" asp-action="Register" class="nav-link"> @SharedLocalizer["Register"]</a></li>
+        <li><a asp-area="" asp-controller="Account" asp-action="Login" class="nav-link"> @SharedLocalizer["Log in"]</a></li>
+</ul>
 }

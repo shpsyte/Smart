@@ -21,8 +21,9 @@ namespace Smart.Controllers
                                     IServices<Location> warehouseServices, 
                                     IUser currentUser, 
                                     IEmailSender emailSender, 
-                                    IHttpContextAccessor accessor
-                                    ) : base(currentUser, emailSender, accessor)
+                                    IHttpContextAccessor accessor,
+                                    IServices<Core.Domain.Business.BusinessEntity> businessEntity
+                                    ) : base(currentUser, emailSender, accessor, businessEntity)
             {
             this._warehouseServices = warehouseServices;
             }
