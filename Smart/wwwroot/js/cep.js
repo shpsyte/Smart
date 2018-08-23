@@ -26,7 +26,6 @@ function meu_callback(conteudo) {
 }
 
 function pesquisacep(valor) {
-    debugger;
     //Nova variável "cep" somente com dígitos.
     var cep = valor.replace(/\D/g, '');
 

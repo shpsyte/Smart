@@ -12,6 +12,7 @@
                     <li class="nav-item" @ActivePagesApp.DashboardNavClass(ViewContext)>
                         <a asp-area="" asp-controller="Home" asp-action="Index" class="nav-link">@SharedLocalizer["Visão Geral"]</a>
                     </li>
+                    <li> <a class="nav-link" asp-action="Index" asp-controller="Customer" asp-area="Customer">@SharedLocalizer["Clientes"]</a> </li>
                     <li> <a class="nav-link @ActivePagesApp.IndexPersonNavClass(ViewContext)" asp-action="List" asp-controller="Person">@SharedLocalizer["Clientes"]</a> </li>
                     <li> <a class="nav-link @ActivePagesApp.ProductNavClass(ViewContext)" asp-action="List" asp-controller="Product">@SharedLocalizer["Produtos"]</a>  </li>
 
